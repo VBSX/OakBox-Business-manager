@@ -7,12 +7,12 @@ from PySide6.QtWidgets import (
 from PySide6.QtGui import QAction, QIcon
 from PySide6.QtCore import Qt
 
-from login import LoginPage
+from login import *
 
 
 class MainPage(QMainWindow):
     def __init__(self):
-        super().__init__()
+        super(MainPage,self).__init__()
         filter_icon_path = r'images/filter.png'
 
         #config of the window
@@ -29,6 +29,7 @@ class MainPage(QMainWindow):
         button_action_logoff.setStatusTip("This is your button")
         button_action_logoff.triggered.connect(self.logoff)
         toolbar.addAction(button_action_logoff)
+
         
         
         
@@ -41,7 +42,7 @@ class MainPage(QMainWindow):
     def show_dialog(self, text):
         QtWidgets.QMessageBox.about(self, 'DIALOG', text)
 
-
+    
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication([])
