@@ -52,7 +52,7 @@ class LoginPage(QtWidgets.QWidget):
     def open_main_page(self):
         self.main_page = MainPage()
         
-        self.main_page.show()
+        self.main_page.showMaximized()
 
 
     def login_process(self):
