@@ -1,9 +1,11 @@
 import sys
 from PySide6 import QtCore, QtWidgets, QtGui
 
+from main_page import *
+
 class LoginPage(QtWidgets.QWidget):
     def __init__(self):
-        super().__init__()
+        super(LoginPage, self).__init__()
         filter_icon_path = r'images/filter.png'
 
         #config of the window
@@ -44,17 +46,29 @@ class LoginPage(QtWidgets.QWidget):
         self.layout.addWidget(self.password_input)
         
         self.layout.addWidget(self.logar)
-
-
+        
 
     
+    def open_main_page(self):
+        self.main_page = MainPage()
+        
+        self.main_page.show()
+
 
     def login_process(self):
         if self.verify_if_field_arent_null() == True:
-            print('entrando')
+            if self.verify_credentials() == True:
+                
+                self.close()
+                self.open_main_page()
+                
+            else:
+                self.show_dialog('Usuário e senha não está correto')
         
         else:
             self.show_dialog('Coloque o usuário e a senha antes de continuar!')
+            
+        
             
     def verify_if_field_arent_null(self):
         user = self.username_input.text()
@@ -64,6 +78,14 @@ class LoginPage(QtWidgets.QWidget):
         
         else:
             return False
+        
+    def verify_credentials(self):
+        user = self.username_input.text()
+        password = self.password_input.text()
+        # if user == 'admin' and password == '12345':
+        #     return True
+        if user and password:
+            return True        
             
             
 
