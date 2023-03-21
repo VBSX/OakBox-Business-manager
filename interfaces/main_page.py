@@ -16,9 +16,10 @@ class MainPage(QMainWindow):
         self.image_test = r'images/filter.png'
         filter_icon_path = self.image_test
         #config of the window
+        
         self.setWindowIcon(QtGui.QIcon(filter_icon_path))
         self.setWindowTitle('Main Page')
-
+        self.setMinimumSize(1024,720)
         #Add the menu options of the program
         self.config_the_menubar()
 
@@ -43,9 +44,10 @@ class MainPage(QMainWindow):
 
     
     def set_icons_and_resize_and_alter_font(self, item, icon):
-        item.setStyleSheet("padding :15px;font-size:18px;")
+        item.setStyleSheet("padding :30px;font-size:18px;margin-top:30px")
         item.setIcon(QIcon(icon))
-        item.setIconSize(QtCore.QSize(130,130))
+        item.setIconSize(QtCore.QSize(64,64))
+    
     
     
     def teste(self):
@@ -64,14 +66,17 @@ class MainPage(QMainWindow):
             
         button_action_logoff = QAction("logoff", self)
         button_action_logoff.triggered.connect(self.logoff)
+        
         bar=self.menuBar()
         file=bar.addMenu('File')
         file.addAction('self.teste')
         log = bar.addMenu('Usuário')
         log.addAction(button_action_logoff)
+        
+        
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication([])
     widget = MainPage()
-    widget.show()
+    widget.showMaximized()
     sys.exit(app.exec())
