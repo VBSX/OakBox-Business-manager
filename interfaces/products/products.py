@@ -5,16 +5,13 @@ from PySide6.QtWidgets import (
     QHBoxLayout,QWidget, QPushButton, QToolBar
 )
 from PySide6.QtGui import QAction, QIcon
+import os
 
-
-import setuptools
-
-setuptools.setup(
-    name="login",py_modules=['login'],
-)
+from os.path import dirname, join, abspath
+sys.path.insert(0, abspath(join(dirname(__file__), '..')))
 
 from login import *
-
+from consult_window import *
 
 class MainPage(QMainWindow):
     def __init__(self):
@@ -91,8 +88,8 @@ class MainPage(QMainWindow):
         
     
     def consult_product(self):
-        window_consult = ConsultWindow()
-        window_consult.show()
+        self.window_consult = ConsultWindow()
+        self.window_consult.show()
 
         
         
