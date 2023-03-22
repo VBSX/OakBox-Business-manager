@@ -2,10 +2,16 @@ import sys
 from PySide6 import QtCore, QtWidgets, QtGui
 from PySide6.QtWidgets import (
     QMainWindow, 
-    QHBoxLayout,QWidget, QPushButton
+    QHBoxLayout,QWidget, QPushButton, QToolBar
 )
 from PySide6.QtGui import QAction, QIcon
 
+
+import setuptools
+
+setuptools.setup(
+    name="login",py_modules=['login'],
+)
 
 from login import *
 
@@ -18,28 +24,29 @@ class MainPage(QMainWindow):
         #config of the window
         
         self.setWindowIcon(QtGui.QIcon(filter_icon_path))
-        self.setWindowTitle('Main Page')
+        self.setWindowTitle('Produtos')
         self.setMinimumSize(1024,720)
         #Add the menu options of the program
         self.config_the_menubar()
 
+        self.config_the_toolbar()
            
         
-        widget = QWidget()
-        layout = QHBoxLayout()
-        self.button_products = QPushButton("Produtos", clicked=self.teste)
-        self.button_estoque = QPushButton("Estoque", clicked=self.teste)
-        self.button_caixa = QPushButton("Caixa", clicked=self.teste)
+        # widget = QWidget()
+        # layout = QHBoxLayout()
+        # self.button_products = QPushButton("Produtos", clicked=self.teste)
+        # self.button_estoque = QPushButton("Estoque", clicked=self.teste)
+        # self.button_caixa = QPushButton("Caixa", clicked=self.teste)
         
-        self.set_icons_and_resize_and_alter_font(self.button_caixa, self.image_test)
-        self.set_icons_and_resize_and_alter_font(self.button_estoque, self.image_test)
-        self.set_icons_and_resize_and_alter_font(self.button_products, self.image_test)
+        # self.set_icons_and_resize_and_alter_font(self.button_caixa, self.image_test)
+        # self.set_icons_and_resize_and_alter_font(self.button_estoque, self.image_test)
+        # self.set_icons_and_resize_and_alter_font(self.button_products, self.image_test)
         
-        layout.addWidget(self.button_estoque)
-        layout.addWidget(self.button_products)
-        layout.addWidget(self.button_caixa)
-        widget.setLayout(layout)
-        self.setCentralWidget(widget)
+        # layout.addWidget(self.button_estoque)
+        # layout.addWidget(self.button_products)
+        # layout.addWidget(self.button_caixa)
+        # widget.setLayout(layout)
+        # self.setCentralWidget(widget)
 
 
     
@@ -73,8 +80,26 @@ class MainPage(QMainWindow):
         log = bar.addMenu('Usuário')
         log.addAction(button_action_logoff)
         
+    
+    
+    def config_the_toolbar(self):
+        button_consult_product = QAction(QIcon(r'images/filter.png'),"Consultar Produto" ,self)
+        button_consult_product.triggered.connect(self.consult_product)
+        tool = QToolBar()
+        self.addToolBar(tool)
+        tool.addAction(button_consult_product)
         
+    
+    def consult_product(self):
+        window_consult = ConsultWindow()
+        window_consult.show()
 
+        
+        
+    def teste(self):
+        print('teste')
+        
+        
 if __name__ == "__main__":
     app = QtWidgets.QApplication([])
     widget = MainPage()
