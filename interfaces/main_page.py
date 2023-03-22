@@ -6,9 +6,12 @@ from PySide6.QtWidgets import (
 )
 from PySide6.QtGui import QAction, QIcon
 
-
+import os
 from login import *
-
+path = os.path.abspath('interfaces/products')
+sys.path.append(path)
+from products.products_window import *
+# sys.path.append(__file__)
 
 class MainPage(QMainWindow):
     def __init__(self):
@@ -27,7 +30,7 @@ class MainPage(QMainWindow):
         
         widget = QWidget()
         layout = QHBoxLayout()
-        self.button_products = QPushButton("Produtos", clicked=self.teste)
+        self.button_products = QPushButton("Produtos", clicked=self.open_products_window)
         self.button_estoque = QPushButton("Estoque", clicked=self.teste)
         self.button_caixa = QPushButton("Caixa", clicked=self.teste)
         
@@ -73,6 +76,10 @@ class MainPage(QMainWindow):
         log = bar.addMenu('Usuário')
         log.addAction(button_action_logoff)
         
+    def open_products_window(self):
+        self.w_product = ProductsPage()
+        self.w_product.showMaximized()
+        self.close()
         
 
 if __name__ == "__main__":
