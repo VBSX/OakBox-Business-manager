@@ -6,6 +6,7 @@ path = os.path.abspath('database/database_manager')
 sys.path.append(path)
 from products_database import *
 
+
 class ConsultWindow(QWidget):
 
     def __init__(self):
@@ -36,14 +37,10 @@ class ConsultWindow(QWidget):
         
         if id_product and name_product:
             try:
-                data = self.database_handle.get_products_by_id(id_product)
+                data = self.database_handle.get_product_by_id_and_name(id_product, name_product)
             except:
-                try:
-                    data = self.database_handle.get_products_by_name(name_product)
-                    
-                except:
-                    self.show_dialog('erro database ao buscar')
-                    print('erro ao tentar buscar por id e por nome')
+                self.show_dialog('erro database ao buscar')
+                print('erro ao tentar buscar por id e por nome')
             if data:
                 print(data)  
             else:
