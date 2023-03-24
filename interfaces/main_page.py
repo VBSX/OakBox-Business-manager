@@ -30,6 +30,7 @@ class MainPage(QMainWindow):
         
         widget = QWidget()
         layout = QHBoxLayout()
+        
         self.button_products = QPushButton("Produtos", clicked=self.open_products_window)
         self.button_estoque = QPushButton("Estoque", clicked=self.teste)
         self.button_caixa = QPushButton("Caixa", clicked=self.teste)

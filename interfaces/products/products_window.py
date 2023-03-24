@@ -2,11 +2,11 @@ import sys
 from PySide6 import QtCore, QtWidgets, QtGui
 from PySide6.QtWidgets import (
     QMainWindow, 
-    QHBoxLayout,QWidget, QPushButton, QToolBar
+    QHBoxLayout,QWidget, QPushButton, QToolBar, QLabel,QTableView
 )
 from PySide6.QtGui import QAction, QIcon
 import os
-
+from table_widget import TableWidget
 from os.path import dirname, join, abspath
 sys.path.insert(0, abspath(join(dirname(__file__), '..')))
 
@@ -14,7 +14,9 @@ from login import *
 from consult_window import *
 
 class ProductsPage(QMainWindow):
+    one = None
     def __init__(self):
+        
         super(ProductsPage,self).__init__()
         self.image_test = r'images/filter.png'
         filter_icon_path = self.image_test
@@ -25,12 +27,25 @@ class ProductsPage(QMainWindow):
         self.setMinimumSize(1024,720)
         #Add the menu options of the program
         self.config_the_menubar()
-
         self.config_the_toolbar()
-           
+        self.label_teste = QLabel()
         
-        # widget = QWidget()
-        # layout = QHBoxLayout()
+        self.window_consult = ConsultWindow(self)
+        
+        
+        self.table = QTableView()
+        data = [
+          [4, 9, 2],
+          [1, 0, 0],
+          [3, 5, 0],
+          [3, 3, 2],
+          [7, 8, 9],
+        ]
+        
+
+        widget = QWidget()
+        layout = QHBoxLayout()
+        self.label_teste = QLabel()
         # self.button_products = QPushButton("Produtos", clicked=self.teste)
         # self.button_estoque = QPushButton("Estoque", clicked=self.teste)
         # self.button_caixa = QPushButton("Caixa", clicked=self.teste)
@@ -41,9 +56,11 @@ class ProductsPage(QMainWindow):
         
         # layout.addWidget(self.button_estoque)
         # layout.addWidget(self.button_products)
-        # layout.addWidget(self.button_caixa)
-        # widget.setLayout(layout)
-        # self.setCentralWidget(widget)
+        
+        layout.addWidget(self.label_teste)
+        layout.addWidget(self.table)
+        widget.setLayout(layout)
+        self.setCentralWidget(widget)
 
 
     
@@ -86,10 +103,27 @@ class ProductsPage(QMainWindow):
         self.addToolBar(tool)
         tool.addAction(button_consult_product)
         
-    
+            
     def consult_product(self):
-        self.window_consult = ConsultWindow()
         self.window_consult.show()
+        
+    def mount_table(self, data):
+        self.model = TableWidget(data, self)
+        self.table.setModel(self.model)
+
+        self.setCentralWidget(self.table)
+       
+
+    
+    def show_products(self, data):
+        list = ['id', 'Nome', 'Quantidade', 'Valor Unitário']
+        list.append(data)
+        print(list)
+        self.mount_table(list)
+        print('main window ',data)
+
+            
+
 
         
         
