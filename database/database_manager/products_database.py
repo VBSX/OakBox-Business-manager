@@ -44,6 +44,36 @@ class ProductsData():
         data_database = self.cursor.fetchall()
 
         return data_database
+    
+    
+    def get_products_of_stock_by_id(self, id_of_product):
+        
+        self.cursor.execute(
+            f"SELECT Id,Produtos,Quantidade, Quantidade_atual FROM Prod_estoque WHERE Id = '{id_of_product}'")
+        
+        data_database = self.cursor.fetchall()
+
+        return data_database
+     
+    def get_products_of_stock_by_name(self, name_of_product):
+        self.cursor.execute(
+            f"SELECT Id,Produtos,Quantidade, Quantidade_atual FROM Prod_estoque WHERE Produtos LIKE '%{name_of_product}%'")
+        data_database = self.cursor.fetchall()
+
+        return data_database
+    
+    def get_product_by_of_stock_id_and_name(self, id_of_product,name_of_product):
+        self.cursor.execute(
+            f"SELECT Id,Produtos,Quantidade, Quantidade_atual FROM Prod_estoque WHERE Id = '{id_of_product}'AND Produtos LIKE '%{name_of_product}%'")
+        
+        data_database = self.cursor.fetchall()
+
+        return data_database
+    
+
+    
 if __name__ =='__main__':
     s = ProductsData()
     print(s.get_products_by_id(3))
+    
+    print(s.get_products_of_stock_by_name('salame'))

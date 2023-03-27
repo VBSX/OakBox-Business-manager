@@ -47,17 +47,6 @@ class ProductsPage(QMainWindow):
         widget = QWidget()
         layout = QHBoxLayout()
         self.label_teste = QLabel()
-        # self.button_products = QPushButton("Produtos", clicked=self.teste)
-        # self.button_estoque = QPushButton("Estoque", clicked=self.teste)
-        # self.button_caixa = QPushButton("Caixa", clicked=self.teste)
-        
-        # self.set_icons_and_resize_and_alter_font(self.button_caixa, self.image_test)
-        # self.set_icons_and_resize_and_alter_font(self.button_estoque, self.image_test)
-        # self.set_icons_and_resize_and_alter_font(self.button_products, self.image_test)
-        
-        # layout.addWidget(self.button_estoque)
-        # layout.addWidget(self.button_products)
-        
         layout.addWidget(self.label_teste)
         layout.addWidget(self.table)
         widget.setLayout(layout)
