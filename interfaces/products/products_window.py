@@ -12,6 +12,7 @@ sys.path.insert(0, abspath(join(dirname(__file__), '..')))
 
 from login import *
 from consult_window import *
+from add_product_window import *
 
 class ProductsPage(QMainWindow):
     one = None
@@ -31,7 +32,7 @@ class ProductsPage(QMainWindow):
         self.label_teste = QLabel()
         
         self.window_consult = ConsultWindow(self)
-        
+        self.window_add = WindowProductAdd(self)
         
         self.table = QTableView()
         data = [
@@ -99,14 +100,18 @@ class ProductsPage(QMainWindow):
     def config_the_toolbar(self):
         button_consult_product = QAction(QIcon(r'images/filter.png'),"Consultar Produto" ,self)
         button_consult_product.triggered.connect(self.consult_product)
+        button_add_product = QAction(QIcon(r'images/plus.png'),"Adicionar Produto" ,self)
+        button_add_product.triggered.connect(self.add_product)
         tool = QToolBar()
         self.addToolBar(tool)
         tool.addAction(button_consult_product)
+        tool.addAction(button_add_product)
         
             
     def consult_product(self):
         self.window_consult.show()
         
+    
     def mount_table(self, data):
         self.model = TableWidget(data, self)
         self.table.setModel(self.model)
@@ -120,13 +125,14 @@ class ProductsPage(QMainWindow):
         for d in data:
             
             list.append(d)
-        print(list,'aaaa')
+        
         # print(list)
         self.mount_table(list)
         print('main window ',data)
 
             
-
+    def add_product(self):
+        self.window_add.show()
 
         
         

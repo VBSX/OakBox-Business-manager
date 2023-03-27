@@ -37,6 +37,13 @@ class ProductsData():
         data_database = self.cursor.fetchall()
 
         return data_database
+    
+    def get_product_by_exact_name(self,name_of_product):
+        self.cursor.execute(
+            f"SELECT Id,Nome,Quantidade, Valor_unitario FROM Produtos WHERE Nome = '{name_of_product}'")
+        data_database = self.cursor.fetchall()
+
+        return data_database
 if __name__ =='__main__':
     s = ProductsData()
     print(s.get_products_by_id(3))
