@@ -112,18 +112,14 @@ class ProductsPage(QMainWindow):
     def show_products(self, data):
         list = [('id', 'Nome', 'Quantidade', 'Valor Unitário')]
         for d in data:
-            
             list.append(d)
-        
-        # print(list)
         self.mount_table(list)
         print('main window ',data)
 
             
     def add_product(self):
         self.window_add.show()
-
-        
+     
         
     def teste(self):
         print('teste')

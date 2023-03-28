@@ -37,9 +37,6 @@ class ConsultWindow(QMainWindow):
         self.data_out = self.verify_what_user_want_to_search()
         
 
-        
-        
-
     
     def verify_what_user_want_to_search(self):
         id_product = self.id.text()

@@ -28,8 +28,7 @@ class WindowProductAdd(QMainWindow):
         self.valor_unidade = QLineEdit()
         self.valor_unidade.setPlaceholderText("Valor unitario")
         
-        
-        
+
         widget = QWidget()
         layout = QHBoxLayout()
         
@@ -41,7 +40,6 @@ class WindowProductAdd(QMainWindow):
         widget.setLayout(layout)
         self.setCentralWidget(widget)
         self.data_out = None
-    
     
     
     def send_new_product(self):
@@ -90,16 +88,11 @@ class WindowProductAdd(QMainWindow):
         else:
             return False
         
-
-            
-        
+    
     def show_dialog(self, text):
         QMessageBox.about(self, 'DIALOG', text)
             
-
-        
-        
-        
+    
         
 if __name__ == "__main__":
     app = QApplication([])

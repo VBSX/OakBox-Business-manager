@@ -13,9 +13,6 @@ class ProductsData():
         self.banco = sqlite3.connect(database_path)
         self.cursor = self.banco.cursor()
         
-        
-
-        
     def get_products_by_id(self, id_of_product):
         
         self.cursor.execute(
@@ -69,9 +66,6 @@ class ProductsData():
         data_database = self.cursor.fetchall()
 
         return data_database
-    
-
-    
 if __name__ =='__main__':
     s = ProductsData()
     print(s.get_products_by_id(3))

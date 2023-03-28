@@ -11,8 +11,8 @@ import os
 
 from os.path import dirname, join, abspath
 sys.path.insert(0, abspath(join(dirname(__file__), '..')))
-
 from consult_page import *
+from window_stock_update import *
 
 from login import *
 
@@ -35,9 +35,6 @@ class StockPage(QMainWindow):
         
         self.consult_window = ConsultWindow(self)
         
-        # widget = QWidget()
-        # hlayout = QHBoxLayout()
-        
         self.label_id_description = QLabel()
         self.label_id_description.setText('ID')
         
@@ -57,46 +54,24 @@ class StockPage(QMainWindow):
         self.label_quantidade_atual_description = QLabel()
         self.label_quantidade_atual_description.setText('QUANTIDADE ATUAL')
         
-        layout = QGridLayout()
         
-        # vlayout = QVBoxLayout()
+        self.layout = QGridLayout()
+        
+        self.layout.addWidget(self.label_id_description, 0,1)
+        self.layout.addWidget(self.label_nome_produto_description,0,2)
+        self.layout.addWidget(self.label_quantidade_description,0,3)
+        self.layout.addWidget(self.label_quantidade_description,0,4)
+        self.layout.addWidget(self.label_quantidade_atual_description,0,5)
+        
+        self.layout.addWidget(self.label_id, 1,1)
+        self.layout.addWidget(self.label_nome_produto,1,2)
+        self.layout.addWidget(self.label_quantidade,1,3)
+        self.layout.addWidget(self.label_quantidade,1,4)
+        self.layout.addWidget(self.label_quantidade_atual,1,5)
+        self.layout.rowStretch(2)
 
-        
-        # widget.setLayout(vlayout)
-        # hlayout.addWidget(self.label_id_description)
-        # hlayout.addWidget(self.label_nome_produto_description)
-        # hlayout.addWidget(self.label_quantidade_description)
-        # hlayout.addWidget(self.label_quantidade_atual_description)
-
-                        
-        # hlayout.addStretch()
-        # hlayout.addWidget(self.label_id)
-        # hlayout.addWidget(self.label_nome_produto)
-        # hlayout.addWidget(self.label_quantidade)
-        # hlayout.addWidget(self.label_quantidade_atual)
-        # hlayout.addStretch()
-        
-        # vlayout.addLayout(hlayout)
-        # vlayout.addStretch()
-        # self.setCentralWidget(widget)
-        
-        layout.addWidget(self.label_id_description, 0,1)
-        layout.addWidget(self.label_nome_produto_description,0,2)
-        layout.addWidget(self.label_quantidade_description,0,3)
-        layout.addWidget(self.label_quantidade_description,0,4)
-        layout.addWidget(self.label_quantidade_atual_description,0,5)
-        
-        layout.addWidget(self.label_id, 1,1)
-        layout.addWidget(self.label_nome_produto,1,2)
-        layout.addWidget(self.label_quantidade,1,3)
-        layout.addWidget(self.label_quantidade,1,4)
-        layout.addWidget(self.label_quantidade_atual,1,5)
-        layout.rowStretch(2)
-        
-
-        
         widget = QWidget()
-        widget.setLayout(layout)
+        widget.setLayout(self.layout)
         self.setCentralWidget(widget)  
 
     def config_the_menubar(self):
@@ -134,19 +109,20 @@ class StockPage(QMainWindow):
         if number_of_products_retorned >1:
             self.show_dialog(f'Foi retornado mais de um produto: \n {str_of_products}')
             
+            
         else:
             print(data[0][1])
-            id_produto = data[0][0]
-            nome = data[0][1]
+            self.id_produto = data[0][0]
+            self.nome = data[0][1]
             quantidade = data[0][2]
-            quantidade_atual = data[0][3]
-            self.label_id.setText(str(id_produto))
-            self.label_nome_produto.setText(str(nome))
+            self.quantidade_atual = data[0][3]
+            self.label_id.setText(str(self.id_produto))
+            self.label_nome_produto.setText(str(self.nome))
             self.label_quantidade.setText(str(quantidade))
-            self.label_quantidade_atual.setText(str(quantidade_atual))
+            self.label_quantidade_atual.setText(str(self.quantidade_atual))
             
-            
-   
+            self.button_atualizar_estoque = QPushButton("Dar entrada no estoque", clicked=self.atualizar_estoque)
+            self.layout.addWidget(self.button_atualizar_estoque, 2,5)
 
         
     def cont_products(self, list):
@@ -161,11 +137,13 @@ class StockPage(QMainWindow):
         for product in list:
             id_prod = str(product[0])
             name_prod = str(product[1])
-            string = string+ '\n id: '+ id_prod+' nome: '+ name_prod +'\n'
+            string = string+ '\nid: '+ id_prod+'\nnome: '+ name_prod +'\n'
 
         return string
             
-            
+    def atualizar_estoque(self):
+        self.update_window_stock = UpdateStock(self.id_produto,self.nome,self.quantidade_atual,self)
+        self.update_window_stock.show()
             
     def show_dialog(self, text):
         QMessageBox.about(self, 'DIALOG', text)

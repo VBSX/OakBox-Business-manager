@@ -36,10 +36,6 @@ class ConsultWindow(QMainWindow):
     def search_product(self):
         self.data_out = self.verify_what_user_want_to_search()
         
-
-        
-        
-
     
     def verify_what_user_want_to_search(self):
         id_product = self.id.text()
@@ -94,13 +90,10 @@ class ConsultWindow(QMainWindow):
         else:
             self.show_dialog('Coloque uma informação antes de pesquisar!')
         
- 
                     
     def show_dialog(self, text):
         QMessageBox.about(self, 'DIALOG', text)
             
-
-        
     
 if __name__ == "__main__":
     app = QApplication([])

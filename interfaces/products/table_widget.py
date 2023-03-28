@@ -15,8 +15,7 @@ class TableWidget(QtCore.QAbstractTableModel):
             # .column() indexes into the sub-list
             return self._data[index.row()][index.column()]
         
-        
-        
+
     def rowCount(self, index):
         # The length of the outer list.
         return len(self._data)
