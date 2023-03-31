@@ -9,7 +9,6 @@ from add_product_database import *
 
 
 class UpdateStock(QMainWindow):
-
     def __init__(self,id,nome, quantidade,parent = None):
         super(UpdateStock, self).__init__(parent = parent)
         self.setWindowTitle('Atualizar Quantidade')

@@ -1,20 +1,16 @@
 from PySide6.QtWidgets import QPushButton, QHBoxLayout, QWidget, QLineEdit,QApplication,QMessageBox, QMainWindow
-
 import sys
 import os
-from PySide6 import QtCore, QtWidgets, QtGui
 path = os.path.abspath('database/database_manager')
 sys.path.append(path)
 from products_database import *
 
 
-class ConsultWindow(QMainWindow):
-
+class ProductsInfo(QMainWindow):
     def __init__(self,parent = None):
-        super(ConsultWindow, self).__init__(parent = parent)
+        super(ProductsInfo, self).__init__(parent = parent)
         self.setWindowTitle('Buscar')
         self.database_handle = ProductsData()
-
         self.id = QLineEdit()
         self.id.setPlaceholderText("Id") 
         
@@ -101,6 +97,6 @@ class ConsultWindow(QMainWindow):
     
 if __name__ == "__main__":
     app = QApplication([])
-    widget = ConsultWindow()
+    widget = ProductsInfo()
     widget.show()
     sys.exit(app.exec())

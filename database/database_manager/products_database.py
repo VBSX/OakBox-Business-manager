@@ -1,8 +1,5 @@
-
 import sqlite3
 import os       
-
-
 
 class ProductsData():
     def __init__(self):
@@ -66,8 +63,26 @@ class ProductsData():
         data_database = self.cursor.fetchall()
 
         return data_database
+    
+    def get_price_of_product(self, name_of_product, id):
+        self.cursor.execute(
+            f"SELECT Valor_unitario FROM Produtos WHERE Nome = '{name_of_product}' AND Id = '{id}'")
+        data_database = self.cursor.fetchall()
+
+        return data_database
+    
+    def get_product_quatity(self,  name_of_product, id):
+        self.cursor.execute(
+            f"SELECT Quantidade FROM Produtos WHERE Nome = '{name_of_product}' AND Id = '{id}'")
+        data_database = self.cursor.fetchall()
+
+        return data_database
+    
+    
+        
 if __name__ =='__main__':
     s = ProductsData()
     print(s.get_products_by_id(3))
     
     print(s.get_products_of_stock_by_name('salame'))
+    print(s.get_product_quatity('salame', 11))

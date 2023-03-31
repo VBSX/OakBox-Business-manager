@@ -2,43 +2,35 @@ import sys
 from PySide6 import  QtWidgets, QtGui
 from PySide6.QtWidgets import (
     QMainWindow, 
-    QHBoxLayout,QWidget, QPushButton, QToolBar, QLabel, QGridLayout
+    QWidget, QPushButton, QToolBar, QLabel, QGridLayout
 )
 from PySide6.QtGui import QAction, QIcon
 import os
-
-
-
 from os.path import dirname, join, abspath
 sys.path.insert(0, abspath(join(dirname(__file__), '..')))
 from consult_page import *
 from window_stock_update import *
-
 from login import *
 
-
 class StockPage(QMainWindow):
-    one = None
     def __init__(self):
         super(StockPage,self).__init__()
         self.image_test = r'images/filter.png'
         filter_icon_path = self.image_test
         #config of the window
-            
-         
         self.setWindowIcon(QtGui.QIcon(filter_icon_path))
-        self.setWindowTitle('Produtos')
-        self.setMinimumSize(1024,720)
+        self.setWindowTitle('Estoque')
+        # self.setMinimumSize(1024,720)
         #Add the menu options of the program
         self.config_the_menubar()
         self.config_the_toolbar()
         
-        self.consult_window = ConsultWindow(self)
+        self.consult_window = ProductsInfo(self)
         
         self.label_id_description = QLabel()
         self.label_id_description.setText('ID')
-        
-        
+             
+   
         self.label_id = QLabel()
         self.label_nome_produto = QLabel()
         self.label_nome_produto_description = QLabel()
@@ -69,7 +61,7 @@ class StockPage(QMainWindow):
         self.layout.addWidget(self.label_quantidade,1,4)
         self.layout.addWidget(self.label_quantidade_atual,1,5)
         self.layout.rowStretch(2)
-
+       
         widget = QWidget()
         widget.setLayout(self.layout)
         self.setCentralWidget(widget)  
@@ -111,6 +103,7 @@ class StockPage(QMainWindow):
             
             
         else:
+
             print(data[0][1])
             self.id_produto = data[0][0]
             self.nome = data[0][1]
@@ -147,12 +140,10 @@ class StockPage(QMainWindow):
             
     def show_dialog(self, text):
         QMessageBox.about(self, 'DIALOG', text)
-        
-
-        
+   
 if  __name__ == "__main__":
     
     app = QtWidgets.QApplication([])
     widget = StockPage()
-    widget.showMaximized()
+    widget.show()
     sys.exit(app.exec())

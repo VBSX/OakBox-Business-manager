@@ -50,6 +50,19 @@ class AddProducts():
 
         self.banco.commit()
         return True
+    
+    def update_quantidade_estoque_atual(self, nova_quantidade, nome_produto, id_produto):
+        self.cursor.execute(
+                           f"UPDATE Prod_estoque SET Quantidade_atual='{nova_quantidade}'"
+                            f"WHERE Id={id_produto}"
+)
+        
+        self.cursor.execute(
+                    f"UPDATE Produtos SET Quantidade='{nova_quantidade}'"
+                    f"WHERE Nome='{nome_produto}'"
+)
+        self.banco.commit()
+        return True   
 if __name__ =='__main__':
     s = AddProducts()
     print(s.update_item_quantity( 2, 30,'a'))

@@ -1,16 +1,13 @@
 from PySide6.QtWidgets import QPushButton, QHBoxLayout, QWidget, QLineEdit,QApplication,QLabel, QMainWindow, QMessageBox
 import sys
 import os
-
 path = os.path.abspath('database/database_manager')
 sys.path.append(path)
-
 from add_product_database import *
 from products_database import *
 
 
 class WindowProductAdd(QMainWindow):
-    
     def __init__(self, parent = None):
         super(WindowProductAdd, self).__init__(parent = parent)
         self.setWindowTitle('Adicionar Produto')

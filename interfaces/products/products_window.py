@@ -15,14 +15,11 @@ from consult_window import *
 from add_product_window import *
 
 class ProductsPage(QMainWindow):
-    one = None
     def __init__(self):
-        
         super(ProductsPage,self).__init__()
         self.image_test = r'images/filter.png'
         filter_icon_path = self.image_test
         #config of the window
-        
         self.setWindowIcon(QtGui.QIcon(filter_icon_path))
         self.setWindowTitle('Produtos')
         self.setMinimumSize(1024,720)
@@ -31,19 +28,10 @@ class ProductsPage(QMainWindow):
         self.config_the_toolbar()
         self.label_teste = QLabel()
         
-        self.window_consult = ConsultWindow(self)
+        self.window_consult = ProductsInfo(self)
         self.window_add = WindowProductAdd(self)
         
         self.table = QTableView()
-        data = [
-          [4, 9, 2],
-          [1, 0, 0],
-          [3, 5, 0],
-          [3, 3, 2],
-          [7, 8, 9],
-        ]
-        
-
         widget = QWidget()
         layout = QHBoxLayout()
         self.label_teste = QLabel()
