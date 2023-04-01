@@ -168,6 +168,8 @@ class CartWidget(QMainWindow):
     def finalizar_venda(self):
         self.atualizar_estoques()
         self.lancar_venda_concluida()
+        self.limpar_widget()
+        self.show_dialog('Venda lançada com sucesso!')
     
     def atualizar_estoques(self):
         for row in range(self.list_widget.count()):
@@ -202,6 +204,17 @@ class CartWidget(QMainWindow):
                 valor_unitario_replaced = float(valor_unitario)   
                 valor_venda = valor_unitario_replaced * int(quantidade_vendida)
             self.database_insert.insert_produtos_vendidos(id_do_produto, nome_do_produto, quantidade_vendida, valor_unitario, valor_venda)
+   
+    def limpar_widget(self):
+        for row in range(self.list_widget.count()):
+            item = self.list_widget.item(row)
+            self.list_widget.takeItem(row)
+            line_edit = self.line_edits[row]
+            line_edit.setParent(None)
+            self.line_edits.remove(line_edit)
+            self.items.pop(row)
+        self.valor_total_do_carrinho = self.obter_valor_total_carrinho()
+        self.label_valor_total.setText(f'O valor Total Do carrinho é de: R$ {str(self.valor_total_do_carrinho)}')
        
 if __name__ == '__main__':
     items = [(1, "maça",'2', '30,00'), (19, 'batata', 0, 10), (17, 'Salame', 0, 1)]
