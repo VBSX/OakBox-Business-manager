@@ -20,6 +20,7 @@ class ProductsInfo(QMainWindow):
         layout = QHBoxLayout()
         layout.addWidget(self.id)
         layout.addWidget(self.name)
+        layout.addWidget(self.pesquisar)
         widget.setLayout(layout)
         self.setCentralWidget(widget)
         self.data_out = None

@@ -44,8 +44,6 @@ class CheckoutPage(QMainWindow):
         self.login.show()
     
     def config_the_toolbar(self):
-        # button_consult_product = QAction(QIcon(r'images/filter.png'),"Consultar Produto" ,self)
-        # button_consult_product.triggered.connect(self.consult_product)
         button_shop = QAction(QIcon(r'images/shopping-cart.png'),"Iniciar Venda" ,self)
         button_shop.triggered.connect(self.get_product_to_sell)
         tool = QToolBar()
@@ -113,7 +111,8 @@ class CheckoutPage(QMainWindow):
             child = layout.takeAt(0)
             if child.widget():
                 child.widget().deleteLater()
-       
+    
+
     def show_dialog(self, text):
         QMessageBox.about(self, 'DIALOG', text)
    
