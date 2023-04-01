@@ -27,10 +27,8 @@ class ProductsPage(QMainWindow):
         self.config_the_menubar()
         self.config_the_toolbar()
         self.label_teste = QLabel()
-        
         self.window_consult = ProductsInfo(self)
         self.window_add = WindowProductAdd(self)
-        
         self.table = QTableView()
         widget = QWidget()
         layout = QHBoxLayout()
@@ -40,39 +38,27 @@ class ProductsPage(QMainWindow):
         widget.setLayout(layout)
         self.setCentralWidget(widget)
 
-
-    
     def set_icons_and_resize_and_alter_font(self, item, icon):
         item.setStyleSheet("padding :30px;font-size:18px;margin-top:30px")
         item.setIcon(QIcon(icon))
         item.setIconSize(QtCore.QSize(64,64))
-    
-    
-    
-    def teste(self):
-        print('teste')
         
     def logoff(self):
         self.close()
         self.login = LoginPage()
         self.login.show()
         
-
     def show_dialog(self, text):
         QtWidgets.QMessageBox.about(self, 'DIALOG', text)
 
     def config_the_menubar(self):
-            
         button_action_logoff = QAction("logoff", self)
         button_action_logoff.triggered.connect(self.logoff)
-        
         bar=self.menuBar()
         file=bar.addMenu('File')
         file.addAction('self.teste')
         log = bar.addMenu('Usuário')
         log.addAction(button_action_logoff)
-        
-    
     
     def config_the_toolbar(self):
         button_consult_product = QAction(QIcon(r'images/filter.png'),"Consultar Produto" ,self)
@@ -84,35 +70,24 @@ class ProductsPage(QMainWindow):
         tool.addAction(button_consult_product)
         tool.addAction(button_add_product)
         
-            
     def consult_product(self):
         self.window_consult.show()
-        
     
     def mount_table(self, data):
         self.model = TableWidget(data, self)
         self.table.setModel(self.model)
-
         self.setCentralWidget(self.table)
-       
 
-    
     def show_products(self, data):
         list = [('id', 'Nome', 'Quantidade', 'Valor Unitário')]
         for d in data:
             list.append(d)
         self.mount_table(list)
         print('main window ',data)
-
-            
+        
     def add_product(self):
         self.window_add.show()
-     
-        
-    def teste(self):
-        print('teste')
-        
-        
+    
 if __name__ == "__main__":
     app = QtWidgets.QApplication([])
     widget = ProductsPage()
