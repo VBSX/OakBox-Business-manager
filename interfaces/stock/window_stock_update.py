@@ -1,5 +1,4 @@
 from PySide6.QtWidgets import QPushButton, QHBoxLayout, QWidget, QLineEdit,QApplication,QMessageBox, QMainWindow, QLabel
-
 import sys
 import os
 from PySide6 import QtCore, QtWidgets, QtGui
@@ -13,7 +12,6 @@ class UpdateStock(QMainWindow):
         super(UpdateStock, self).__init__(parent = parent)
         self.setWindowTitle('Atualizar Quantidade')
         self.database_handle = AddProducts()
-        
         self.nome_do_produto = nome
         self.id_product = id
         self.quantidade = quantidade        
@@ -21,20 +19,18 @@ class UpdateStock(QMainWindow):
         self.mensagem_direcional.setText('Coloque a quantidade a ser adicionada no estoque: ')
         self.Quantidade = QLineEdit()
         self.Quantidade.setPlaceholderText("Quantidade") 
-        
         self.Atualizar = QPushButton("Adicionar", clicked=self.update_quantity_database)
         widget = QWidget()
         layout = QHBoxLayout()
         layout.addWidget(self.mensagem_direcional)
         layout.addWidget(self.Quantidade)
-        
         layout.addWidget(self.Atualizar)
-        
         widget.setLayout(layout)
         self.setCentralWidget(widget)
         self.data_out = None
     
     def update_quantity_database(self):
+        #TODO verificar pq a quantidade esta sendo atualizada errado
         quantidade_para_adicionar_no_estoque = int(self.Quantidade.text())
         print(quantidade_para_adicionar_no_estoque)
         id_product = self.id_product
@@ -49,9 +45,6 @@ class UpdateStock(QMainWindow):
             self.show_dialog('erro database, tente novamente')
     def show_dialog(self, text):
         QMessageBox.about(self, 'DIALOG', text)
-            
-
-        
     
 if __name__ == "__main__":
     app = QApplication([])
