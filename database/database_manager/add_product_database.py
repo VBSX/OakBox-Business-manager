@@ -40,12 +40,10 @@ class AddProducts():
         self.cursor.execute(
                            f"UPDATE Produtos SET Quantidade='{quantidade}'"
                             f"WHERE Nome='{nome}'"
-)
-                            
-                            
+)                           
         self.cursor.execute(
                     "INSERT INTO Entrada_prod ( Data,Horario, Id, Produto,Quantidade) "
-        f"VALUES ('{data}','{horario}','{id}','{nome}', '{quantidade_de_entrada}')")
+        f"VALUES ('{data}','{horario}','{id}','{nome}','{quantidade_de_entrada}')")
 
 
         self.banco.commit()
@@ -63,7 +61,31 @@ class AddProducts():
 )
         self.banco.commit()
         return True   
+    
+    def insert_produtos_vendidos(self, id_produto, nome_do_produto, quantidade_vendida, valor_unitario, valor_venda):
+        data = self.horario_sys.get_data_sistema()
+        horario = self.horario_sys.get_horario_sistema()
+        
+        self.cursor.execute(
+                    "INSERT INTO Saidas_prod ( Produto,Id_produto,Quantidade_vendida,Preco_unitario, Valor_venda, Horario_venda, Data_venda) "
+        f"VALUES ('{nome_do_produto}', '{id_produto}','{quantidade_vendida}','{valor_unitario}','{valor_venda}', '{data}','{horario}')")
+        self.banco.commit()
+        return True
+    
+    def update_stock(self,id, quantidade, nome):
+        data = self.horario_sys.get_data_sistema()
+        horario = self.horario_sys.get_horario_sistema()
+        
+        self.cursor.execute(
+                           f"UPDATE Prod_estoque SET Quantidade_atual='{quantidade}'"
+                            f"WHERE Id={id}"
+)
+        self.cursor.execute(
+                           f"UPDATE Produtos SET Quantidade='{quantidade}'"
+                            f"WHERE Nome='{nome}'"
+)    
 if __name__ =='__main__':
     s = AddProducts()
-    print(s.update_item_quantity( 2, 30,'a'))
+    # print(s.update_item_quantity( 2, 30,'a', 50))
+    print(s.insert_produtos_vendidos(1,'salame', 10, 2, 250))
     # s.a()
