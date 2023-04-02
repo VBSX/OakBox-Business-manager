@@ -68,13 +68,11 @@ class AddProducts():
         
         self.cursor.execute(
                     "INSERT INTO Saidas_prod ( Produto,Id_produto,Quantidade_vendida,Preco_unitario, Valor_venda, Horario_venda, Data_venda) "
-        f"VALUES ('{nome_do_produto}', '{id_produto}','{quantidade_vendida}','{valor_unitario}','{valor_venda}', '{data}','{horario}')")
+        f"VALUES ('{nome_do_produto}', '{id_produto}','{quantidade_vendida}','{valor_unitario}','{valor_venda}', '{horario}','{data}')")
         self.banco.commit()
         return True
     
     def update_stock(self,id, quantidade, nome):
-        data = self.horario_sys.get_data_sistema()
-        horario = self.horario_sys.get_horario_sistema()
         
         self.cursor.execute(
                            f"UPDATE Prod_estoque SET Quantidade_atual='{quantidade}'"
