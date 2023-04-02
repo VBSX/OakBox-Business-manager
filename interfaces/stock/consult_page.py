@@ -35,9 +35,6 @@ class ConsultWindow(QMainWindow):
     
     def search_product(self):
         self.data_out = self.verify_what_user_want_to_search()
-        
-        
-        
     
     def verify_what_user_want_to_search(self):
         id_product = self.id.text()
@@ -45,7 +42,7 @@ class ConsultWindow(QMainWindow):
         
         if id_product and name_product:
             try:
-                data = self.database_handle.get_product_of_stock_by_id_and_name(id_product, name_product)
+                data = self.database_handle.get_product_by_of_stock_id_and_name(id_product, name_product)
                 self.parent().show_products(data)
                
                 
@@ -62,6 +59,7 @@ class ConsultWindow(QMainWindow):
             try:
                 data = self.database_handle.get_products_of_stock_by_id(id_product)
                 self.parent().show_products(data)
+                
                 
                 
             except:
@@ -100,6 +98,6 @@ class ConsultWindow(QMainWindow):
     
 if __name__ == "__main__":
     app = QApplication([])
-    widget = ConsultWindow()
-    widget.show()
+    self.widget = ConsultWindow()
+    self.widget.show()
     sys.exit(app.exec())

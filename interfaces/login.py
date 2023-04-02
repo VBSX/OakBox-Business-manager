@@ -69,6 +69,6 @@ class LoginPage(QtWidgets.QWidget):
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication([])
-    widget = LoginPage()
-    widget.show()
+    self.widget = LoginPage()
+    self.widget.show()
     sys.exit(app.exec())

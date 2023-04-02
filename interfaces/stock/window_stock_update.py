@@ -4,14 +4,15 @@ import os
 from PySide6 import QtCore, QtWidgets, QtGui
 path = os.path.abspath('database/database_manager')
 sys.path.append(path)
-from add_product_database import *
-
+from add_product_database import *       
+from products_database import *
 
 class UpdateStock(QMainWindow):
     def __init__(self,id,nome, quantidade,parent = None):
         super(UpdateStock, self).__init__(parent = parent)
         self.setWindowTitle('Atualizar Quantidade')
         self.database_handle = AddProducts()
+        self.database_get = ProductsData()
         self.nome_do_produto = nome
         self.id_product = id
         self.quantidade = quantidade        
@@ -30,7 +31,6 @@ class UpdateStock(QMainWindow):
         self.data_out = None
     
     def update_quantity_database(self):
-        #TODO verificar pq a quantidade esta sendo atualizada errado
         quantidade_para_adicionar_no_estoque = int(self.Quantidade.text())
         print(quantidade_para_adicionar_no_estoque)
         id_product = self.id_product
@@ -41,13 +41,15 @@ class UpdateStock(QMainWindow):
         try:    
             if self.database_handle.update_item_quantity(id_product, quantidade_final, self.nome_do_produto, quantidade_para_adicionar_no_estoque):
                 self.show_dialog(f'Estoque atualizado com sucesso, \nQuantidade atualizada de produtos: {quantidade_final}')
+                self.close()
+                self.parent().show_products(self.database_get.get_product_by_of_stock_id_and_name(self.id_product, self.nome_do_produto))
         except:
             self.show_dialog('erro database, tente novamente')
+            
     def show_dialog(self, text):
         QMessageBox.about(self, 'DIALOG', text)
-    
 if __name__ == "__main__":
     app = QApplication([])
-    widget = UpdateStock(3, 'salame', 219)
-    widget.show()
+    self.widget = UpdateStock(3, 'salame', 219)
+    self.widget.show()
     sys.exit(app.exec())

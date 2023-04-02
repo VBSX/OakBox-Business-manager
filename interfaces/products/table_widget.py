@@ -14,3 +14,4 @@ class TableWidget(QtCore.QAbstractTableModel):
 
     def columnCount(self, index):
         return len(self._data[0])
+    

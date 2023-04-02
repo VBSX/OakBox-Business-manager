@@ -15,8 +15,8 @@ from consult_window import *
 from add_product_window import *
 
 class ProductsPage(QMainWindow):
-    def __init__(self):
-        super(ProductsPage,self).__init__()
+    def __init__(self, parent=None):
+        super().__init__(parent)
         self.image_test = r'images/filter.png'
         filter_icon_path = self.image_test
         #config of the window
@@ -24,7 +24,6 @@ class ProductsPage(QMainWindow):
         self.setWindowTitle('Produtos')
         self.setMinimumSize(1024,720)
         #Add the menu options of the program
-        self.config_the_menubar()
         self.config_the_toolbar()
         self.label_teste = QLabel()
         self.window_consult = ProductsInfo(self)
@@ -43,22 +42,8 @@ class ProductsPage(QMainWindow):
         item.setIcon(QIcon(icon))
         item.setIconSize(QtCore.QSize(64,64))
         
-    def logoff(self):
-        self.close()
-        self.login = LoginPage()
-        self.login.show()
-        
     def show_dialog(self, text):
         QtWidgets.QMessageBox.about(self, 'DIALOG', text)
-
-    def config_the_menubar(self):
-        button_action_logoff = QAction("logoff", self)
-        button_action_logoff.triggered.connect(self.logoff)
-        bar=self.menuBar()
-        file=bar.addMenu('File')
-        file.addAction('self.teste')
-        log = bar.addMenu('Usuário')
-        log.addAction(button_action_logoff)
     
     def config_the_toolbar(self):
         button_consult_product = QAction(QIcon(r'images/filter.png'),"Consultar Produto" ,self)

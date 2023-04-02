@@ -6,9 +6,8 @@ from PySide6.QtWidgets import (
 )
 from PySide6.QtGui import QAction, QIcon
 import os
-from os.path import dirname, join, abspath
-sys.path.insert(0, abspath(join(dirname(__file__), '..')))
-from login import *
+path = os.path.abspath('interfaces/checkout')
+sys.path.append(path)
 from product_informations_window import *
 
 from cart_window import *
@@ -24,24 +23,9 @@ class CheckoutPage(QMainWindow):
         self.widget = QWidget()
         self.layout_window = QVBoxLayout()
         #Add the menu options of the program
-        self.config_the_menubar()
         self.config_the_toolbar()
         self.set_layout()
         self.products = []
-
-    def config_the_menubar(self):     
-        button_action_logoff = QAction("logoff", self)
-        button_action_logoff.triggered.connect(self.logoff)
-        bar=self.menuBar()
-        file=bar.addMenu('File')
-        file.addAction('self.teste')
-        log = bar.addMenu('Usuário')
-        log.addAction(button_action_logoff)
-        
-    def logoff(self):
-        self.close()
-        self.login = LoginPage()
-        self.login.show()
     
     def config_the_toolbar(self):
         button_shop = QAction(QIcon(r'images/shopping-cart.png'),"Iniciar Venda" ,self)
@@ -112,12 +96,10 @@ class CheckoutPage(QMainWindow):
             if child.widget():
                 child.widget().deleteLater()
     
-
     def show_dialog(self, text):
         QMessageBox.about(self, 'DIALOG', text)
    
 if  __name__ == "__main__":
-    
     app = QtWidgets.QApplication([])
     widget = CheckoutPage()
     widget.show()
