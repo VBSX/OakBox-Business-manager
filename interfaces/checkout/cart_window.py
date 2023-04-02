@@ -83,7 +83,7 @@ class CartWidget(QMainWindow):
             item = self.list_widget.item(row)
             line_edit = self.line_edits[row]
             quantidade_informada = line_edit.text()
-            if not self.verificar_se_as_quantidades_estão_preenchidas(quantidade_informada):
+            if not self.verificar_se_as_quantidades_estao_preenchidas(quantidade_informada):
                 self.show_dialog('coloque a quantidade')
                 all_filled = False
                 break
@@ -105,7 +105,7 @@ class CartWidget(QMainWindow):
                     self.finalizar_venda()
  
     def verificar_se_deseja_concluir_a_venda(self):
-        quantidade_produtos_no_carrinho = self.obter_quantidade_total_de_itens_que_serão_comprados()
+        quantidade_produtos_no_carrinho = self.obter_quantidade_total_de_itens_que_serao_comprados()
         valor_carrinho = self.obter_valor_total_carrinho()
         mensagem = f'Valor total do carrinho: R$ {valor_carrinho}\nQuantidade de itens no carrinho: {quantidade_produtos_no_carrinho}\nDeseja Finalizar a venda?'
         dialog = MyDialog(mensagem,self)
@@ -137,7 +137,7 @@ class CartWidget(QMainWindow):
             
         return valor_total
     
-    def obter_quantidade_total_de_itens_que_serão_comprados(self):
+    def obter_quantidade_total_de_itens_que_serao_comprados(self):
         quantidade_total = 0
         for row in range(self.list_widget.count()):
             item = self.list_widget.item(row)
@@ -152,7 +152,7 @@ class CartWidget(QMainWindow):
     def show_dialog(self, text):
         QMessageBox.about(self, 'DIALOG', text)
 
-    def verificar_se_as_quantidades_estão_preenchidas(self, data):
+    def verificar_se_as_quantidades_estao_preenchidas(self, data):
         if data:
             return True
 
