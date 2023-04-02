@@ -1,16 +1,16 @@
+from product_informations_window import *
+from cart_window import *
 import sys
 from PySide6 import  QtWidgets, QtGui
 from PySide6.QtWidgets import (
     QMainWindow, 
-    QWidget, QPushButton, QToolBar, QLabel, QGridLayout,QMessageBox, QListWidget
+    QWidget, QToolBar, QMessageBox
 )
 from PySide6.QtGui import QAction, QIcon
 import os
 path = os.path.abspath('interfaces/checkout')
 sys.path.append(path)
-from product_informations_window import *
 
-from cart_window import *
 class CheckoutPage(QMainWindow):
     def __init__(self):
         super(CheckoutPage,self).__init__()

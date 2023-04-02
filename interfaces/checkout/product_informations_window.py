@@ -5,7 +5,6 @@ path = os.path.abspath('database/database_manager')
 sys.path.append(path)
 from products_database import *
 
-
 class ProductsInfo(QMainWindow):
     def __init__(self,parent = None):
         super(ProductsInfo, self).__init__(parent = parent)

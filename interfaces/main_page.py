@@ -10,7 +10,7 @@ from PySide6.QtWidgets import (
     QDockWidget,
     QTextEdit,
 )
-from PySide6.QtGui import QAction, QIcon, Qt, QDesktopServices, QPalette, QColor, QPainter, QRegion
+from PySide6.QtGui import QAction, QIcon, Qt, QDesktopServices, QPalette, QColor
 from PySide6.QtCore import QUrl
 from login import *
 path = os.path.abspath('interfaces/products')

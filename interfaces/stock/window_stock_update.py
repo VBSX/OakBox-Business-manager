@@ -1,7 +1,6 @@
 from PySide6.QtWidgets import QPushButton, QHBoxLayout, QWidget, QLineEdit,QApplication,QMessageBox, QMainWindow, QLabel
 import sys
 import os
-from PySide6 import QtCore, QtWidgets, QtGui
 path = os.path.abspath('database/database_manager')
 sys.path.append(path)
 from add_product_database import *       

@@ -1,6 +1,6 @@
 from PySide6.QtWidgets import (
-    QApplication, QMainWindow, QWidget, QVBoxLayout, QHBoxLayout, QCheckBox, QListWidget, 
-    QPushButton, QLineEdit, QListWidgetItem, QLabel, QMessageBox, QSpacerItem, QSizePolicy
+    QApplication, QMainWindow, QWidget, QVBoxLayout, QHBoxLayout, QListWidget, 
+    QPushButton, QLineEdit, QListWidgetItem, QLabel, QMessageBox, 
 )
 from PySide6.QtCore import Qt
 import sys

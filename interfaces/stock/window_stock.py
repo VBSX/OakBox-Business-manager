@@ -2,7 +2,7 @@ import sys
 from PySide6 import  QtWidgets, QtGui
 from PySide6.QtWidgets import (
     QMainWindow, 
-    QWidget, QPushButton, QToolBar, QLabel, QGridLayout, QTableWidget, QTableWidgetItem, QVBoxLayout, QHeaderView
+    QWidget, QPushButton, QToolBar, QTableWidget, QTableWidgetItem, QVBoxLayout
 )
 from PySide6.QtGui import QAction, QIcon
 import os
@@ -84,7 +84,6 @@ class StockPage(QMainWindow):
             product_data = data[0]
             self.id_produto = product_data[0]
             self.nome = product_data[1]
-            quantidade = product_data[2]
             self.quantidade_atual = product_data[3]
             self.update_table(data)
             

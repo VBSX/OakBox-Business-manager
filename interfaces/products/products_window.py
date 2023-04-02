@@ -1,18 +1,17 @@
+from consult_window import *
+from add_product_window import *
 import sys
 from PySide6 import QtCore, QtWidgets, QtGui
 from PySide6.QtWidgets import (
     QMainWindow, 
-    QHBoxLayout,QWidget, QPushButton, QToolBar, QLabel,QTableView
+    QHBoxLayout,QWidget, QToolBar, QLabel,QTableView
 )
 from PySide6.QtGui import QAction, QIcon
-import os
 from table_widget import TableWidget
 from os.path import dirname, join, abspath
 sys.path.insert(0, abspath(join(dirname(__file__), '..')))
-
 from login import *
-from consult_window import *
-from add_product_window import *
+
 
 class ProductsPage(QMainWindow):
     def __init__(self, parent=None):
