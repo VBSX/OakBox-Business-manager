@@ -78,11 +78,24 @@ class ProductsData():
 
         return data_database
     
+    def get_password_by_user(self, user):
+        self.cursor.execute(
+            f"SELECT Senha FROM Usuarios WHERE Usuario = '{user}'")
+        data_database = self.cursor.fetchall()
+        return data_database
+    
+    def get_user_info(self, user):
+        self.cursor.execute(
+            f"SELECT Id, Usuario,Nome,Sobrenome FROM Usuarios WHERE Usuario = '{user}'")
+        data_database = self.cursor.fetchall()
+        return data_database
+       
     
         
 if __name__ =='__main__':
     s = ProductsData()
-    print(s.get_products_by_id(3))
+    # print(s.get_products_by_id(3))
     
-    print(s.get_products_of_stock_by_name('salame'))
-    print(s.get_product_quatity('salame', 11))
+    # print(s.get_products_of_stock_by_name('salame'))
+    # print(s.get_product_quatity('salame', 11))
+    print(s.get_password_by_user('admin'))
