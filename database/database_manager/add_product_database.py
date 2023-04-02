@@ -82,8 +82,15 @@ class AddProducts():
                            f"UPDATE Produtos SET Quantidade='{quantidade}'"
                             f"WHERE Nome='{nome}'"
 )    
+    def adicionar_usuario(self, usuario, nome, sobrenome, senha):
+        self.cursor.execute(
+                    "INSERT INTO Usuarios ( Usuario,Nome,Sobrenome,Senha) "
+        f"VALUES ('{usuario}', '{nome}','{sobrenome}','{senha}')")
+        self.banco.commit()
+        return True
 if __name__ =='__main__':
     s = AddProducts()
     # print(s.update_item_quantity( 2, 30,'a', 50))
-    print(s.insert_produtos_vendidos(1,'salame', 10, 2, 250))
+    # print(s.insert_produtos_vendidos(1,'salame', 10, 2, 250))
+    print(s.adicionar_usuario('admin','Admin', 'Sys', '123456'))
     # s.a()
