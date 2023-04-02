@@ -12,13 +12,21 @@ class WindowProductAdd(QMainWindow):
         self.setWindowTitle('Adicionar Produto')
         self.database_handle_add = AddProducts()
         self.database_handle_consult = ProductsData()
+        self.data_out = None
+        self.setup_ui()
+        
+    def setup_ui(self):
         self.message_init = QLabel()
         self.message_init.setText('')
         self.name = QLineEdit()
         self.name.setPlaceholderText("Nome")
         self.add = QPushButton("Adicionar novo produto", clicked=self.send_new_product)
+        
         self.valor_unidade = QLineEdit()
         self.valor_unidade.setPlaceholderText("Valor unitario")
+        
+        self.name.returnPressed.connect(self.add.click)
+        self.valor_unidade.returnPressed.connect(self.add.click)
         widget = QWidget()
         layout = QHBoxLayout()
         layout.addWidget(self.name)
@@ -26,8 +34,7 @@ class WindowProductAdd(QMainWindow):
         layout.addWidget(self.add)
         widget.setLayout(layout)
         self.setCentralWidget(widget)
-        self.data_out = None
-
+        
     def send_new_product(self):
         nome = self.name.text()
         nome_lower = nome.lower()
@@ -70,6 +77,6 @@ class WindowProductAdd(QMainWindow):
         
 if __name__ == "__main__":
     app = QApplication([])
-    self.widget = WindowProductAdd()
-    self.widget.show()
+    widget = WindowProductAdd()
+    widget.show()
     sys.exit(app.exec())

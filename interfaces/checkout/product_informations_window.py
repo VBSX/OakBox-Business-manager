@@ -16,6 +16,8 @@ class ProductsInfo(QMainWindow):
         self.name = QLineEdit()
         self.name.setPlaceholderText("NOME")
         self.pesquisar = QPushButton("Pesquisar", clicked=self.search_product)
+        self.name.returnPressed.connect(self.pesquisar.click)
+        self.id.returnPressed.connect(self.pesquisar.click)
         widget = QWidget()
         layout = QHBoxLayout()
         layout.addWidget(self.id)

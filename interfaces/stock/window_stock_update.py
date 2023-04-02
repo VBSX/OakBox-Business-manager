@@ -23,6 +23,7 @@ class UpdateStock(QMainWindow):
         self.Atualizar = QPushButton("Adicionar", clicked=self.update_quantity_database)
         widget = QWidget()
         layout = QHBoxLayout()
+        self.Quantidade.returnPressed.connect(self.Atualizar.click)
         layout.addWidget(self.mensagem_direcional)
         layout.addWidget(self.Quantidade)
         layout.addWidget(self.Atualizar)
@@ -50,6 +51,6 @@ class UpdateStock(QMainWindow):
         QMessageBox.about(self, 'DIALOG', text)
 if __name__ == "__main__":
     app = QApplication([])
-    self.widget = UpdateStock(3, 'salame', 219)
-    self.widget.show()
+    widget = UpdateStock(3, 'salame', 219)
+    widget.show()
     sys.exit(app.exec())

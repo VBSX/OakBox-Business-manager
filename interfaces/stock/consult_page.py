@@ -1,27 +1,27 @@
 from PySide6.QtWidgets import QPushButton, QHBoxLayout, QWidget, QLineEdit,QApplication,QMessageBox, QMainWindow
-
 import sys
 import os
-from PySide6 import QtCore, QtWidgets, QtGui
 path = os.path.abspath('database/database_manager')
 sys.path.append(path)
 from products_database import *
 
-
 class ConsultWindow(QMainWindow):
-
     def __init__(self,parent = None):
         super(ConsultWindow, self).__init__(parent = parent)
         self.setWindowTitle('Buscar')
         self.database_handle = ProductsData()
+        self.setup_ui()
+        self.data_out = None
 
+    def setup_ui(self):
         self.id = QLineEdit()
         self.id.setPlaceholderText("Id") 
         
         self.name = QLineEdit()
         self.name.setPlaceholderText("NOME")
         self.pesquisar = QPushButton("Pesquisar", clicked=self.search_product)
-        
+        self.name.returnPressed.connect(self.pesquisar.click)
+        self.id.returnPressed.connect(self.pesquisar.click)
         widget = QWidget()
         layout = QHBoxLayout()
         
@@ -31,8 +31,7 @@ class ConsultWindow(QMainWindow):
         
         widget.setLayout(layout)
         self.setCentralWidget(widget)
-        self.data_out = None
-    
+        
     def search_product(self):
         self.data_out = self.verify_what_user_want_to_search()
     
@@ -44,8 +43,7 @@ class ConsultWindow(QMainWindow):
             try:
                 data = self.database_handle.get_product_by_of_stock_id_and_name(id_product, name_product)
                 self.parent().show_products(data)
-               
-                
+                 
             except:
                 self.show_dialog('erro database ao buscar')
                 print('erro ao tentar buscar por id e por nome')
@@ -61,7 +59,6 @@ class ConsultWindow(QMainWindow):
                 self.parent().show_products(data)
                 
                 
-                
             except:
                 self.show_dialog('erro database ao buscar')
                 print('erro ao buscar pelo id')
@@ -71,7 +68,6 @@ class ConsultWindow(QMainWindow):
             else:
                 self.show_dialog('Produto não encontrado')
             
-        
         elif name_product:
             try:
                 data = self.database_handle.get_products_of_stock_by_name(name_product)
@@ -90,14 +86,12 @@ class ConsultWindow(QMainWindow):
         
         else:
             self.show_dialog('Coloque uma informação antes de pesquisar!')
-        
-                    
+                 
     def show_dialog(self, text):
         QMessageBox.about(self, 'DIALOG', text)
-            
-    
+     
 if __name__ == "__main__":
     app = QApplication([])
-    self.widget = ConsultWindow()
-    self.widget.show()
+    widget = ConsultWindow()
+    widget.show()
     sys.exit(app.exec())

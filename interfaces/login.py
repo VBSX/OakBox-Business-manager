@@ -28,6 +28,7 @@ class LoginPage(QtWidgets.QWidget):
         self.password_message = QtWidgets.QLabel(alignment=QtCore.Qt.AlignCenter)
         self.password_message.setText("Coloque a senha")
         self.logar = QtWidgets.QPushButton("Logar", clicked=self.login_process)
+        self.password_input.returnPressed.connect(self.logar.click)
         # Define que a entrada de senha não mostrará o que está sendo digitado
         self.password_input.setEchoMode(QtWidgets.QLineEdit.Password)
         # Define as folhas de estilo para o modo claro e modo escuro
@@ -63,12 +64,10 @@ class LoginPage(QtWidgets.QWidget):
         if self.dark_mode_checkbox.isChecked():
             self.set_stylesheet(self.light_stylesheet)
         else:
-            
             self.set_stylesheet(self.dark_stylesheet)
 
     def open_main_page(self):
         self.main_page = MainPage()
-        
         self.main_page.show()
 
     def login_process(self):
