@@ -1,4 +1,8 @@
-from PySide6.QtWidgets import QApplication, QMainWindow, QWidget, QVBoxLayout, QHBoxLayout, QCheckBox, QListWidget, QPushButton, QLineEdit, QListWidgetItem, QLabel, QMessageBox
+from PySide6.QtWidgets import (
+    QApplication, QMainWindow, QWidget, QVBoxLayout, QHBoxLayout, QCheckBox, QListWidget, 
+    QPushButton, QLineEdit, QListWidgetItem, QLabel, QMessageBox, QSpacerItem, QSizePolicy
+)
+from PySide6.QtCore import Qt
 import sys
 import os
 path = os.path.abspath('database/database_manager')
@@ -21,7 +25,7 @@ class CartWidget(QMainWindow):
         self.label_valor_total = QLabel()
         self.create_list()
         self.create_remove_button()
-        self.create_print_button()
+        self.create_finish_button()
         self.set_layout()
         self.valor_total_do_carrinho = self.obter_valor_total_carrinho()
         self.label_valor_total.setText(f'O valor Total Do carrinho é de: R$ {str(self.valor_total_do_carrinho)}')
@@ -42,17 +46,18 @@ class CartWidget(QMainWindow):
             list_widget_item.setSizeHint(hbox_widget.sizeHint())
             self.list_widget.setItemWidget(list_widget_item, hbox_widget)
             self.line_edits.append(line_edit)
-
     def create_remove_button(self):
         remove_button = QPushButton("Remover Produto")
         remove_button.clicked.connect(self.remove_selected)
-        self.layout_window.addWidget(remove_button)
-
-    def create_print_button(self):
-        print_button = QPushButton('Efetuar a Venda')
-        print_button.clicked.connect(self.efetuar_venda)
-        self.layout_window.addWidget(print_button)
-
+        remove_button.setMaximumWidth(150)  # Define a largura máxima do botão como 150 pixels
+        self.layout_window.addWidget(remove_button, 0, Qt.AlignHCenter)  # Adiciona o botão no centro da janela
+      
+    def create_finish_button(self):
+        finish_sell_button = QPushButton('Efetuar a Venda')
+        finish_sell_button.clicked.connect(self.efetuar_venda)
+        finish_sell_button.setMaximumWidth(150)  # Define a largura máxima do botão como 150 pixels
+        self.layout_window.addWidget(finish_sell_button, 0, Qt.AlignHCenter)  # Adiciona o botão no centro da janela
+      
     def set_layout(self):
         
         self.layout_window.addWidget(self.list_widget)
