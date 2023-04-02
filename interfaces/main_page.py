@@ -1,13 +1,17 @@
+
 import sys
+import os
 from PySide6 import QtCore, QtWidgets, QtGui
 from PySide6.QtWidgets import (
-    QMainWindow, 
-    QHBoxLayout,QWidget, QPushButton, QDockWidget, QTextEdit
+    QMainWindow,
+    QHBoxLayout,
+    QWidget,
+    QPushButton,
+    QDockWidget,
+    QTextEdit,
 )
-from PySide6.QtGui import QAction, QIcon, Qt, QDesktopServices, QPalette, QColor
+from PySide6.QtGui import QAction, QIcon, Qt, QDesktopServices, QPalette, QColor, QPainter, QRegion
 from PySide6.QtCore import QUrl
-
-import os
 from login import *
 path = os.path.abspath('interfaces/products')
 sys.path.append(path)
@@ -26,10 +30,7 @@ class MainPage(QMainWindow):
         self.setWindowIcon(QtGui.QIcon(filter_icon_path))
         self.setWindowTitle('Main Page')
         self.setMinimumSize(1024,720)
-        #Add the menu options of the program
-        
         self.config_the_menubar()
-        
         # Set up the main window and sidebar
         self.create_main_layout()
         self.set_dark_mode('enable')
@@ -49,36 +50,31 @@ class MainPage(QMainWindow):
         layout.addWidget(self.button_estoque)
         layout.addWidget(self.button_products)
         layout.addWidget(self.button_caixa)
-        
         widget.setLayout(layout)
-
         # Set the main window widget
         main_layout = QVBoxLayout()
-        main_layout.addWidget(
-            widget)
+        main_layout.addWidget(widget)
         main_widget = QWidget()
         main_widget.setLayout(main_layout)
         self.setCentralWidget(main_widget)
         self.create_sidebar()
+        
 
     def create_sidebar(self):
         # Create a QDockWidget for the sidebar
         self.sidebar = QDockWidget("Sidebar", self)
         self.sidebar.setAllowedAreas(Qt.LeftDockWidgetArea | Qt.RightDockWidgetArea)
-        
+        self.sidebar.move(0, 0)
         # Create a QTextEdit widget to hold the contents of the sidebar
         self.sidebar_contents = QTextEdit()
         self.sidebar_contents.setReadOnly(True)
         self.sidebar.setWidget(self.sidebar_contents)
         self.sidebar.setFixedWidth(200)
-        
         # Add a button widget to the sidebar to open the GitHub link
         self.github_button = QPushButton("GitHub")
         self.github_button.clicked.connect(lambda: QDesktopServices.openUrl(QUrl("https://github.com/vbsx")))
-        
         self.reset_sidebar_button = QPushButton("Voltar Ao Menu")
         self.reset_sidebar_button.clicked.connect(self.reset_layout)
-        
         # Add the buttons to the sidebar layout
         self.sidebar_contents_layout = QVBoxLayout()
         self.sidebar_contents_layout.addWidget(self.github_button)
@@ -92,7 +88,7 @@ class MainPage(QMainWindow):
         
         # Add the sidebar to the left dock widget area
         self.addDockWidget(Qt.LeftDockWidgetArea, self.sidebar)
-            # Add the sidebar to the left dock widget area and set it as fixed
+        # Add the sidebar to the left dock widget area and set it as fixed
         self.addDockWidget(Qt.LeftDockWidgetArea, self.sidebar)
         self.sidebar.setFixedHeight(self.height())
         self.sidebar.setFeatures(QDockWidget.DockWidgetMovable | QDockWidget.DockWidgetFloatable | QDockWidget.NoDockWidgetFeatures)
@@ -176,8 +172,6 @@ class MainPage(QMainWindow):
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication([])
-    
     widget = MainPage()
-    
     widget.show()
     sys.exit(app.exec())
