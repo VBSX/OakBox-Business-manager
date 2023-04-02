@@ -1,9 +1,8 @@
-# Controle-financeiro
+# Oak-SellerInterface
 
 Este programa foi desenvolvido para ajudar
 a pequenos empreendedores a gerenciar
-o seu negócio.
-Ele oferece uma interface gráfica simples
+o seu negócio. Ele oferece uma interface gráfica simples
 e prática, além disso possibilita a visualização
 e edição de produtos, controle de estoque,
 página de caixa para efetuar as vendas,
@@ -13,6 +12,4 @@ gráficos demonstrando como está o andamento das
 finanças.
 
 
-### TENHA EM MENTE QUE O PROJOETO ESTÁ
-### EM DESENVOLVIMENTO, LOGO MAIS SERÁ
-### LANÇADO A VERSÃO DE TESTES 
+### TENHA EM MENTE QUE O PROJETO ESTÁ EM DESENVOLVIMENTO, LOGO MAIS SERÁ LANÇADO A VERSÃO DE TESTE 
