@@ -38,10 +38,10 @@ class ConsultWindow(QMainWindow):
     def verify_what_user_want_to_search(self):
         id_product = self.id.text()
         name_product = self.name.text()
-        
+        data = []
         if id_product and name_product:
             try:
-                data = self.database_handle.get_product_by_of_stock_id_and_name(id_product, name_product)
+                data = self.database_handle.get_product_by_id_and_name(id_product, name_product)
                 self.parent().show_products(data)
                  
             except:
@@ -55,7 +55,8 @@ class ConsultWindow(QMainWindow):
         
         elif id_product:
             try:
-                data = self.database_handle.get_products_of_stock_by_id(id_product)
+                print(id_product)
+                data = self.database_handle.get_products_by_id(id_product)
                 self.parent().show_products(data)
                 
                 
@@ -70,10 +71,9 @@ class ConsultWindow(QMainWindow):
             
         elif name_product:
             try:
-                data = self.database_handle.get_products_of_stock_by_name(name_product)
+                data = self.database_handle.get_products_by_name(name_product)
                 self.parent().show_products(data)
                 
-             
             except:
                 self.show_dialog('erro database ao buscar')
                 print('erro ao buscar pelo nome')
@@ -85,7 +85,9 @@ class ConsultWindow(QMainWindow):
                 self.show_dialog('Produto não encontrado')
         
         else:
-            self.show_dialog('Coloque uma informação antes de pesquisar!')
+            self.show_dialog('Coloque alguma informação')
+        
+        
                  
     def show_dialog(self, text):
         QMessageBox.about(self, 'DIALOG', text)

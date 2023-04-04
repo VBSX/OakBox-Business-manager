@@ -34,18 +34,12 @@ class AddProducts():
         horario = self.horario_sys.get_horario_sistema()
         
         self.cursor.execute(
-                           f"UPDATE Prod_estoque SET Quantidade_atual='{quantidade}'"
-                            f"WHERE Id={id}"
-)
-        self.cursor.execute(
                            f"UPDATE Produtos SET Quantidade='{quantidade}'"
-                            f"WHERE Nome='{nome}'"
+                            f"WHERE Id={id} AND Nome='{nome}'"
 )                           
         self.cursor.execute(
                     "INSERT INTO Entrada_prod ( Data,Horario, Id, Produto,Quantidade) "
         f"VALUES ('{data}','{horario}','{id}','{nome}','{quantidade_de_entrada}')")
-
-
         self.banco.commit()
         return True
     

@@ -13,56 +13,32 @@ class ProductsData():
     def get_products_by_id(self, id_of_product):
         
         self.cursor.execute(
-            f"SELECT Id,Nome,Quantidade, Valor_unitario FROM Produtos WHERE Id = '{id_of_product}'")
+            f"SELECT Id, Nome, Quantidade, Valor_unitario, Unidade_de_medida,Categoria from PRodutos WHERE Id = '{id_of_product}'")
         data_database = self.cursor.fetchall()
 
         return data_database
     
     def get_products_by_name(self, name_of_product):
         self.cursor.execute(
-            f"SELECT Id,Nome,Quantidade, Valor_unitario FROM Produtos WHERE Nome LIKE '%{name_of_product}%'")
+            f"SELECT Id, Nome, Quantidade, Valor_unitario, Unidade_de_medida,Categoria FROM Produtos WHERE Nome LIKE '%{name_of_product}%'")
         data_database = self.cursor.fetchall()
 
         return data_database
     
     def get_product_by_id_and_name(self, id_of_product,name_of_product):
         self.cursor.execute(
-            f"SELECT Id,Nome,Quantidade, Valor_unitario FROM Produtos WHERE Id = '{id_of_product}'AND Nome LIKE '%{name_of_product}%'")
+            f"SELECT Id, Nome, Quantidade, Valor_unitario, Unidade_de_medida,Categoria FROM Produtos WHERE Id = '{id_of_product}'AND Nome LIKE '%{name_of_product}%'")
         data_database = self.cursor.fetchall()
 
         return data_database
     
     def get_product_by_exact_name(self,name_of_product):
         self.cursor.execute(
-            f"SELECT Id,Nome,Quantidade, Valor_unitario FROM Produtos WHERE Nome = '{name_of_product}'")
+            f"SELECT Id, Nome, Quantidade, Valor_unitario, Unidade_de_medida,Categoria FROM Produtos WHERE Nome = '{name_of_product}'")
         data_database = self.cursor.fetchall()
 
         return data_database
     
-    
-    def get_products_of_stock_by_id(self, id_of_product):
-        
-        self.cursor.execute(
-            f"SELECT Id,Produtos,Quantidade, Quantidade_atual FROM Prod_estoque WHERE Id = '{id_of_product}'")
-        
-        data_database = self.cursor.fetchall()
-
-        return data_database
-     
-    def get_products_of_stock_by_name(self, name_of_product):
-        self.cursor.execute(
-            f"SELECT Id,Produtos,Quantidade, Quantidade_atual FROM Prod_estoque WHERE Produtos LIKE '%{name_of_product}%'")
-        data_database = self.cursor.fetchall()
-
-        return data_database
-    
-    def get_product_by_of_stock_id_and_name(self, id_of_product,name_of_product):
-        self.cursor.execute(
-            f"SELECT Id,Produtos,Quantidade, Quantidade_atual FROM Prod_estoque WHERE Id = '{id_of_product}'AND Produtos LIKE '%{name_of_product}%'")
-        
-        data_database = self.cursor.fetchall()
-
-        return data_database
     
     def get_price_of_product(self, name_of_product, id):
         self.cursor.execute(
@@ -76,7 +52,7 @@ class ProductsData():
             f"SELECT Quantidade FROM Produtos WHERE Nome = '{name_of_product}' AND Id = '{id}'")
         data_database = self.cursor.fetchall()
 
-        return data_database
+        return data_database[0][0]
     
     def get_password_by_user(self, user):
         self.cursor.execute(
@@ -90,12 +66,27 @@ class ProductsData():
         data_database = self.cursor.fetchall()
         return data_database
        
-    
+       
+    def get_all_products(self):
+        self.cursor.execute(
+            f"SELECT Id, Nome, Quantidade, Valor_unitario, Unidade_de_medida,Categoria FROM Produtos")
+        data_database = self.cursor.fetchall()
         
+        return data_database
+
+    def get_some_data_by_id_and_name_from_products_table(self, id_of_product,name_of_product, wich_colum_to_take):
+        self.cursor.execute(
+            f"SELECT {wich_colum_to_take} FROM Produtos WHERE Nome = '{name_of_product}' AND Id = '{id_of_product}'")
+        data_database = self.cursor.fetchall()
+
+        return data_database[0][0]
+    
+
 if __name__ =='__main__':
     s = ProductsData()
-    # print(s.get_products_by_id(3))
-    
+    # print(s.get_all_products())
+    # print(s.get_some_data_by_id_and_name_from_products_table(1, 'pudim', 'Valor_de_custo'))
+    print(type(s.get_product_quatity('pudim', 1)))
     # print(s.get_products_of_stock_by_name('salame'))
     # print(s.get_product_quatity('salame', 11))
-    print(s.get_password_by_user('admin'))
+    # print(s.get_all_products())
