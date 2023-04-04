@@ -9,7 +9,22 @@ class ProductsData():
         print(database_path,'\n\n')
         self.banco = sqlite3.connect(database_path)
         self.cursor = self.banco.cursor()
+    
+    def get_all_info_of_product(self, product_id, name_of_product, find_by_id,find_by_name):
+        if find_by_id == True:
+            self.cursor.execute(
+                f"SELECT * FROM Produtos WHERE Id = '{product_id}'")
+            data_database = self.cursor.fetchall()
+
+            return data_database
+        elif find_by_name == True:
+            self.cursor.execute(
+                f"SELECT * FROM Produtos WHERE Nome LIKE '%{name_of_product}%'")
+            data_database = self.cursor.fetchall()
+
+            return data_database
         
+      
     def get_products_by_id(self, id_of_product):
         
         self.cursor.execute(
@@ -80,8 +95,14 @@ class ProductsData():
         data_database = self.cursor.fetchall()
 
         return data_database[0][0]
-    
 
+    def get_all_info_of_all_products(self):
+        
+        self.cursor.execute(
+            f"SELECT * FROM Produtos")
+        data_database = self.cursor.fetchall()
+        
+        return data_database
 if __name__ =='__main__':
     s = ProductsData()
     # print(s.get_all_products())

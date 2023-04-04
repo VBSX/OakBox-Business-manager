@@ -10,8 +10,13 @@ class ProductsInfo(QMainWindow):
         super(ProductsInfo, self).__init__(parent = parent)
         self.setWindowTitle('Buscar')
         self.database_handle = ProductsData()
+        self.setup_ui()
+        self.data_out = None
+
+    def setup_ui(self):
         self.id = QLineEdit()
         self.id.setPlaceholderText("Id") 
+        
         self.name = QLineEdit()
         self.name.setPlaceholderText("NOME")
         self.pesquisar = QPushButton("Pesquisar", clicked=self.search_product)
@@ -19,24 +24,26 @@ class ProductsInfo(QMainWindow):
         self.id.returnPressed.connect(self.pesquisar.click)
         widget = QWidget()
         layout = QHBoxLayout()
+        
         layout.addWidget(self.id)
         layout.addWidget(self.name)
         layout.addWidget(self.pesquisar)
+        
         widget.setLayout(layout)
         self.setCentralWidget(widget)
-        self.data_out = None
-    
+        
     def search_product(self):
         self.data_out = self.verify_what_user_want_to_search()
-        
+    
     def verify_what_user_want_to_search(self):
         id_product = self.id.text()
         name_product = self.name.text()
+        data = []
         if id_product and name_product:
             try:
-                data = self.database_handle.get_product_by_id_and_name(id_product, name_product)
+                data = self.database_handle.get_all_info_of_product(id_product, name_product, find_by_id=True, find_by_name=True)
                 self.parent().show_products(data)
-                self.close()  
+                 
             except:
                 self.show_dialog('erro database ao buscar')
                 print('erro ao tentar buscar por id e por nome')
@@ -48,9 +55,11 @@ class ProductsInfo(QMainWindow):
         
         elif id_product:
             try:
-                data = self.database_handle.get_products_by_id(id_product)
+                print(id_product)
+                data = self.database_handle.get_all_info_of_product(id_product, False, find_by_id=True, find_by_name=True)
                 self.parent().show_products(data)
-                self.close()
+                
+                
             except:
                 self.show_dialog('erro database ao buscar')
                 print('erro ao buscar pelo id')
@@ -59,24 +68,30 @@ class ProductsInfo(QMainWindow):
                 return data
             else:
                 self.show_dialog('Produto não encontrado')
+            
         elif name_product:
             try:
-                data = self.database_handle.get_products_by_name(name_product)
+                data = self.database_handle.get_all_info_of_product(False, name_product, find_by_id=True, find_by_name=True)
                 self.parent().show_products(data)
-                self.close()
+                
             except:
                 self.show_dialog('erro database ao buscar')
                 print('erro ao buscar pelo nome')
             if data:
-                print(data)  
+                print(data) 
+                 
                 return data
             else:
                 self.show_dialog('Produto não encontrado')
+        
         else:
-            self.show_dialog('Coloque uma informação antes de pesquisar!')
-    
+            self.show_dialog('Coloque alguma informação')
+        
+        
+                 
     def show_dialog(self, text):
         QMessageBox.about(self, 'DIALOG', text)
+     
             
 if __name__ == "__main__":
     app = QApplication([])

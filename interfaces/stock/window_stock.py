@@ -2,7 +2,7 @@ import sys
 from PySide6 import  QtWidgets, QtGui
 from PySide6.QtWidgets import (
     QMainWindow, 
-    QWidget, QPushButton, QToolBar, QTableWidget, QTableWidgetItem, QVBoxLayout
+    QWidget, QToolBar, QTableWidget, QTableWidgetItem, QVBoxLayout, QAbstractItemView
 )
 from PySide6.QtGui import QAction, QIcon
 import os
@@ -19,6 +19,7 @@ path = os.path.abspath('database/database_manager')
 sys.path.append(path)
 from products_database import ProductsData
 
+
 class StockPage(QMainWindow):
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -32,6 +33,7 @@ class StockPage(QMainWindow):
         self.config_the_toolbar()
         self.consult_window = ConsultWindow(self)
         self.table = QTableWidget()
+        self.table.setEditTriggers(QAbstractItemView.NoEditTriggers)
         self.table.setColumnCount(6)
         self.table.setHorizontalHeaderLabels(['ID', 'Produto', 'Quantidade','Valor unitario' ,'Unidade medida', 'Categoria'])
         self.database_get = ProductsData()
@@ -129,7 +131,7 @@ class StockPage(QMainWindow):
       
     def show_dialog(self, text):
         QMessageBox.about(self, 'DIALOG', text)
-    
+
     
 if  __name__ == "__main__":
     app = QtWidgets.QApplication([])
