@@ -25,6 +25,10 @@ class MainPage(QMainWindow):
     def __init__(self):
         super(MainPage,self).__init__()
         self.image_test = r'images/filter.png'
+        self.image_shopping_cart = r'images/shopping-cart.png'
+        self.image_warehouse = r'images/warehouse.png'
+        self.image_cash_register = r'images/cash-register.png'
+        self.image_box = r'images/box.png'
         filter_icon_path = self.image_test
         #config of the window
         self.setWindowIcon(QtGui.QIcon(filter_icon_path))
@@ -44,9 +48,9 @@ class MainPage(QMainWindow):
         self.button_estoque = QPushButton("Estoque", clicked=self.abrir_janela_estoque)
         self.button_caixa = QPushButton("Caixa", clicked=self.abrir_caixa)
         
-        self.set_icons_and_resize_and_alter_font(self.button_caixa, self.image_test)
-        self.set_icons_and_resize_and_alter_font(self.button_estoque, self.image_test)
-        self.set_icons_and_resize_and_alter_font(self.button_products, self.image_test)
+        self.set_icons_and_resize_and_alter_font(self.button_caixa, self.image_cash_register)
+        self.set_icons_and_resize_and_alter_font(self.button_estoque, self.image_warehouse)
+        self.set_icons_and_resize_and_alter_font(self.button_products, self.image_box)
         layout.addWidget(self.button_estoque)
         layout.addWidget(self.button_products)
         layout.addWidget(self.button_caixa)

@@ -15,8 +15,8 @@ class LoginPage(QtWidgets.QWidget):
 
     def initUI(self):
         # Configurações da janela
-        filter_icon_path = r'images/filter.png'
-        self.setWindowIcon(QtGui.QIcon(filter_icon_path))
+        key_icon_path = r'images/key-security.png'
+        self.setWindowIcon(QtGui.QIcon(key_icon_path))
         self.setWindowTitle('Logar')
         self.resize(400, 200)
 
