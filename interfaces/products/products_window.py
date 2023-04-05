@@ -8,6 +8,7 @@ from PySide6.QtWidgets import (
 )
 from PySide6.QtGui import QAction, QIcon
 from table_widget import TableWidget
+from product_edit import ProductEditWindow
 from os.path import dirname, join, abspath
 sys.path.insert(0, abspath(join(dirname(__file__), '..')))
 from login import *
@@ -21,16 +22,21 @@ class ProductsPage(QMainWindow):
         super().__init__(parent)
         self.image_test = r'images/filter.png'
         filter_icon_path = self.image_test
+        self.window_consult = ProductsInfo(self)
+        
+        self.window_add = WindowProductAdd(self)
         #config of the window
         self.setWindowIcon(QtGui.QIcon(filter_icon_path))
         self.setWindowTitle('Produtos')
         self.setMinimumSize(950,320)
-        #Add the menu options of the program
         self.config_the_toolbar()
-        self.label_teste = QLabel()
-        self.window_consult = ProductsInfo(self)
+        self.setup_ui()
+
+    def setup_ui(self):
+        #Add the menu options of the program
         
-        self.window_add = WindowProductAdd(self)
+        self.label_teste = QLabel()
+
         self.table = QTableWidget()
         
         self.table.setColumnCount(9)
@@ -50,6 +56,7 @@ class ProductsPage(QMainWindow):
         layout.addWidget(self.table)
         widget.setLayout(layout)
         self.setCentralWidget(widget)
+ 
 
     def set_icons_and_resize_and_alter_font(self, item, icon):
         item.setStyleSheet("padding :30px;font-size:18px;margin-top:30px")
@@ -101,7 +108,8 @@ class ProductsPage(QMainWindow):
             name_prod = str(product[1])
             string = string+ '\nid: '+ id_prod+'\nnome: '+ name_prod +'\n'
         return string
-               
+    
+
     def update_table(self, data):
         #A função update_table atualiza a tabela com dados passados como parâmetro data.
         # A quantidade de linhas da tabela é ajustada de acordo com a quantidade de itens em data.
@@ -117,13 +125,20 @@ class ProductsPage(QMainWindow):
         current_index = self.table.currentIndex()
         current_row = current_index.row()
         item_id = self.table.item(current_row, 0)
-        item_name = self.table.item(current_row, 1)
+        item_name = self.table.item(current_row, 2)
         id_clicked = item_id.text()
         nome_clicked = item_name.text()
-        self.editar_produto(id_clicked, nome_clicked)
+        self.editar_produto_window = ProductEditWindow(id_clicked, nome_clicked,self)
+        self.editar_produto_window.show()
+        self.reset_layout()
             
     def add_product(self):
         self.window_add.show()
+    def reset_layout(self):
+        # Clear the central widget
+        self.centralWidget().setParent(None)
+        self.setup_ui()
+                
     
 if __name__ == "__main__":
     app = QtWidgets.QApplication([])

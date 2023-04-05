@@ -1,15 +1,16 @@
 from PySide6.QtWidgets import QApplication, QDialog, QVBoxLayout, QHBoxLayout, QLabel, QPushButton
 
 class MyDialog(QDialog):
-    def __init__(self, info, parent=None):
+    def __init__(self, info,info_button, parent=None):
         super().__init__(parent)
-        self.setWindowTitle("Minha Janela de Diálogo")
+        self.setWindowTitle("Tela Confirmação")
         self.info = info
+        self.setModal(True)
         # Cria um QLabel para exibir as informações
         label = QLabel(self.info)
         # Cria dois QPushButton, um para Concluir e outro para Cancelar
         button_box = QHBoxLayout()
-        conclui_button = QPushButton("Concluir Venda")
+        conclui_button = QPushButton(f"{info_button}")
         conclui_button.clicked.connect(self.accept)  # Chama o método accept() quando o botão "Concluir" for pressionado
         cancela_button = QPushButton("Cancelar")
         cancela_button.clicked.connect(self.reject)  # Chama o método reject() quando o botão "Cancelar" for pressionado

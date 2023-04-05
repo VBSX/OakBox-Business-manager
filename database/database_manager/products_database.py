@@ -103,11 +103,34 @@ class ProductsData():
         data_database = self.cursor.fetchall()
         
         return data_database
+    
+    def get_all_unity_of_mesurament_name(self):
+        self.cursor.execute(
+            f"SELECT Nome FROM Unidades_medidas")
+        data_database = self.cursor.fetchall()
+
+        return data_database
+    
+    def get_all_unity_of_mesurament_acronym(self):
+        self.cursor.execute(
+            f"SELECT Sigla FROM Unidades_medidas")
+        data_database = self.cursor.fetchall()
+
+        return data_database
+
+    def get_all_category(self):
+        self.cursor.execute(
+            f"SELECT Nome FROM Categorias")
+        data_database = self.cursor.fetchall()
+
+        return data_database
 if __name__ =='__main__':
     s = ProductsData()
     # print(s.get_all_products())
     # print(s.get_some_data_by_id_and_name_from_products_table(1, 'pudim', 'Valor_de_custo'))
-    print(type(s.get_product_quatity('pudim', 1)))
+    # print(type(s.get_product_quatity('pudim', 1)))
     # print(s.get_products_of_stock_by_name('salame'))
     # print(s.get_product_quatity('salame', 11))
     # print(s.get_all_products())
+    print(s.get_all_unity_of_mesurament_name())
+    

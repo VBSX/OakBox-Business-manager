@@ -110,7 +110,7 @@ class CartWidget(QMainWindow):
         quantidade_produtos_no_carrinho = self.obter_quantidade_total_de_itens_que_serao_comprados()
         valor_carrinho = self.obter_valor_total_carrinho()
         mensagem = f'Valor total do carrinho: R$ {valor_carrinho}\nQuantidade de itens no carrinho: {quantidade_produtos_no_carrinho}\nDeseja Finalizar a venda?'
-        dialog = MyDialog(mensagem,self)
+        dialog = MyDialog(mensagem,'Concluir Venda',self)
         if dialog.exec() == QDialog.Accepted:
             return True
         else:

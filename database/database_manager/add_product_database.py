@@ -82,9 +82,27 @@ class AddProducts():
         f"VALUES ('{usuario}', '{nome}','{sobrenome}','{senha}')")
         self.banco.commit()
         return True
+    
+    def update_one_part_of_the_product_information(self, 
+                                                   witch_field_to_update,
+                                                   iformation_to_update,
+                                                   id_of_product,
+                                                   ):
+        try:
+            self.cursor.execute(
+                f"UPDATE Produtos SET '{witch_field_to_update}'='{iformation_to_update}'"
+                f"WHERE Id = '{id_of_product}'"
+    )    
+            self.banco.commit()
+            return True
+        except sqlite3.Error as er:
+            return er
+    
+    
 if __name__ =='__main__':
     s = AddProducts()
     # print(s.update_item_quantity( 2, 30,'a', 50))
     # print(s.insert_produtos_vendidos(1,'salame', 10, 2, 250))
-    print(s.adicionar_usuario('admin','Admin', 'Sys', '123456'))
+    # print(s.adicionar_usuario('admin','Admin', 'Sys', '123456'))
+    print(s.update_one_part_of_the_product_information('Nome', 'Pirulito', 6, 'Sonho'))
     # s.a()
