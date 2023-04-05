@@ -23,6 +23,7 @@ class ProductEditWindow(QMainWindow):
         self.id_of_product = id
         self.database_get = ProductsData()
         self.database_insert = AddProducts()
+        
         self.measurement_unit = str(self.database_get.get_some_data_by_id_and_name_from_products_table(
                     self.id_of_product, self.name_of_product,'Unidade_de_medida'
                     ))
@@ -91,6 +92,9 @@ class ProductEditWindow(QMainWindow):
         self.layout.addWidget(label_produto)
         self.layout.addWidget(self.line_edit_produto)
 
+        
+        #adiciona o a parte do valor de custo
+        
         layout_valor_custo = QHBoxLayout()
         layout_valor_custo.setSpacing(10)
         layout_valor_custo.setAlignment(Qt.AlignLeft)
@@ -121,10 +125,10 @@ class ProductEditWindow(QMainWindow):
         self.layout.addLayout(layout_valor_custo)
 
         # Criar um QHBoxLayout para adicionar o QLineEdit e o QLabel na mesma linha
-        
         layout_unitario = QHBoxLayout()
         layout_unitario.setSpacing(10)
         layout_unitario.setAlignment(Qt.AlignLeft)
+        
         # Criar um QLineEdit para o valor unitário
         label_unitario = QLabel("Valor Unitario:")
         self.line_edit_unitario = QLineEdit()
@@ -216,6 +220,7 @@ class ProductEditWindow(QMainWindow):
 
         # Adicionando o widget ao central widget da janela principal
         self.setCentralWidget(widget)
+
 
     def atualizar_as_informações_do_produto(self):
         categoria_selecionada_para_verificar = self.combo_categoria.currentText()
@@ -480,8 +485,8 @@ class ProductEditWindow(QMainWindow):
                 if database_return != True:
                     self.show_dialog(f'{database_return}')
                     break
-                else:
-                    return True
+        if database_return:
+            return True
   
         
         
