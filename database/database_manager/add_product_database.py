@@ -15,19 +15,37 @@ class AddProducts():
         self.cursor = self.banco.cursor()
         self.horario_sys = HorarioDoSistema()
         
-    def add_on_database_new_product(self, nome, quantidade, valor_unidade):
-        qnt_now = '0'
-        self.cursor.execute(
-                
-                "INSERT INTO Produtos ( Nome, Quantidade, Valor_unitario) "
-                "VALUES ('" +nome+ "','" +quantidade+ "', '" +valor_unidade+ "')")
-        
-        self.cursor.execute(
-                            "INSERT INTO Prod_estoque ( Produtos, Quantidade, Quantidade_atual) "
-                "VALUES ('" +nome+ "','" +qnt_now+ "', '" +qnt_now+ "')")
+    def add_on_database_new_product(
+            self,   
+            codigo_de_barras,
+            nome,
+            valor_custo,
+            valor_por_unidade,
+            quantidade,       
+            estoque_minimo,
+            estoque_maximo,
+            unidade_de_medida,
+            categoria):
+        try:
+            self.cursor.execute(
+                "INSERT INTO Produtos (Codigo_do_produto,"
+                    "Nome, Valor_de_custo, Valor_unitario, Quantidade,"
+                    "Estoque_minimo,Estoque_maximo, Unidade_de_medida,Categoria)"
+                    "VALUES ('" +
+                    codigo_de_barras+ "','" +
+                    nome+ "','" +
+                    valor_custo+ "','" +
+                    valor_por_unidade+ "','" +
+                    quantidade+ "','" +
+                    estoque_minimo+ "', '" +
+                    estoque_maximo+ "','" +
+                    unidade_de_medida+ "','" +
+                    categoria+ "')")
 
-        self.banco.commit()
-        return True
+            self.banco.commit()
+            return True
+        except sqlite3.Error as er:
+            return er
         
     def update_item_quantity(self,id, quantidade, nome, quantidade_de_entrada):
         data = self.horario_sys.get_data_sistema()
@@ -104,5 +122,5 @@ if __name__ =='__main__':
     # print(s.update_item_quantity( 2, 30,'a', 50))
     # print(s.insert_produtos_vendidos(1,'salame', 10, 2, 250))
     # print(s.adicionar_usuario('admin','Admin', 'Sys', '123456'))
-    print(s.update_one_part_of_the_product_information('Nome', 'Pirulito', 6, 'Sonho'))
+    print(s.add_on_database_new_product('4654864646321', 'Pirulito', '6','15','1','5','10', 'UN', 'DOCES'))
     # s.a()
