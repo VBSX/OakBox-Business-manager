@@ -36,7 +36,7 @@ class ProductEditWindow(QMainWindow):
             self.id_of_product, self.name_of_product,'Id'
             ))
         
-        self.codigo_produto = str(self.database_get.get_some_data_by_id_and_name_from_products_table(
+        self.code_bar_of_product = str(self.database_get.get_some_data_by_id_and_name_from_products_table(
             self.id_of_product, self.name_of_product,'Codigo_do_produto'
             ))
         
@@ -79,31 +79,31 @@ class ProductEditWindow(QMainWindow):
         self.layout.addWidget(line_edit_id)
 
         # Adicionando o QLabel e QLineEdit para Codigo Produto
-        label_codigo = QLabel("Codigo Produto:")
-        self.line_edit_codigo = QLineEdit()
-        self.line_edit_codigo.setText(self.codigo_produto)
-        self.layout.addWidget(label_codigo)
-        self.layout.addWidget(self.line_edit_codigo)
+        label_code_bar = QLabel("Codigo Produto:")
+        self.line_edit_code_bar = QLineEdit()
+        self.line_edit_code_bar.setText(self.code_bar_of_product)
+        self.layout.addWidget(label_code_bar)
+        self.layout.addWidget(self.line_edit_code_bar)
 
         # Adicionando o QLabel e QLineEdit para Produto
-        label_produto = QLabel("Produto:")
-        self.line_edit_produto = QLineEdit()
-        self.line_edit_produto.setText(self.name_product_to_show)
-        self.layout.addWidget(label_produto)
-        self.layout.addWidget(self.line_edit_produto)
+        label_product_name = QLabel("Produto:")
+        self.line_edit_product_name = QLineEdit()
+        self.line_edit_product_name.setText(self.name_product_to_show)
+        self.layout.addWidget(label_product_name)
+        self.layout.addWidget(self.line_edit_product_name)
 
         
         #adiciona o a parte do valor de custo
         
-        layout_valor_custo = QHBoxLayout()
-        layout_valor_custo.setSpacing(10)
-        layout_valor_custo.setAlignment(Qt.AlignLeft)
+        layout_cost_value = QHBoxLayout()
+        layout_cost_value.setSpacing(10)
+        layout_cost_value.setAlignment(Qt.AlignLeft)
         # Criar um QLineEdit para o valor unitário
-        label_valor_custo = QLabel("Valor de Custo:")
-        self.line_edit_valor_custo = QLineEdit()
+        label_cost_value = QLabel("Valor de Custo:")
+        self.line_edit_cost_value = QLineEdit()
 
         # Criar um QLabel para o sulfixo
-        label_valor_custo_suffix = QLabel("R$")
+        label_cost_value_suffix = QLabel("R$")
 
         # Criar um QDoubleValidator para validar o input do usuário
         validator = QDoubleValidator()
@@ -111,73 +111,73 @@ class ProductEditWindow(QMainWindow):
         validator.setNotation(QDoubleValidator.StandardNotation)
 
         # Adicionar o validator no QLineEdit
-        self.line_edit_valor_custo.setValidator(validator)
-        self.line_edit_valor_custo.setFixedWidth(100)
-        self.line_edit_valor_custo.setText(self.cost_value)
+        self.line_edit_cost_value.setValidator(validator)
+        self.line_edit_cost_value.setFixedWidth(100)
+        self.line_edit_cost_value.setText(self.cost_value)
         
         # Adicionar o QLineEdit e o QLabel no QHBoxLayout
-        layout_valor_custo.addWidget(label_valor_custo, 0, Qt.AlignLeft)
+        layout_cost_value.addWidget(label_cost_value, 0, Qt.AlignLeft)
         
-        layout_valor_custo.addWidget(label_valor_custo_suffix, 0, Qt.AlignLeft)
-        layout_valor_custo.addWidget(self.line_edit_valor_custo, 0, Qt.AlignLeft)
+        layout_cost_value.addWidget(label_cost_value_suffix, 0, Qt.AlignLeft)
+        layout_cost_value.addWidget(self.line_edit_cost_value, 0, Qt.AlignLeft)
 
         # Adicionar o QHBoxLayout na grid layout
-        self.layout.addLayout(layout_valor_custo)
+        self.layout.addLayout(layout_cost_value)
 
         # Criar um QHBoxLayout para adicionar o QLineEdit e o QLabel na mesma linha
-        layout_unitario = QHBoxLayout()
-        layout_unitario.setSpacing(10)
-        layout_unitario.setAlignment(Qt.AlignLeft)
+        layout_unitary_value = QHBoxLayout()
+        layout_unitary_value.setSpacing(10)
+        layout_unitary_value.setAlignment(Qt.AlignLeft)
         
         # Criar um QLineEdit para o valor unitário
-        label_unitario = QLabel("Valor Unitario:")
-        self.line_edit_unitario = QLineEdit()
+        label_unitary = QLabel("Valor Unitario:")
+        self.line_edit_unitary_value = QLineEdit()
 
         # Criar um QLabel para o sulfixo
         label_unitario_suffix = QLabel(" R$")
    
         # Adicionar o validator no QLineEdit
-        self.line_edit_unitario.setValidator(validator)
-        self.line_edit_unitario.setFixedWidth(100)
-        self.line_edit_unitario.setText(self.unitary_value)
+        self.line_edit_unitary_value.setValidator(validator)
+        self.line_edit_unitary_value.setFixedWidth(100)
+        self.line_edit_unitary_value.setText(self.unitary_value)
         
         # Adicionar o QLineEdit e o QLabel no QHBoxLayout
-        layout_unitario.addWidget(label_unitario, 0, Qt.AlignLeft)
+        layout_unitary_value.addWidget(label_unitary, 0, Qt.AlignLeft)
         
-        layout_unitario.addWidget(label_unitario_suffix, 0, Qt.AlignLeft)
-        layout_unitario.addWidget(self.line_edit_unitario, 0, Qt.AlignLeft)
+        layout_unitary_value.addWidget(label_unitario_suffix, 0, Qt.AlignLeft)
+        layout_unitary_value.addWidget(self.line_edit_unitary_value, 0, Qt.AlignLeft)
 
         # Adicionar o QHBoxLayout na grid layout
-        self.layout.addLayout(layout_unitario)
+        self.layout.addLayout(layout_unitary_value)
 
         # Adicionar os widgets restantes na grid layout
-        label_quantidade = QLabel("Quantidade:")
-        line_edit_quantidade = QLineEdit()
-        line_edit_quantidade.setText(self.quantity)
-        line_edit_quantidade.setReadOnly(True)
-        self.layout.addWidget(label_quantidade)
-        self.layout.addWidget(line_edit_quantidade)        
+        label_quantity = QLabel("Quantidade:")
+        line_edit_quantity_of_product = QLineEdit()
+        line_edit_quantity_of_product.setText(self.quantity)
+        line_edit_quantity_of_product.setReadOnly(True)
+        self.layout.addWidget(label_quantity)
+        self.layout.addWidget(line_edit_quantity_of_product)        
 
         # Adicionando o QLabel e QLineEdit para Estoque Minimo
-        label_minimo = QLabel("Estoque Minimo:")
-        self.line_edit_minimo = QLineEdit()
-        self.line_edit_minimo.setText(self.minimum_stock)
-        self.line_edit_minimo.setValidator(QIntValidator()) 
+        label_minimum_stock = QLabel("Estoque Minimo:")
+        self.line_edit_minimum_stock = QLineEdit()
+        self.line_edit_minimum_stock.setText(self.minimum_stock)
+        self.line_edit_minimum_stock.setValidator(QIntValidator()) 
 
-        self.layout.addWidget(label_minimo)
-        self.layout.addWidget(self.line_edit_minimo)
+        self.layout.addWidget(label_minimum_stock)
+        self.layout.addWidget(self.line_edit_minimum_stock)
 
         # Adicionando o QLabel e QLineEdit para Estoque Maximo
-        label_maximo = QLabel("Estoque Maximo:")
-        self.line_edit_maximo = QLineEdit()
-        self.line_edit_maximo.setText(self.maximum_stock)
-        self.line_edit_maximo.setValidator(QIntValidator()) 
-        self.layout.addWidget(label_maximo)
-        self.layout.addWidget(self.line_edit_maximo)
+        label_maximus_stock = QLabel("Estoque Maximo:")
+        self.line_edit_maximus_stock = QLineEdit()
+        self.line_edit_maximus_stock.setText(self.maximum_stock)
+        self.line_edit_maximus_stock.setValidator(QIntValidator()) 
+        self.layout.addWidget(label_maximus_stock)
+        self.layout.addWidget(self.line_edit_maximus_stock)
         
-        label_unidade = QLabel("Unidade de Medida:")
-        self.combo_box_unidade = QComboBox()
-        self.combo_box_unidade.addItems([
+        label_unit = QLabel("Unidade de Medida:")
+        self.combo_box_unit = QComboBox()
+        self.combo_box_unit.addItems([
             self.measurement_unit
             ])
         
@@ -186,32 +186,32 @@ class ProductEditWindow(QMainWindow):
                 print(unity)
                 pass
             else:
-              self.combo_box_unidade.addItems(unity) 
+              self.combo_box_unit.addItems(unity) 
                
-        self.layout.addWidget(label_unidade)
-        self.layout.addWidget(self.combo_box_unidade)
+        self.layout.addWidget(label_unit)
+        self.layout.addWidget(self.combo_box_unit)
 
-        label_categoria = QLabel("Categoria:")
-        self.combo_categoria = QComboBox()
-        categoria_atual_maiuscula = self.categoria.upper()
+        label_category = QLabel("Categoria:")
+        self.combo_box_category = QComboBox()
+        actual_product_category = self.categoria.upper()
         
-        self.combo_categoria.addItems([
-            categoria_atual_maiuscula
+        self.combo_box_category.addItems([
+            actual_product_category
             ])
-        for categoria in self.database_get.get_all_category():
-            categoria_maiuscula = categoria[0].upper()
+        for category in self.database_get.get_all_category():
+            upper_category = category[0].upper()
             
-            if categoria_maiuscula == categoria_atual_maiuscula:
+            if upper_category == actual_product_category:
                 pass
             else:
-                self.combo_categoria.addItems(categoria)
+                self.combo_box_category.addItems(category)
                 
         update_item_button = QPushButton()
         update_item_button.setText('Atualizar')
-        update_item_button.clicked.connect(self.atualizar_as_informações_do_produto)
+        update_item_button.clicked.connect(self.update_products_informations)
 
-        self.layout.addWidget(label_categoria)
-        self.layout.addWidget(self.combo_categoria)
+        self.layout.addWidget(label_category)
+        self.layout.addWidget(self.combo_box_category)
         
         self.layout.addWidget(update_item_button)
         # Criando um widget para conter o layout vertical
@@ -222,17 +222,15 @@ class ProductEditWindow(QMainWindow):
         self.setCentralWidget(widget)
 
 
-    def atualizar_as_informações_do_produto(self):
-        categoria_selecionada_para_verificar = self.combo_categoria.currentText()
-        unidade_de_medida_selecionada_para_verificar = self.combo_box_unidade.currentText()
-        codigo_do_produto_para_verificar = self.line_edit_codigo.text()
-        nome_do_produto_para_verificar = self.line_edit_produto.text()
-        valor_de_custo_para_verificar = self.line_edit_valor_custo.text()
-        valor_unitario_para_verificar = self.line_edit_unitario.text()
-        estoque_minimo_para_verificar = self.line_edit_minimo.text()
-        estoque_maximo_para_verificar = self.line_edit_maximo.text()
-
-        categoria_atual_maiuscula = self.categoria.upper()
+    def update_products_informations(self):
+        selected_category_text_input = self.combo_box_category.currentText()
+        mesuramente_unity_text_input = self.combo_box_unit.currentText()
+        product_codebar_text_input = self.line_edit_code_bar.text()
+        name_of_product_text_input = self.line_edit_product_name.text()
+        cost_value_text_input = self.line_edit_cost_value.text()
+        unitary_value_text_input = self.line_edit_unitary_value.text()
+        minimum_stock_text_input = self.line_edit_minimum_stock.text()
+        maximum_stock_text = self.line_edit_maximus_stock.text()
         
         product_code_changed = [False, None, None, None]
         product_name_changed = [False, None, None, None]
@@ -243,122 +241,121 @@ class ProductEditWindow(QMainWindow):
         product_measurement_unit_changed = [False, None, None, None]
         product_category_changed = [False, None, None, None]
         
+        category_text_input_upper = self.categoria.upper()
         #Verifica se foi alterado o CODIGO DE BARRAS do produto comparando o nome inicial com o lineEdit
-        if self.verify_if_has_change_on_informations(self.codigo_produto, codigo_do_produto_para_verificar):
+        if self.verify_if_has_change_on_informations(self.code_bar_of_product, product_codebar_text_input):
             #não foi alterado
             pass
         else:
             product_code_changed = [
                 True,
-                self.codigo_produto,
-                codigo_do_produto_para_verificar,
+                self.code_bar_of_product,
+                product_codebar_text_input,
                 'Codigo_do_produto'
                 ]
             
             print('Do alter query CODIGO DE BARRAS')
             
         #Verifica se foi alterado o NOME DO PRODUTO comparando o nome inicial com o lineEdit
-        if self.verify_if_has_change_on_informations(self.name_product_to_show, nome_do_produto_para_verificar):
+        if self.verify_if_has_change_on_informations(self.name_product_to_show, name_of_product_text_input):
             #não foi alterado
             pass
         else:
             product_name_changed = [
                 True,
                 self.name_product_to_show,
-                nome_do_produto_para_verificar,
+                name_of_product_text_input,
                 'Nome'
                 ]
             
             print('Do alter query NOME DO PRODUTO')  
             
         #Verifica se foi alterado o VALOR DE CUSTO comparando o nome inicial com o lineEdit 
-        if self.verify_if_has_change_on_informations(self.cost_value, valor_de_custo_para_verificar):
+        if self.verify_if_has_change_on_informations(self.cost_value, cost_value_text_input):
             #não foi alterado
             pass
         else:
             product_cost_value_changed = [
                 True,
                 self.cost_value,
-                valor_de_custo_para_verificar, 
+                cost_value_text_input, 
                 'Valor_de_custo'
                 ]
             
             print('Do alter query VALOR DE CUSTO')  
             
         #Verifica se foi alterado o VALOR UNITARIO do produto comparando o nome inicial com o lineEdit
-        if self.verify_if_has_change_on_informations(self.unitary_value, valor_unitario_para_verificar):
+        if self.verify_if_has_change_on_informations(self.unitary_value, unitary_value_text_input):
             #não foi alterado
             pass
         else:
             product_unitary_value_changed = [
                 True,
                 self.unitary_value,
-                valor_unitario_para_verificar,
+                unitary_value_text_input,
                 'Valor_unitario'
                 ]
             
             print('Do alter query VALOR UNITARIO')  
             
         #Verifica se foi alterado o ESTOQUE MINIMO do produto comparando o nome inicial com o lineEdit
-        if self.verify_if_has_change_on_informations(self.minimum_stock , estoque_minimo_para_verificar):
+        if self.verify_if_has_change_on_informations(self.minimum_stock , minimum_stock_text_input):
             #não foi alterado
             pass
         else:
             product_minimum_stock_changed = [
                 True,
                 self.minimum_stock,
-                estoque_minimo_para_verificar, 
+                minimum_stock_text_input, 
                 'Estoque_minimo'
                 ]
             
             print('Do alter query ESTOQUE MINIMO') 
             
         #Verifica se foi alterado o ESTOQUE MAXIMO do produto comparando o nome inicial com o lineEdit
-        if self.verify_if_has_change_on_informations(self.maximum_stock ,estoque_maximo_para_verificar ):
+        if self.verify_if_has_change_on_informations(self.maximum_stock ,maximum_stock_text ):
             #não foi alterado
             pass
         else:
             product_maximum_stock_changed = [
                 True,
                 self.maximum_stock,
-                estoque_maximo_para_verificar,
+                maximum_stock_text,
                 'Estoque_maximo'
                 ]
             
             print('Do alter query ESTOQUE MAXIMO')
         
         #Verifica se foi alterado A UNIDADE DE MEDIDA do produto comparando o nome inicial com o lineEdit
-        if self.verify_if_has_change_on_informations(self.measurement_unit ,unidade_de_medida_selecionada_para_verificar ):
+        if self.verify_if_has_change_on_informations(self.measurement_unit ,mesuramente_unity_text_input ):
             #não foi alterado
             pass
         else:
             product_measurement_unit_changed = [
                 True,
                 self.measurement_unit,
-                unidade_de_medida_selecionada_para_verificar,
+                mesuramente_unity_text_input,
                 'Unidade_de_medida'
                 ]
             
-            print('Do alter query UNIDADE DE MEDIDA')
-            
+            print('Do alter query UNIDADE DE MEDIDA')  
             
         #Verifica se foi alterado A CATEGORIA do produto comparando o nome inicial com o lineEdit
-        if self.verify_if_has_change_on_informations(categoria_atual_maiuscula,categoria_selecionada_para_verificar ):
+        if self.verify_if_has_change_on_informations(category_text_input_upper,selected_category_text_input ):
             #não foi alterado
             pass
-        
-        
         else:
             product_category_changed = [
                 True,
-                categoria_atual_maiuscula,
-                categoria_selecionada_para_verificar, 
+                category_text_input_upper,
+                selected_category_text_input, 
                 'Categoria'
                 ]
             print('Do alter query CATEGORIA')
+            
         if self.verify_if_minimum_stock_is_less_than_maximum_stock(
-            estoque_minimo_para_verificar,
-            estoque_maximo_para_verificar):
+            minimum_stock_text_input,
+            maximum_stock_text):
             if self.verify_if_the_user_want_to_continue_editing_the_itens(
                 product_code_changed,
                 product_name_changed,
@@ -377,8 +374,8 @@ class ProductEditWindow(QMainWindow):
                     product_minimum_stock_changed,
                     product_maximum_stock_changed,
                     product_measurement_unit_changed,
-                    product_category_changed
-                ):  
+                    product_category_changed):  
+                    
                     self.show_dialog('Atualizado!')
                     self.parent().reset_layout()
                     self.close()

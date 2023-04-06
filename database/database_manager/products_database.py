@@ -80,8 +80,7 @@ class ProductsData():
             f"SELECT Id, Usuario,Nome,Sobrenome FROM Usuarios WHERE Usuario = '{user}'")
         data_database = self.cursor.fetchall()
         return data_database
-       
-       
+
     def get_all_products(self):
         self.cursor.execute(
             f"SELECT Id, Nome, Quantidade, Valor_unitario, Unidade_de_medida,Categoria FROM Produtos")
@@ -117,13 +116,34 @@ class ProductsData():
         data_database = self.cursor.fetchall()
 
         return data_database
+    def get_all_unity_of_mesurament_info(self):
+        self.cursor.execute(
+            f"SELECT * FROM Unidades_medidas")
+        data_database = self.cursor.fetchall()
 
+        return data_database
+        
     def get_all_category(self):
         self.cursor.execute(
             f"SELECT Nome FROM Categorias")
         data_database = self.cursor.fetchall()
 
         return data_database
+    
+    def get_especific_unity_by_name(self, name):
+        self.cursor.execute(
+            f"SELECT Nome FROM Unidades_medidas WHERE Nome = '{name}'")
+        data_database = self.cursor.fetchall()
+
+        return data_database
+    
+    def get_especific_unity_by_acronym(self,acronym):
+        self.cursor.execute(
+            f"SELECT Sigla FROM Unidades_medidas WHERE Sigla = '{acronym}'")
+        data_database = self.cursor.fetchall()
+
+        return data_database
+    
 if __name__ =='__main__':
     s = ProductsData()
     # print(s.get_all_products())
@@ -132,5 +152,6 @@ if __name__ =='__main__':
     # print(s.get_products_of_stock_by_name('salame'))
     # print(s.get_product_quatity('salame', 11))
     # print(s.get_all_products())
-    print(s.get_all_unity_of_mesurament_name())
+    # print(s.get_all_unity_of_mesurament_info())
+    print(s.get_especific_unity_by_name('UNIDADE'))
     

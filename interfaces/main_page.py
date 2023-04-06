@@ -33,7 +33,7 @@ class MainPage(QMainWindow):
         #config of the window
         self.setWindowIcon(QtGui.QIcon(filter_icon_path))
         self.setWindowTitle('Main Page')
-        self.setMinimumSize(1024,720)
+        self.setMinimumSize(1200,720)
         self.config_the_menubar()
         # Set up the main window and sidebar
         self.create_main_layout()
