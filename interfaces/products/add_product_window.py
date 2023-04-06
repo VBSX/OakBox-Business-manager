@@ -13,14 +13,11 @@ class WindowProductAdd(QMainWindow):
     def __init__(self, parent = None):
         super(WindowProductAdd, self).__init__(parent = parent)
         self.setWindowTitle('Adicionar Produto')
-        self.setMinimumWidth(400)
+        self.setMinimumWidth(600)
         self.add_icon = r'images/plus.png'
         self.database_handle_add = AddProducts()
         self.database_handle_consult = ProductsData()
-        self.data_out = None
-        
         self.setup_ui()
-        
         
     def setup_ui(self):
         self.layout = QVBoxLayout()
@@ -122,27 +119,38 @@ class WindowProductAdd(QMainWindow):
         layout_estoque.addWidget(self.estoque_maximo_edit, 0, Qt.AlignLeft)
         self.layout.addLayout(layout_estoque)
         
+        
+        layout_unidade_medida = QHBoxLayout()
+        layout_unidade_medida.setSpacing(10)
+        layout_unidade_medida.setAlignment(Qt.AlignLeft)
         self.unidade_medida_label = QLabel("Unidade medida:")
         self.combo_box_unidade = QComboBox()
         for unity_mesurement in self.database_handle_consult.get_all_unity_of_mesurament_acronym():
             self.combo_box_unidade.addItems(
                 unity_mesurement
                 )
-            
+        layout_unidade_medida.addWidget(self.unidade_medida_label, 0, Qt.AlignLeft)
+        layout_unidade_medida.addWidget(self.combo_box_unidade, 0, Qt.AlignLeft)
+        self.layout.addLayout(layout_unidade_medida)
 
+
+        layout_category = QHBoxLayout()
+        layout_category.setSpacing(10)
+        layout_category.setAlignment(Qt.AlignLeft)
         self.categoria_label = QLabel("Categoria:")
         self.combo_categoria = QComboBox()
         for category in self.database_handle_consult.get_all_category():
             self.combo_categoria.addItems(
                 category
                 )
-            
-        self.layout.addWidget(self.add)
+        layout_category.addWidget(self.categoria_label, 0, Qt.AlignLeft)
+        layout_category.addWidget(self.combo_categoria, 0, Qt.AlignLeft)
+        self.layout.addLayout(layout_category) 
         
+        self.layout.addWidget(self.add)
         # Criando um widget para conter o layout vertical
         widget = QWidget()
         widget.setLayout(self.layout)
-
         # Adicionando o widget ao central widget da janela principal
         self.setCentralWidget(widget)
         
@@ -157,29 +165,71 @@ class WindowProductAdd(QMainWindow):
         estoque_maximo = self.estoque_maximo_edit.text()
         unidade_de_medida = self.combo_box_unidade.currentText()
         categoria = self.combo_categoria.currentText()
-        valor = self.valor_unidade.text()
+        # valor = self.valor_unidade.text()
         
-        if self.verify_in_field_is_not_null():
-            if self.verify_if_product_exist_on_database() == False:
-                try:
-                    self.database_handle_add.add_on_database_new_product(nome_lower, quantidade, valor)
-                    self.show_dialog('Produto Adicionado com sucesso!')
-                except:
-                    self.show_dialog('erro ao adicionar')
-                    print('erro ao adicionar na database')
+        if self.verify_in_field_is_not_null(
+            nome,
+            quantidade,
+            codigo_de_barras,
+            valor_custo,
+            valor_por_unidade,
+            estoque_minimo,
+            estoque_maximo,
+            unidade_de_medida,
+            categoria):
+
+            if self.verify_if_product_exist_on_database(nome_lower) == False:
+                if self.verify_if_minimum_stock_is_less_than_maximum_stock(estoque_minimo,estoque_maximo):
+                    database_return = self.database_handle_add.add_on_database_new_product(
+                        codigo_de_barras,
+                        nome,
+                        valor_custo,
+                        valor_por_unidade,
+                        quantidade,       
+                        estoque_minimo,
+                        estoque_maximo,
+                        unidade_de_medida,
+                        categoria)
+                    
+                    if database_return  == True: 
+                        self.show_dialog('Produto Adicionado com sucesso!')
+                        self.reset_layout()
+                        self.close()
+                        self.parent().reset_layout()
+                    else: 
+                        self.show_dialog('erro ao adicionar')     
+                else:
+                    self.show_dialog('O estoque minimo tem que ser menor do que o estoque maximo!')    
             else:
                 self.show_dialog('O produto ja existe!')
 
-    def verify_in_field_is_not_null(self):
-        nome = self.name.text()
-        valor = self.valor_unidade.text()
-        if nome and valor:
+    def verify_in_field_is_not_null(
+            self,   
+            nome,
+            quantidade,
+            codigo_de_barras,
+            valor_custo,
+            valor_por_unidade,
+            estoque_minimo,
+            estoque_maximo,
+            unidade_de_medida,
+            categoria):
+
+        if (nome 
+            and quantidade
+            and codigo_de_barras 
+            and valor_custo
+            and valor_por_unidade
+            and estoque_minimo
+            and estoque_maximo
+            and unidade_de_medida
+            and categoria):
             return True
         else:
             self.show_dialog('Prencha os campos antes de continuar')
-    
-    def verify_if_product_exist_on_database(self):
-        nome = self.name.text()
+        
+    def verify_if_product_exist_on_database(self,nome):
+
         product_list = self.database_handle_consult.get_product_by_exact_name(nome)
         print(product_list)
         if product_list:
@@ -194,6 +244,15 @@ class WindowProductAdd(QMainWindow):
     def show_dialog(self, text):
         QMessageBox.about(self, 'DIALOG', text)
         
+    def reset_layout(self):
+        # Clear the central widget
+        self.centralWidget().setParent(None)
+        self.setup_ui()
+                
+    def verify_if_minimum_stock_is_less_than_maximum_stock(self,estoque_minimo,estoque_maximo):
+        if int(estoque_minimo) < int(estoque_maximo):
+            return True
+          
 if __name__ == "__main__":
     app = QApplication([])
     widget = WindowProductAdd()

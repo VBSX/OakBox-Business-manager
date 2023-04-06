@@ -20,13 +20,11 @@ from products_database import ProductsData
 class ProductsPage(QMainWindow):
     def __init__(self, parent=None):
         super().__init__(parent)
-        self.image_test = r'images/filter.png'
-        filter_icon_path = self.image_test
+        self.image_box = r'images/box.png'
         self.window_consult = ProductsInfo(self)
-        
         self.window_add = WindowProductAdd(self)
         #config of the window
-        self.setWindowIcon(QtGui.QIcon(filter_icon_path))
+        self.setWindowIcon(QtGui.QIcon(self.image_box))
         self.setWindowTitle('Produtos')
         self.setMinimumSize(950,320)
         self.config_the_toolbar()
