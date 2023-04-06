@@ -248,11 +248,12 @@ class ProductEditWindow(QMainWindow):
             #não foi alterado
             pass
         else:
-            product_code_changed = [True,
-                                    self.codigo_produto,
-                                    codigo_do_produto_para_verificar,
-                                    'Codigo_do_produto'
-                                    ]
+            product_code_changed = [
+                True,
+                self.codigo_produto,
+                codigo_do_produto_para_verificar,
+                'Codigo_do_produto'
+                ]
             
             print('Do alter query CODIGO DE BARRAS')
             
@@ -261,11 +262,12 @@ class ProductEditWindow(QMainWindow):
             #não foi alterado
             pass
         else:
-            product_name_changed = [True,
-                                    self.name_product_to_show,
-                                    nome_do_produto_para_verificar,
-                                    'Nome'
-                                    ]
+            product_name_changed = [
+                True,
+                self.name_product_to_show,
+                nome_do_produto_para_verificar,
+                'Nome'
+                ]
             
             print('Do alter query NOME DO PRODUTO')  
             
@@ -274,11 +276,12 @@ class ProductEditWindow(QMainWindow):
             #não foi alterado
             pass
         else:
-            product_cost_value_changed = [True,
-                                          self.cost_value,
-                                          valor_de_custo_para_verificar, 
-                                          'Valor_de_custo'
-                                          ]
+            product_cost_value_changed = [
+                True,
+                self.cost_value,
+                valor_de_custo_para_verificar, 
+                'Valor_de_custo'
+                ]
             
             print('Do alter query VALOR DE CUSTO')  
             
@@ -287,11 +290,12 @@ class ProductEditWindow(QMainWindow):
             #não foi alterado
             pass
         else:
-            product_unitary_value_changed = [True,
-                                             self.unitary_value,
-                                             valor_unitario_para_verificar,
-                                             'Valor_unitario'
-                                             ]
+            product_unitary_value_changed = [
+                True,
+                self.unitary_value,
+                valor_unitario_para_verificar,
+                'Valor_unitario'
+                ]
             
             print('Do alter query VALOR UNITARIO')  
             
@@ -300,11 +304,12 @@ class ProductEditWindow(QMainWindow):
             #não foi alterado
             pass
         else:
-            product_minimum_stock_changed = [True,
-                                             self.minimum_stock,
-                                             estoque_minimo_para_verificar, 
-                                             'Estoque_minimo'
-                                             ]
+            product_minimum_stock_changed = [
+                True,
+                self.minimum_stock,
+                estoque_minimo_para_verificar, 
+                'Estoque_minimo'
+                ]
             
             print('Do alter query ESTOQUE MINIMO') 
             
@@ -313,11 +318,12 @@ class ProductEditWindow(QMainWindow):
             #não foi alterado
             pass
         else:
-            product_maximum_stock_changed = [True,
-                                             self.maximum_stock,
-                                             estoque_maximo_para_verificar,
-                                             'Estoque_maximo'
-                                             ]
+            product_maximum_stock_changed = [
+                True,
+                self.maximum_stock,
+                estoque_maximo_para_verificar,
+                'Estoque_maximo'
+                ]
             
             print('Do alter query ESTOQUE MAXIMO')
         
@@ -326,11 +332,12 @@ class ProductEditWindow(QMainWindow):
             #não foi alterado
             pass
         else:
-            product_measurement_unit_changed = [True,
-                                                self.measurement_unit,
-                                                unidade_de_medida_selecionada_para_verificar,
-                                                'Unidade_de_medida'
-                                                ]
+            product_measurement_unit_changed = [
+                True,
+                self.measurement_unit,
+                unidade_de_medida_selecionada_para_verificar,
+                'Unidade_de_medida'
+                ]
             
             print('Do alter query UNIDADE DE MEDIDA')
             
@@ -342,78 +349,80 @@ class ProductEditWindow(QMainWindow):
         
         
         else:
-            product_category_changed = [True,
-                                        categoria_atual_maiuscula,
-                                        categoria_selecionada_para_verificar, 
-                                        'Categoria'
-                                        ]
-            
+            product_category_changed = [
+                True,
+                categoria_atual_maiuscula,
+                categoria_selecionada_para_verificar, 
+                'Categoria'
+                ]
             print('Do alter query CATEGORIA')
-        
-        
-        if self.verify_if_the_user_want_to_continue_editing_the_itens( product_code_changed,
-                                                                    product_name_changed,
-                                                                    product_cost_value_changed,
-                                                                    product_unitary_value_changed,
-                                                                    product_minimum_stock_changed,
-                                                                    product_maximum_stock_changed,
-                                                                    product_measurement_unit_changed,
-                                                                    product_category_changed
-                                                                    
-        ) == True:
-            
-            
-            if self.update_itens_on_database(  product_code_changed,
-                                            product_name_changed,
-                                            product_cost_value_changed,
-                                            product_unitary_value_changed,
-                                            product_minimum_stock_changed,
-                                            product_maximum_stock_changed,
-                                            product_measurement_unit_changed,
-                                            product_category_changed
-            ):  
-                self.show_dialog('Atualizado!')
-                self.parent().reset_layout()
-                self.close()
-                
+        if self.verify_if_minimum_stock_is_less_than_maximum_stock(
+            estoque_minimo_para_verificar,
+            estoque_maximo_para_verificar):
+            if self.verify_if_the_user_want_to_continue_editing_the_itens(
+                product_code_changed,
+                product_name_changed,
+                product_cost_value_changed,
+                product_unitary_value_changed,
+                product_minimum_stock_changed,
+                product_maximum_stock_changed,
+                product_measurement_unit_changed,
+                product_category_changed
+                ) == True:
+                if self.update_itens_on_database(
+                    product_code_changed,
+                    product_name_changed,
+                    product_cost_value_changed,
+                    product_unitary_value_changed,
+                    product_minimum_stock_changed,
+                    product_maximum_stock_changed,
+                    product_measurement_unit_changed,
+                    product_category_changed
+                ):  
+                    self.show_dialog('Atualizado!')
+                    self.parent().reset_layout()
+                    self.close()
+        else:
+            self.show_dialog('O estoque minimo tem que ser menor do que o estoque maximo!')       
                 
     
-    def verify_if_the_user_want_to_continue_editing_the_itens(self,product_code_changed,
-                                                                    product_name_changed,
-                                                                    product_cost_value_changed,
-                                                                    product_unitary_value_changed,
-                                                                    product_minimum_stock_changed,
-                                                                    product_maximum_stock_changed,
-                                                                    product_measurement_unit_changed,
-                                                                    product_category_changed ):
+    def verify_if_the_user_want_to_continue_editing_the_itens(
+        self,
+        product_code_changed,
+        product_name_changed,
+        product_cost_value_changed,
+        product_unitary_value_changed,
+        product_minimum_stock_changed,
+        product_maximum_stock_changed,
+        product_measurement_unit_changed,
+        product_category_changed ):
         texto_final ='Você deseja alterar os itens atuais pelos que estão abaixo:  '
-        
-        
-        list_of_itens =[ product_code_changed,
-                        product_name_changed,
-                        product_cost_value_changed,
-                        product_unitary_value_changed,
-                        product_minimum_stock_changed,
-                        product_maximum_stock_changed,
-                        product_measurement_unit_changed,
-                        product_category_changed]
 
-        
+        list_of_itens =[
+            product_code_changed,
+            product_name_changed,
+            product_cost_value_changed,
+            product_unitary_value_changed,
+            product_minimum_stock_changed,
+            product_maximum_stock_changed,
+            product_measurement_unit_changed,
+            product_category_changed]
+
         for item in list_of_itens:
             if item[0] == True:
                 item_changed = item[2]
                 item_initial_info = item[1]
-                
                 texto_final+='\nSem a modificação:'+str(item_initial_info)+'\nCom a modificação: '+str(item_changed)+'\n'
                 
-        if self.verify_if_has_one_item_edited(product_code_changed,
-                                            product_name_changed,
-                                            product_cost_value_changed,
-                                            product_unitary_value_changed,
-                                            product_minimum_stock_changed,
-                                            product_maximum_stock_changed,
-                                            product_measurement_unit_changed,
-                                            product_category_changed):   
+        if self.verify_if_has_one_item_edited(
+            product_code_changed,
+            product_name_changed,
+            product_cost_value_changed,
+            product_unitary_value_changed,
+            product_minimum_stock_changed,
+            product_maximum_stock_changed,
+            product_measurement_unit_changed,
+            product_category_changed):   
                 
             tela_de_confirmação = MyDialog(texto_final,'Atualizar Itens',self)
             tela_de_confirmação.show()
@@ -424,29 +433,30 @@ class ProductEditWindow(QMainWindow):
         else:
             self.show_dialog('Não há itens para editar')
         
-      
-        
     def verify_if_has_change_on_informations(self,elemento_sem_alteração, elemento_do_produto_alterado):
         if elemento_sem_alteração  == elemento_do_produto_alterado:
             #Not Changed
             return True    
 
-    def verify_if_has_one_item_edited(self, product_code_changed,
-                                            product_name_changed,
-                                            product_cost_value_changed,
-                                            product_unitary_value_changed,
-                                            product_minimum_stock_changed,
-                                            product_maximum_stock_changed,
-                                            product_measurement_unit_changed,
-                                            product_category_changed):
-        list_itens = [product_code_changed,
-                                            product_name_changed,
-                                            product_cost_value_changed,
-                                            product_unitary_value_changed,
-                                            product_minimum_stock_changed,
-                                            product_maximum_stock_changed,
-                                            product_measurement_unit_changed,
-                                            product_category_changed]
+    def verify_if_has_one_item_edited(
+        self, 
+        product_code_changed,
+        product_name_changed,
+        product_cost_value_changed,
+        product_unitary_value_changed,
+        product_minimum_stock_changed,
+        product_maximum_stock_changed,
+        product_measurement_unit_changed,
+        product_category_changed):
+        list_itens = [
+            product_code_changed,
+            product_name_changed,
+            product_cost_value_changed,
+            product_unitary_value_changed,
+            product_minimum_stock_changed,
+            product_maximum_stock_changed,
+            product_measurement_unit_changed,
+            product_category_changed]
         has_item_edited = False
         
         for item in list_itens:
@@ -458,23 +468,26 @@ class ProductEditWindow(QMainWindow):
         if has_item_edited == True:
             return True
 
-    def update_itens_on_database(self,product_code_changed,
-                                            product_name_changed,
-                                            product_cost_value_changed,
-                                            product_unitary_value_changed,
-                                            product_minimum_stock_changed,
-                                            product_maximum_stock_changed,
-                                            product_measurement_unit_changed,
-                                            product_category_changed):
+    def update_itens_on_database(
+        self,
+        product_code_changed,
+        product_name_changed,
+        product_cost_value_changed,
+        product_unitary_value_changed,
+        product_minimum_stock_changed,
+        product_maximum_stock_changed,
+        product_measurement_unit_changed,
+        product_category_changed):
         
-        list_of_itens = [   product_code_changed,
-                            product_name_changed,
-                            product_cost_value_changed,
-                            product_unitary_value_changed,
-                            product_minimum_stock_changed,
-                            product_maximum_stock_changed,
-                            product_measurement_unit_changed,
-                            product_category_changed]
+        list_of_itens = [
+            product_code_changed,
+            product_name_changed,
+            product_cost_value_changed,
+            product_unitary_value_changed,
+            product_minimum_stock_changed,
+            product_maximum_stock_changed,
+            product_measurement_unit_changed,
+            product_category_changed]
         
         for item in list_of_itens:
             item_changed_verify = item[0]
@@ -488,13 +501,13 @@ class ProductEditWindow(QMainWindow):
         if database_return:
             return True
   
-        
-        
-                
-    
     def show_dialog(self, text):
         QtWidgets.QMessageBox.about(self, 'DIALOG', text)
-    
+        
+    def verify_if_minimum_stock_is_less_than_maximum_stock(self,estoque_minimo,estoque_maximo):
+        if int(estoque_minimo) < int(estoque_maximo):
+            return True
+          
 if __name__ == "__main__":
     app = QtWidgets.QApplication([])
     widget = ProductEditWindow(1, 'pudim')
