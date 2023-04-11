@@ -126,12 +126,34 @@ class AddProducts():
             return True
         except sqlite3.Error as er:
             return er
+    def update_unit_of_mesurament(self,actual_name, actual_acronym, new_name, new_acronym):
+        try:
+            self.cursor.execute(
+                f"UPDATE Unidades_medidas SET Nome ='{new_name}', Sigla = '{new_acronym}'"
+                f"WHERE Nome = '{actual_name}' AND Sigla = '{actual_acronym}'"
+    )    
+            self.banco.commit()
+            return True
+        except sqlite3.Error as er:
+            return er
+        
+    def delete_some_unit_of_mesurament(self,name, acronym):
+        try:
             
+            self.cursor.execute(
+                f"DELETE FROM Unidades_medidas WHERE Nome='{name}' AND Sigla='{acronym}'"
+    )    
+            self.banco.commit()
+            return True
+        except sqlite3.Error as er:
+            return er
+       
 if __name__ =='__main__':
     s = AddProducts()
     # print(s.update_item_quantity( 2, 30,'a', 50))
     # print(s.insert_produtos_vendidos(1,'salame', 10, 2, 250))
     # print(s.adicionar_usuario('admin','Admin', 'Sys', '123456'))
     # print(s.add_on_database_new_product('4654864646321', 'Pirulito', '6','15','1','5','10', 'UN', 'DOCES'))
-    s.add_new_unit_of_mesurament('s', 'ss')
+    # s.add_new_unit_of_mesurament('s', 'ss')
+    print(s.delete_some_unit_of_mesurament('s', 's'))
     # s.a()
