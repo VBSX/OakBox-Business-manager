@@ -1,7 +1,6 @@
-
 import sys
 import os
-from PySide6 import QtCore, QtWidgets, QtGui
+# from PySide6 import QtCore, QtWidgets, QtGui
 from PySide6.QtWidgets import (
     QMainWindow,
     QHBoxLayout,
@@ -9,26 +8,30 @@ from PySide6.QtWidgets import (
     QPushButton,
     QDockWidget,
     QTextEdit,
+    QVBoxLayout,
+    QApplication
 )
 from PySide6.QtGui import QAction, QIcon, Qt, QDesktopServices, QPalette, QColor
 from PySide6.QtCore import QUrl
-from login import *
-path = os.path.abspath('interfaces/products')
+path = os.path.abspath('./')
 sys.path.append(path)
-from products.products_window import *
-sys.path.append('interface/stock')
-sys.path.append(path)
-from stock.window_stock import *
-from checkout.cashier_window import CheckoutPage
-
+from interfaces.login import *
+from interfaces.products.products_window import ProductsPage
+from interfaces.stock.window_stock import StockPage
+from interfaces.checkout.cashier_window import CheckoutPage
+from interfaces.mesurament_unity.mesurament_unit_window import WindowUnit
+from interfaces.category.category_window import CategoryWindow
 class MainPage(QMainWindow):
-    def __init__(self):
-        super(MainPage,self).__init__()
+    def __init__(self, parent=None):
+        super(MainPage,self).__init__(parent)
         self.image_test = r'images/filter.png'
         self.image_shopping_cart = r'images/shopping-cart.png'
         self.image_warehouse = r'images/warehouse.png'
         self.image_cash_register = r'images/cash-register.png'
         self.image_box = r'images/box.png'
+        self.image_rule = r'images/ruler.png'
+        self.category_image = r'images/category.png'
+        
         filter_icon_path = self.image_test
         #config of the window
         self.setWindowIcon(QtGui.QIcon(filter_icon_path))
@@ -47,13 +50,22 @@ class MainPage(QMainWindow):
         self.button_products = QPushButton("Produtos", clicked=self.open_products_window)
         self.button_estoque = QPushButton("Estoque", clicked=self.abrir_janela_estoque)
         self.button_caixa = QPushButton("Caixa", clicked=self.abrir_caixa)
+        self.button_mesurement = QPushButton("Unidades de medida", clicked=self.open_mesurement_unit_window)
+        self.button_category = QPushButton("Categorias", clicked=self.open_category_window)
         
         self.set_icons_and_resize_and_alter_font(self.button_caixa, self.image_cash_register)
         self.set_icons_and_resize_and_alter_font(self.button_estoque, self.image_warehouse)
         self.set_icons_and_resize_and_alter_font(self.button_products, self.image_box)
+        self.set_icons_and_resize_and_alter_font(self.button_mesurement, self.image_rule)
+        self.set_icons_and_resize_and_alter_font(self.button_category, self.category_image)
+        
+        
         layout.addWidget(self.button_estoque)
         layout.addWidget(self.button_products)
         layout.addWidget(self.button_caixa)
+        layout.addWidget(self.button_mesurement)
+        layout.addWidget(self.button_category)
+        
         widget.setLayout(layout)
         # Set the main window widget
         main_layout = QVBoxLayout()
@@ -150,6 +162,14 @@ class MainPage(QMainWindow):
         self.janela_caixa = CheckoutPage()
         self.setCentralWidget(self.janela_caixa)
         
+    def open_mesurement_unit_window(self):
+        self.mesurement_window = WindowUnit(self)
+        self.setCentralWidget(self.mesurement_window)
+    
+    def open_category_window(self):
+        self.category = CategoryWindow(self)
+        self.setCentralWidget(self.category)    
+        
     def set_dark_mode(self, enabled):
         if enabled:
             qApp.setStyle("Fusion")
@@ -174,8 +194,9 @@ class MainPage(QMainWindow):
             qApp.setStyle("Fusion")
             qApp.setPalette(QApplication.style().standardPalette())
 
+
 if __name__ == "__main__":
-    app = QtWidgets.QApplication([])
+    app = QApplication([])
     widget = MainPage()
     widget.show()
     sys.exit(app.exec())

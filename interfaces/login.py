@@ -1,12 +1,11 @@
 import sys
 import os
 from PySide6 import QtCore, QtWidgets, QtGui
-path = os.path.abspath('interfaces')
+path = os.path.abspath('./')
 sys.path.append(path)
-from main_page import *
-path = os.path.abspath('database/database_manager')
-sys.path.append(path)
-from products_database import *
+from interfaces.main_page import MainPage
+from database.database_manager.products_database import ProductsData
+
 class LoginPage(QtWidgets.QWidget):
     def __init__(self):
         super(LoginPage, self).__init__()
@@ -67,7 +66,7 @@ class LoginPage(QtWidgets.QWidget):
             self.set_stylesheet(self.dark_stylesheet)
 
     def open_main_page(self):
-        self.main_page = MainPage()
+        self.main_page = MainPage(self)
         self.main_page.show()
 
     def login_process(self):

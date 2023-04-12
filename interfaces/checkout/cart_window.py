@@ -5,11 +5,11 @@ from PySide6.QtWidgets import (
 from PySide6.QtCore import Qt
 import sys
 import os
-path = os.path.abspath('database/database_manager')
+path = os.path.abspath('./')
 sys.path.append(path)
-from products_database import *
-from add_product_database import *
-from dialog_window_confirmation import *
+from database.database_manager.products_database import ProductsData
+from database.database_manager.add_product_database import AddProducts
+from interfaces.checkout.dialog_window_confirmation import MyDialog
 
 class CartWidget(QMainWindow):
     def __init__(self, items, parent = None):

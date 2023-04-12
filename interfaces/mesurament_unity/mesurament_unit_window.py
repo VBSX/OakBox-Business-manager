@@ -12,21 +12,19 @@ from PySide6.QtWidgets import (
     QMessageBox,
     QDialog)
 from PySide6.QtGui import QAction,QIcon
-from add_mesurament_unit_window import AddUnitWindow
-from edit_mesurement_unit import EditUnitWindow
-import os
-path = os.path.abspath('database/database_manager')
-sys.path.append(path)
-from products_database import ProductsData
-from add_product_database import AddProducts
 
-path = os.path.abspath('interfaces/checkout')
+import os
+path = os.path.abspath('./')
 sys.path.append(path)
-from dialog_window_confirmation import *
+from interfaces.mesurament_unity.add_mesurament_unit_window import AddUnitWindow
+from interfaces.mesurament_unity.edit_mesurement_unit import EditUnitWindow
+from database.database_manager.products_database import ProductsData
+from database.database_manager.add_product_database import AddProducts
+from interfaces.checkout.dialog_window_confirmation import MyDialog
 
 class WindowUnit(QMainWindow):
-    def __init__(self):
-        super().__init__()
+    def __init__(self, parent= None):
+        super().__init__(parent)
         self.setWindowTitle("Unidades de Medida")
         self.database_get = ProductsData()
         self.database_insert = AddProducts()
@@ -34,7 +32,7 @@ class WindowUnit(QMainWindow):
         self.config_the_toolbar()
         self.setup_ui()
         self.setWindowIcon(QIcon(r'images/ruler.png'))
-
+        self.add_unit = AddUnitWindow(self)
 
     def setup_ui(self):
         # Criação dos widgets
@@ -101,8 +99,7 @@ class WindowUnit(QMainWindow):
         tool.addAction(button_remove_measurement_unity)
 
     def add_new_category_window(self):
-        self.category_window = AddUnitWindow(self)
-        self.category_window.show()
+        self.add_unit.show()
         
     def reset_layout(self):
         # Clear the central widget
@@ -136,7 +133,7 @@ class WindowUnit(QMainWindow):
                     self.show_dialog(f'erro:\n {database_return}')
                       
     def user_verify_continue_to_delete(self, name, acronym):
-        msg_of_warning = f'Deseja continuar a deletar o item?\n\nNome: {name}\nSigla: {acronym}'
+        msg_of_warning = f'Deseja continuar a deletar o item?\n\nNome: {name}\nSigla: {acronym}\n'
         tela_de_confirmação = MyDialog(msg_of_warning,'Deletar Item',self)
         tela_de_confirmação.show()
         if tela_de_confirmação.exec() == QDialog.Accepted:

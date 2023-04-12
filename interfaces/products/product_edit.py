@@ -1,21 +1,21 @@
 from PySide6.QtWidgets import QLabel, QLineEdit, QVBoxLayout, QWidget, QMainWindow, QComboBox, QPushButton,QHBoxLayout,QDialog
 from PySide6 import QtWidgets
 from PySide6.QtGui import QDoubleValidator, QIntValidator, Qt
+from PySide6 import QtCore
 import sys
 import os
-path = os.path.abspath('database/database_manager')
+path = os.path.abspath('./')
 sys.path.append(path)
-from products_database import *
-from add_product_window import *
-path = os.path.abspath('interfaces/checkout')
-sys.path.append(path)
-from dialog_window_confirmation import *
-
+from database.database_manager.products_database import ProductsData
+from interfaces.checkout.dialog_window_confirmation import MyDialog
+from database.database_manager.add_product_database import AddProducts
 
 class ProductEditWindow(QMainWindow):
     def __init__(self,id,nome, parent=None):
         super().__init__(parent)
+        
         # Configurando a janela principal
+        self.setWindowModality(QtCore.Qt.ApplicationModal)
         self.setWindowTitle("Edição de Produto")
         self.setMinimumSize(500,500)
         # Chamando a função para configurar o layout da página

@@ -4,14 +4,16 @@ from PySide6.QtWidgets import (
    )
 
 import os
-path = os.path.abspath('database/database_manager')
+path = os.path.abspath('./')
 sys.path.append(path)
-from mesurement_window_base import MesuramentBase
+from interfaces.base_windows.mesurement_window_base import MesuramentBase
 
 class AddUnitWindow(MesuramentBase):
     def __init__(self,parent=None):
         super().__init__(parent)
+        self.setWindowTitle("Adinionar unidade de medida")
         self.button_add_unit_of_measurement.clicked.connect(self.add_unit)
+        
     def add_unit(self):
         # Obtém os valores dos campos
         name = self.line_edit_unit_of_measurement.text()

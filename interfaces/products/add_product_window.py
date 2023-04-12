@@ -4,10 +4,10 @@ QMainWindow, QMessageBox,QHBoxLayout,QVBoxLayout )
 from PySide6.QtGui import Qt,QDoubleValidator,QIntValidator, QIcon
 import sys
 import os
-path = os.path.abspath('database/database_manager')
+path = os.path.abspath('./')
 sys.path.append(path)
-from add_product_database import *
-from products_database import *
+from database.database_manager.add_product_database import AddProducts
+from database.database_manager.products_database import ProductsData
 
 class WindowProductAdd(QMainWindow):
     def __init__(self, parent = None):

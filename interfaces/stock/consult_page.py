@@ -1,9 +1,9 @@
 from PySide6.QtWidgets import QPushButton, QHBoxLayout, QWidget, QLineEdit,QApplication,QMessageBox, QMainWindow
 import sys
 import os
-path = os.path.abspath('database/database_manager')
+path = os.path.abspath('./')
 sys.path.append(path)
-from products_database import *
+from database.database_manager.products_database import ProductsData
 
 class ConsultWindow(QMainWindow):
     def __init__(self,parent = None):

@@ -9,17 +9,16 @@ from PySide6.QtWidgets import (
     QLineEdit,
     QPushButton,
     QMessageBox)
-from PySide6.QtGui import QIcon
 import os
-path = os.path.abspath('database/database_manager')
+path = os.path.abspath('./')
 sys.path.append(path)
-from products_database import ProductsData
-from add_product_database import AddProducts
+from database.database_manager.products_database import ProductsData
+from database.database_manager.add_product_database import AddProducts
 
 class MesuramentBase(QMainWindow):
     def __init__(self,parent=None):
         super().__init__(parent)
-        self.setWindowTitle("Adicionar Unidade de Medida")
+        
         self.setMinimumSize(350,100)
         self.database_get = ProductsData()
         self.database_insert = AddProducts()

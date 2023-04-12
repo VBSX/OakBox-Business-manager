@@ -1,5 +1,3 @@
-from consult_window import *
-from add_product_window import *
 import sys
 from PySide6 import QtCore, QtWidgets, QtGui
 from PySide6.QtWidgets import (
@@ -7,15 +5,14 @@ from PySide6.QtWidgets import (
     QHBoxLayout,QWidget, QToolBar, QLabel,QTableWidget,QAbstractItemView,QTableWidgetItem
 )
 from PySide6.QtGui import QAction, QIcon
-from table_widget import TableWidget
-from product_edit import ProductEditWindow
-from os.path import dirname, join, abspath
-sys.path.insert(0, abspath(join(dirname(__file__), '..')))
-from login import *
-path = os.path.abspath('database/database_manager')
+import os
+path = os.path.abspath('./')
 sys.path.append(path)
-from products_database import ProductsData
-
+from interfaces.products.consult_window import *
+from interfaces.products.add_product_window import *
+from interfaces.products.table_widget import TableWidget
+from interfaces.products.product_edit import ProductEditWindow
+from database.database_manager.products_database import ProductsData
 
 class ProductsPage(QMainWindow):
     def __init__(self, parent=None):
@@ -32,11 +29,8 @@ class ProductsPage(QMainWindow):
 
     def setup_ui(self):
         #Add the menu options of the program
-        
         self.label_teste = QLabel()
-
         self.table = QTableWidget()
-        
         self.table.setColumnCount(9)
         self.table.setHorizontalHeaderLabels(['ID','Codigo produto' ,
                                               'Produto','Valor de custo', 'Valor unitario' ,

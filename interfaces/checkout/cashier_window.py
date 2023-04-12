@@ -1,13 +1,13 @@
 import sys
 import os
-path = os.path.abspath('interfaces/checkout')
+path = os.path.abspath('./')
 sys.path.append(path)
-from product_informations_window import *
-from cart_window import *
+from interfaces.checkout.product_informations_window import ProductsInfo
+from interfaces.checkout.cart_window import CartWidget
 from PySide6 import  QtWidgets, QtGui
 from PySide6.QtWidgets import (
     QMainWindow, 
-    QWidget, QToolBar, QMessageBox
+    QWidget, QToolBar, QMessageBox, QVBoxLayout
 )
 from PySide6.QtGui import QAction, QIcon
 class CheckoutPage(QMainWindow):

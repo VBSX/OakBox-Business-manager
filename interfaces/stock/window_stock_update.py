@@ -3,10 +3,10 @@ from PySide6 import QtGui
 from PySide6.QtGui import QIntValidator
 import sys
 import os
-path = os.path.abspath('database/database_manager')
+path = os.path.abspath('./')
 sys.path.append(path)
-from add_product_database import *       
-from products_database import *
+from database.database_manager.add_product_database import AddProducts       
+from database.database_manager.products_database import ProductsData
 
 class UpdateStock(QMainWindow):
     def __init__(self,id,nome,parent = None):

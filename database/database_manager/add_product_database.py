@@ -1,9 +1,9 @@
 import sqlite3
 import os       
 import sys
-path = os.path.abspath('env_get')
+path = os.path.abspath('./')
 sys.path.append(path)
-from consulta_horario_sys import HorarioDoSistema
+from env_get.consulta_horario_sys import HorarioDoSistema
 
 class AddProducts():
     def __init__(self):
@@ -147,7 +147,37 @@ class AddProducts():
             return True
         except sqlite3.Error as er:
             return er
-       
+    
+    def delete_some_category(self, name):
+        try:
+            self.cursor.execute(
+                f"DELETE FROM Categorias WHERE Nome='{name}'"
+    )
+            self.banco.commit()
+            return True
+        except sqlite3.Error as er:
+            return er
+    
+    def add_new_category(self, name):
+        try:
+            self.cursor.execute(
+                        "INSERT INTO Categorias (Nome) "
+            f"VALUES ('{name}')")
+            self.banco.commit()
+            return True
+        except sqlite3.Error as er:
+            return er
+        
+    def update_category_item(self,actual_name, new_name):
+        try:
+            self.cursor.execute(
+                f"UPDATE Categorias SET Nome ='{new_name}'"
+                f"WHERE Nome = '{actual_name}'"
+    )    
+            self.banco.commit()
+            return True
+        except sqlite3.Error as er:
+            return er
 if __name__ =='__main__':
     s = AddProducts()
     # print(s.update_item_quantity( 2, 30,'a', 50))

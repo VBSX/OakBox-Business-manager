@@ -2,15 +2,16 @@ import sys
 from PySide6.QtWidgets import (
     QApplication,
    )
-
+from PySide6 import QtCore
 import os
-path = os.path.abspath('database/database_manager')
+path = os.path.abspath('./')
 sys.path.append(path)
-from mesurement_window_base import MesuramentBase
+from interfaces.base_windows.mesurement_window_base  import MesuramentBase
 
 class EditUnitWindow(MesuramentBase):
     def __init__(self,unit_name, unit_acronym,parent=None):
         super().__init__(parent)
+        self.setWindowModality(QtCore.Qt.ApplicationModal)
         self.button_add_unit_of_measurement.setText('Atualizar Informações')
         self.actual_unit_name = unit_name
         self.actual_unit_acronym = unit_acronym
@@ -18,7 +19,7 @@ class EditUnitWindow(MesuramentBase):
         unit_acronym_low = self.actual_unit_acronym.lower()
         self.line_edit_unit_of_measurement.setText(unit_name_low)
         self.line_edit_acronym.setText(unit_acronym_low)
-        self.button_add_unit_of_measurement .clicked.connect(self.edit_unit_info)
+        self.button_add_unit_of_measurement.clicked.connect(self.edit_unit_info)
         
     def edit_unit_info(self):
         # Obtém os valores dos campos

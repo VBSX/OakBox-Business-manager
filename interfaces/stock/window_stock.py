@@ -2,23 +2,15 @@ import sys
 from PySide6 import  QtWidgets, QtGui
 from PySide6.QtWidgets import (
     QMainWindow, 
-    QWidget, QToolBar, QTableWidget, QTableWidgetItem, QVBoxLayout, QAbstractItemView
+    QWidget, QToolBar, QMessageBox,QTableWidget, QTableWidgetItem, QVBoxLayout, QAbstractItemView
 )
 from PySide6.QtGui import QAction, QIcon
 import os
-
-path = os.path.abspath('interfaces/stock')
+path = os.path.abspath('./')
 sys.path.append(path)
-from consult_page import *
-from window_stock_update import *
-path = os.path.abspath('interfaces/')
-sys.path.append(path)
-
-from login import *
-path = os.path.abspath('database/database_manager')
-sys.path.append(path)
-from products_database import ProductsData
-
+from interfaces.stock.consult_page import ConsultWindow
+from interfaces.stock.window_stock_update import UpdateStock
+from database.database_manager.products_database import ProductsData
 
 class StockPage(QMainWindow):
     def __init__(self, parent=None):
