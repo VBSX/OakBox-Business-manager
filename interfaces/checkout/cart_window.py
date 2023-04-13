@@ -1,6 +1,6 @@
 from PySide6.QtWidgets import (
     QApplication, QMainWindow, QWidget, QVBoxLayout, QHBoxLayout, QListWidget, 
-    QPushButton, QLineEdit, QListWidgetItem, QLabel, QMessageBox, 
+    QPushButton, QLineEdit, QListWidgetItem, QLabel, QMessageBox, QDialog
 )
 from PySide6.QtCore import Qt
 import sys
@@ -167,7 +167,7 @@ class CartWidget(QMainWindow):
             return True
     def verificar_se_o_produto_tem_no_estoque(self, nome_produto, id_produto, quantidade_a_ser_vendida):
         data = self.database_get.get_product_quatity(nome_produto, id_produto)
-        quantidade_do_estoque = int(data [0][0])
+        quantidade_do_estoque = int(data)
         if quantidade_do_estoque >=int(quantidade_a_ser_vendida):
             return True
                 
@@ -185,7 +185,7 @@ class CartWidget(QMainWindow):
             id_do_produto = self.items[row][0]
             data = self.database_get.get_product_quatity(nome_do_produto, id_do_produto)
             
-            quantidade_que_existe_atualmente_no_estoque = int(data[0][0])
+            quantidade_que_existe_atualmente_no_estoque = int(data)
             quantidade_atualizada_para_o_banco = quantidade_que_existe_atualmente_no_estoque - int(quantidade_informada) 
             print('quantidade no estoque ', quantidade_que_existe_atualmente_no_estoque, 
                   'quantidade atualizada para o banco', quantidade_atualizada_para_o_banco, 

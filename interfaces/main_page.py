@@ -1,6 +1,27 @@
+"""""
+ _____             _            _             _  _    _         __ _____      
+/  __ \           | |          | |           (_)| |  | |       / / |____ |     
+| /  \/  ___    __| |  ___   __| | __      __ _ | |_ | |__    / /     / /     
+| |     / _ \  / _` | / _ \ / _` | \ \ /\ / /| || __|| '_ \  < <      \ \     
+| \__/\| (_) || (_| ||  __/| (_| |  \ V  V / | || |_ | | | |  \ \ .___/ /     
+ \____/ \___/  \__,_| \___| \__,_|   \_/\_/  |_| \__||_| |_|   \_\\____/      
+                                                                              
+                                                                              
+          _____         _     _____                _____  _____  _____  _____ 
+   ____  |  _  |       | |   |_   _|              / __  \|  _  |/ __  \|____ |
+  / __ \ | | | |  __ _ | | __  | |   _ __    ___  `' / /'| |/' |`' / /'    / /
+ / / _` || | | | / _` || |/ /  | |  | '_ \  / __|   / /  |  /| |  / /      \ \
+| | (_| |\ \_/ /| (_| ||   <  _| |_ | | | || (__  ./ /___\ |_/ /./ /___.___/ /
+ \ \__,_| \___/  \__,_||_|\_\ \___/ |_| |_| \___| \_____/ \___/ \_____/\____/ 
+  \____/    
+  
+                            github.com/vbsx    
+                            https://www.oakbox.com.br
+                            https://www.linkedin.com/in/oak-borges                                                             
+ """""                                                                                       
 import sys
 import os
-# from PySide6 import QtCore, QtWidgets, QtGui
+
 from PySide6.QtWidgets import (
     QMainWindow,
     QHBoxLayout,
@@ -44,7 +65,6 @@ class MainPage(QMainWindow):
         
     def create_main_layout(self):
         # Create a QWidget for the main content
-        
         widget = QWidget()
         layout = QHBoxLayout()
         self.button_products = QPushButton("Produtos", clicked=self.open_products_window)
@@ -59,7 +79,6 @@ class MainPage(QMainWindow):
         self.set_icons_and_resize_and_alter_font(self.button_mesurement, self.image_rule)
         self.set_icons_and_resize_and_alter_font(self.button_category, self.category_image)
         
-        
         layout.addWidget(self.button_estoque)
         layout.addWidget(self.button_products)
         layout.addWidget(self.button_caixa)
@@ -73,8 +92,7 @@ class MainPage(QMainWindow):
         main_widget = QWidget()
         main_widget.setLayout(main_layout)
         self.setCentralWidget(main_widget)
-        self.create_sidebar()
-        
+        self.create_sidebar()  
 
     def create_sidebar(self):
         # Create a QDockWidget for the sidebar
@@ -91,6 +109,7 @@ class MainPage(QMainWindow):
         self.github_button.clicked.connect(lambda: QDesktopServices.openUrl(QUrl("https://github.com/vbsx")))
         self.reset_sidebar_button = QPushButton("Voltar Ao Menu")
         self.reset_sidebar_button.clicked.connect(self.reset_layout)
+        
         # Add the buttons to the sidebar layout
         self.sidebar_contents_layout = QVBoxLayout()
         self.sidebar_contents_layout.addWidget(self.github_button)
@@ -109,7 +128,6 @@ class MainPage(QMainWindow):
         self.sidebar.setFixedHeight(self.height())
         self.sidebar.setFeatures(QDockWidget.DockWidgetMovable | QDockWidget.DockWidgetFloatable | QDockWidget.NoDockWidgetFeatures)
 
-
     def reset_layout(self):
         # Remove all widgets from the sidebar layout
         while self.sidebar_contents_layout.count() > 0:
@@ -123,12 +141,11 @@ class MainPage(QMainWindow):
         
         # Remove the central widget
         self.centralWidget().setParent(None)
-    
     # Recreate the layout
         self.create_main_layout()
         
     def set_icons_and_resize_and_alter_font(self, item, icon):
-        item.setStyleSheet("padding :30px;font-size:18px;margin-top:30px")
+        item.setStyleSheet("padding :30px;font-size:18px;margin-top:30px;")
         item.setIcon(QIcon(icon))
         item.setIconSize(QtCore.QSize(64,64))
     

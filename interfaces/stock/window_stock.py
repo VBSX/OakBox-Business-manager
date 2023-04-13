@@ -1,3 +1,24 @@
+"""""
+ _____             _            _             _  _    _         __ _____      
+/  __ \           | |          | |           (_)| |  | |       / /|____ |     
+| /  \/  ___    __| |  ___   __| | __      __ _ | |_ | |__    / /     / /     
+| |     / _ \  / _` | / _ \ / _` | \ \ /\ / /| || __|| '_ \  < <      \ \     
+| \__/\| (_) || (_| ||  __/| (_| |  \ V  V / | || |_ | | | |  \ \ .___/ /     
+ \____/ \___/  \__,_| \___| \__,_|   \_/\_/  |_| \__||_| |_|   \_\\____/      
+                                                                              
+                                                                              
+          _____         _     _____                _____  _____  _____  _____ 
+   ____  |  _  |       | |   |_   _|              / __  \|  _  |/ __  \|____ |
+  / __ \ | | | |  __ _ | | __  | |   _ __    ___  `' / /'| |/' |`' / /'    / /
+ / / _` || | | | / _` || |/ /  | |  | '_ \  / __|   / /  |  /| |  / /      \ \
+| | (_| |\ \_/ /| (_| ||   <  _| |_ | | | || (__  ./ /___\ |_/ /./ /___.___/ /
+ \ \__,_| \___/  \__,_||_|\_\ \___/ |_| |_| \___| \_____/ \___/ \_____/\____/ 
+  \____/    
+  
+                            github.com/vbsx    
+                            https://www.oakbox.com.br
+                            https://www.linkedin.com/in/oak-borges                                                             
+ """"" 
 import sys
 from PySide6 import  QtWidgets, QtGui
 from PySide6.QtWidgets import (
@@ -48,12 +69,12 @@ class StockPage(QMainWindow):
     def config_the_toolbar(self):
         button_consult_product = QAction(QIcon(r'images/filter.png'),"Consultar Produto" ,self)
         button_consult_product.triggered.connect(self.consult_product)
-        button_edit_product = QAction(QIcon(r'images/pencil.png'),"Editar Produto" ,self)
-        button_edit_product.triggered.connect(self.product_edit_window)
+        button_add_product = QAction(QIcon(r'images/plus.png'),"Adicionar Produto Ao estoque" ,self)
+        button_add_product.triggered.connect(self.product_add_window)
         tool = QToolBar()
         self.addToolBar(tool)
         tool.addAction(button_consult_product)
-        tool.addAction(button_edit_product)
+        tool.addAction(button_add_product)
         
     def consult_product(self):
         self.consult_window.show()
@@ -112,7 +133,7 @@ class StockPage(QMainWindow):
         self.update_window_stock = UpdateStock(id,nome,self)
         self.update_window_stock.show()
      
-    def product_edit_window(self):
+    def product_add_window(self):
         current_index = self.table.currentIndex()
         current_row = current_index.row()
         item_id = self.table.item(current_row, 0)

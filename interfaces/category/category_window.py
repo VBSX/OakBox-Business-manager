@@ -10,8 +10,8 @@ from PySide6.QtWidgets import (
     QToolBar,
     QHBoxLayout,
     QMessageBox,
-    QDialog)
-from PySide6.QtGui import QAction,QIcon
+    QDialog,)
+from PySide6.QtGui import QAction,QIcon, QPalette, QColor, Qt
 import os
 path = os.path.abspath('./')
 sys.path.append(path)
@@ -39,7 +39,7 @@ class CategoryWindow(QMainWindow):
     def setup_ui(self):
         # Criação dos widgets
         self.list_unidades = QListWidget()
-
+        self.list_unidades.itemSelectionChanged.connect(self.on_item_selection_changed)
         # Configuração dos layouts
         central_widget = QWidget()
         self.setCentralWidget(central_widget)
@@ -71,6 +71,7 @@ class CategoryWindow(QMainWindow):
         # Adiciona as unidades de medida na lista
         for name in self.all_itens:
             item = QListWidgetItem(self.list_unidades)
+            
             widget = QWidget()
             layout = QHBoxLayout()
             widget.setLayout(layout)
@@ -147,8 +148,19 @@ class CategoryWindow(QMainWindow):
     def open_add_new_item_window(self):
         self.new_item_window = CategoryAddWindow(self)
         self.new_item_window.show()
+        
+    def on_item_selection_changed(self):
+        # Obter a lista de itens selecionados
+        selected_items = self.list_unidades.selectedItems()
 
-    
+        # Definir a cor do texto dos itens selecionados como vermelho
+        palette = QPalette()
+        color = QColor(Qt.red)
+        palette.setColor(QPalette.Text, color)
+
+        # Percorrer os itens selecionados e definir a paleta de cor
+        for item in selected_items:
+            item.setForeground(color)
     def show_dialog(self, text):
         QMessageBox.about(self, 'DIALOG', text)
 
