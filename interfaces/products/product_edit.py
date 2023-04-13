@@ -106,12 +106,20 @@ class ProductEditWindow(QMainWindow):
         label_cost_value_suffix = QLabel("R$")
 
         # Criar um QDoubleValidator para validar o input do usuário
-        validator = QDoubleValidator()
-        validator.setDecimals(2)
-        validator.setNotation(QDoubleValidator.StandardNotation)
+        validator_double = QDoubleValidator()
+               
+        validator_double.setBottom(1)  # Define o limite para que não seja permitido negativos
 
+        validator_double.setDecimals(2)
+        validator_double.setNotation(QDoubleValidator.StandardNotation)
+
+        #Validador para numeros inteiros e positivos
+        
+        validator_int = QIntValidator()
+        validator_int.setBottom(1)
+        
         # Adicionar o validator no QLineEdit
-        self.line_edit_cost_value.setValidator(validator)
+        self.line_edit_cost_value.setValidator(validator_double)
         self.line_edit_cost_value.setFixedWidth(100)
         self.line_edit_cost_value.setText(self.cost_value)
         
@@ -137,7 +145,7 @@ class ProductEditWindow(QMainWindow):
         label_unitario_suffix = QLabel(" R$")
    
         # Adicionar o validator no QLineEdit
-        self.line_edit_unitary_value.setValidator(validator)
+        self.line_edit_unitary_value.setValidator(validator_double)
         self.line_edit_unitary_value.setFixedWidth(100)
         self.line_edit_unitary_value.setText(self.unitary_value)
         
@@ -158,11 +166,13 @@ class ProductEditWindow(QMainWindow):
         self.layout.addWidget(label_quantity)
         self.layout.addWidget(line_edit_quantity_of_product)        
 
+        
         # Adicionando o QLabel e QLineEdit para Estoque Minimo
         label_minimum_stock = QLabel("Estoque Minimo:")
         self.line_edit_minimum_stock = QLineEdit()
         self.line_edit_minimum_stock.setText(self.minimum_stock)
-        self.line_edit_minimum_stock.setValidator(QIntValidator()) 
+        self.line_edit_minimum_stock.setValidator(validator_int) 
+        
 
         self.layout.addWidget(label_minimum_stock)
         self.layout.addWidget(self.line_edit_minimum_stock)
@@ -171,7 +181,7 @@ class ProductEditWindow(QMainWindow):
         label_maximus_stock = QLabel("Estoque Maximo:")
         self.line_edit_maximus_stock = QLineEdit()
         self.line_edit_maximus_stock.setText(self.maximum_stock)
-        self.line_edit_maximus_stock.setValidator(QIntValidator()) 
+        self.line_edit_maximus_stock.setValidator(validator_int) 
         self.layout.addWidget(label_maximus_stock)
         self.layout.addWidget(self.line_edit_maximus_stock)
         

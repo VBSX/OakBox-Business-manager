@@ -37,7 +37,6 @@ class WindowProductAdd(QMainWindow):
         layout_codigo_barras.addWidget(self.codigo_produto_edit, 0, Qt.AlignLeft)
         self.layout.addLayout(layout_codigo_barras)
         
-        
         layout_layout_nome_produto = QHBoxLayout()
         layout_layout_nome_produto.setSpacing(10)
         layout_layout_nome_produto.setAlignment(Qt.AlignLeft)
@@ -56,11 +55,17 @@ class WindowProductAdd(QMainWindow):
         # Criar um QLabel para o sulfixo
         label_valor_custo_suffix = QLabel("R$")
         # Criar um QDoubleValidator para validar o input do usuário
-        validator = QDoubleValidator()
-        validator.setDecimals(2)
-        validator.setNotation(QDoubleValidator.StandardNotation)
+        validator_double = QDoubleValidator()    
+        validator_double.setBottom(1)  # Define o limite para que não seja permitido negativos
+        validator_double.setDecimals(2)
+        validator_double.setNotation(QDoubleValidator.StandardNotation)
+
+        #Validador para numeros inteiros e positivos
+        validator_int = QIntValidator()
+        validator_int.setBottom(1)
+        
         # Adicionar o validator no QLineEdit
-        self.line_edit_valor_custo.setValidator(validator)
+        self.line_edit_valor_custo.setValidator(validator_double)
         self.line_edit_valor_custo.setFixedWidth(100)
         # Adicionar o QLineEdit e o QLabel no QHBoxLayout
         layout_valor_custo.addWidget(label_valor_custo, 0, Qt.AlignLeft)
@@ -69,14 +74,14 @@ class WindowProductAdd(QMainWindow):
         # Adicionar o QHBoxLayout na grid layout
         self.layout.addLayout(layout_valor_custo)
         
-        
         #Configs do input do valor unitario
         self.valor_unitario_label = QLabel("Valor unitario: ")
         self.valor_unitario_edit  = QLineEdit()
         # Criar um QLabel para o sulfixo
         label_valor_unitario_suffix = QLabel("R$")
+        
         # Adicionar o validator no QLineEdit
-        self.valor_unitario_edit.setValidator(validator)
+        self.valor_unitario_edit.setValidator(validator_double)
         self.valor_unitario_edit.setFixedWidth(100)
         # Adicionar o QLineEdit e o QLabel no QHBoxLayout
         layout_valor_custo.addWidget(self.valor_unitario_label, 0, Qt.AlignLeft)
@@ -106,14 +111,14 @@ class WindowProductAdd(QMainWindow):
         self.estoque_minimo_label = QLabel("Estoque mínimo:")
         self.estoque_minimo_edit = QLineEdit()
         self.estoque_minimo_edit.returnPressed.connect(self.add.click)
-        self.estoque_minimo_edit.setValidator(QIntValidator()) 
+        self.estoque_minimo_edit.setValidator(validator_int) 
         layout_estoque.addWidget(self.estoque_minimo_label, 0, Qt.AlignLeft)
         layout_estoque.addWidget(self.estoque_minimo_edit, 0, Qt.AlignLeft)
 
         
         self.estoque_maximo_label = QLabel("Estoque máximo:")
         self.estoque_maximo_edit = QLineEdit()
-        self.estoque_maximo_edit.setValidator(QIntValidator()) 
+        self.estoque_maximo_edit.setValidator(validator_int) 
         self.estoque_maximo_edit.returnPressed.connect(self.add.click)
         layout_estoque.addWidget(self.estoque_maximo_label, 0, Qt.AlignLeft)
         layout_estoque.addWidget(self.estoque_maximo_edit, 0, Qt.AlignLeft)
@@ -165,7 +170,6 @@ class WindowProductAdd(QMainWindow):
         estoque_maximo = self.estoque_maximo_edit.text()
         unidade_de_medida = self.combo_box_unidade.currentText()
         categoria = self.combo_categoria.currentText()
-        # valor = self.valor_unidade.text()
         
         if self.verify_in_field_is_not_null(
             nome,

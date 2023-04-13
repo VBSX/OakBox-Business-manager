@@ -1,3 +1,24 @@
+"""""
+ _____             _            _             _  _    _         __ _____      
+/  __ \           | |          | |           (_)| |  | |       / /|____ |     
+| /  \/  ___    __| |  ___   __| | __      __ _ | |_ | |__    / /     / /     
+| |     / _ \  / _` | / _ \ / _` | \ \ /\ / /| || __|| '_ \  < <      \ \     
+| \__/\| (_) || (_| ||  __/| (_| |  \ V  V / | || |_ | | | |  \ \ .___/ /     
+ \____/ \___/  \__,_| \___| \__,_|   \_/\_/  |_| \__||_| |_|   \_\\____/      
+                                                                              
+                                                                              
+          _____         _     _____                _____  _____  _____  _____ 
+   ____  |  _  |       | |   |_   _|              / __  \|  _  |/ __  \|____ |
+  / __ \ | | | |  __ _ | | __  | |   _ __    ___  `' / /'| |/' |`' / /'    / /
+ / / _` || | | | / _` || |/ /  | |  | '_ \  / __|   / /  |  /| |  / /      \ \
+| | (_| |\ \_/ /| (_| ||   <  _| |_ | | | || (__  ./ /___\ |_/ /./ /___.___/ /
+ \ \__,_| \___/  \__,_||_|\_\ \___/ |_| |_| \___| \_____/ \___/ \_____/\____/ 
+  \____/    
+  
+                            github.com/vbsx    
+                            https://www.oakbox.com.br
+                            https://www.linkedin.com/in/oak-borges                                                             
+ """"" 
 from PySide6.QtWidgets import QPushButton, QHBoxLayout, QWidget, QLineEdit,QApplication,QMessageBox, QMainWindow, QLabel,QVBoxLayout
 from PySide6 import QtGui
 from PySide6.QtGui import QIntValidator
@@ -26,7 +47,11 @@ class UpdateStock(QMainWindow):
         self.mensagem_direcional = QLabel()
         self.mensagem_direcional.setText('Coloque a quantidade a ser adicionada no estoque: ')
         self.quantidade_a_adicionar = QLineEdit()
-        self.quantidade_a_adicionar.setValidator(QIntValidator()) 
+        # self.quantidade_a_adicionar.setValidator(QIntValidator()) 
+        validator = QIntValidator()
+        validator.setBottom(1)  # Define o limite para que não seja permitido negativos
+        self.quantidade_a_adicionar.setValidator(validator)
+
         self.quantidade_a_adicionar.setPlaceholderText("Quantidade") 
         self.quantidade_a_adicionar.editingFinished.connect(self.atualizar_quantidade_final)
 
