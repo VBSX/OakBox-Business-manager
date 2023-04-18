@@ -87,7 +87,7 @@ class LoginPage(QtWidgets.QWidget):
             self.set_stylesheet(self.dark_stylesheet)
 
     def open_main_page(self):
-        self.main_page = MainPage(self)
+        self.main_page = MainPage()
         self.main_page.show()
 
     def login_process(self):

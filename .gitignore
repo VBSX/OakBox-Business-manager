@@ -2,3 +2,6 @@
 __pycache__
 .vscode
 lauch.json
+main.spec
+build
+dist

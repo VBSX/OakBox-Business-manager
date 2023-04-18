@@ -155,7 +155,7 @@ class CategoryWindow(QMainWindow):
 
         # Definir a cor do texto dos itens selecionados como vermelho
         palette = QPalette()
-        color = QColor(Qt.red)
+        color = QColor(Qt.blue)
         palette.setColor(QPalette.Text, color)
 
         # Percorrer os itens selecionados e definir a paleta de cor

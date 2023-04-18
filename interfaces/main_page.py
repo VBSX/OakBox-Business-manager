@@ -30,9 +30,10 @@ from PySide6.QtWidgets import (
     QDockWidget,
     QTextEdit,
     QVBoxLayout,
-    QApplication
+    QApplication,
+    QLabel
 )
-from PySide6.QtGui import QAction, QIcon, Qt, QDesktopServices, QPalette, QColor
+from PySide6.QtGui import QAction, QIcon, Qt, QDesktopServices, QPalette, QColor,QPixmap,QImage
 from PySide6.QtCore import QUrl
 path = os.path.abspath('./')
 sys.path.append(path)
@@ -45,19 +46,17 @@ from interfaces.category.category_window import CategoryWindow
 class MainPage(QMainWindow):
     def __init__(self, parent=None):
         super(MainPage,self).__init__(parent)
-        self.image_test = r'images/filter.png'
         self.image_shopping_cart = r'images/shopping-cart.png'
         self.image_warehouse = r'images/warehouse.png'
         self.image_cash_register = r'images/cash-register.png'
         self.image_box = r'images/box.png'
         self.image_rule = r'images/ruler.png'
         self.category_image = r'images/category.png'
-        
-        filter_icon_path = self.image_test
+        self.smartedge_logo = r'images/smartedge.png'
         #config of the window
-        self.setWindowIcon(QtGui.QIcon(filter_icon_path))
-        self.setWindowTitle('Main Page')
-        self.setMinimumSize(1200,720)
+        self.setWindowIcon(QtGui.QIcon(self.smartedge_logo))
+        self.setWindowTitle('SmartEdge ERP')
+        self.setMinimumSize(1400,720)
         self.config_the_menubar()
         # Set up the main window and sidebar
         self.create_main_layout()
@@ -65,8 +64,16 @@ class MainPage(QMainWindow):
         
     def create_main_layout(self):
         # Create a QWidget for the main content
-        widget = QWidget()
-        layout = QHBoxLayout()
+        self.layout_vertical = QVBoxLayout()
+        
+        img = QImage(self.smartedge_logo)
+        pixmap = QPixmap(img.scaledToWidth(225))
+        label = QLabel()
+        label.setPixmap(pixmap) 
+        label.setAlignment(Qt.AlignCenter)
+        self.layout_vertical.addWidget(label)
+        layout_botao = QHBoxLayout()
+        
         self.button_products = QPushButton("Produtos", clicked=self.open_products_window)
         self.button_estoque = QPushButton("Estoque", clicked=self.abrir_janela_estoque)
         self.button_caixa = QPushButton("Caixa", clicked=self.abrir_caixa)
@@ -79,18 +86,17 @@ class MainPage(QMainWindow):
         self.set_icons_and_resize_and_alter_font(self.button_mesurement, self.image_rule)
         self.set_icons_and_resize_and_alter_font(self.button_category, self.category_image)
         
-        layout.addWidget(self.button_estoque)
-        layout.addWidget(self.button_products)
-        layout.addWidget(self.button_caixa)
-        layout.addWidget(self.button_mesurement)
-        layout.addWidget(self.button_category)
+        layout_botao.addWidget(self.button_estoque)
+        layout_botao.addWidget(self.button_products)
+        layout_botao.addWidget(self.button_caixa)
+        layout_botao.addWidget(self.button_mesurement)
+        layout_botao.addWidget(self.button_category)
         
-        widget.setLayout(layout)
+        self.layout_vertical.addLayout(layout_botao)
+
         # Set the main window widget
-        main_layout = QVBoxLayout()
-        main_layout.addWidget(widget)
         main_widget = QWidget()
-        main_widget.setLayout(main_layout)
+        main_widget.setLayout(self.layout_vertical)
         self.setCentralWidget(main_widget)
         self.create_sidebar()  
 
@@ -110,10 +116,14 @@ class MainPage(QMainWindow):
         self.reset_sidebar_button = QPushButton("Voltar Ao Menu")
         self.reset_sidebar_button.clicked.connect(self.reset_layout)
         
+        #Label Version
+        self.label = QLabel("Beta v.0.0.0.1")
+        
         # Add the buttons to the sidebar layout
         self.sidebar_contents_layout = QVBoxLayout()
         self.sidebar_contents_layout.addWidget(self.github_button)
         self.sidebar_contents_layout.addWidget(self.reset_sidebar_button)
+        self.sidebar_contents_layout.addWidget(self.label)
         self.sidebar_contents_layout.addStretch()
         
         # Create a container widget to hold the sidebar layout
