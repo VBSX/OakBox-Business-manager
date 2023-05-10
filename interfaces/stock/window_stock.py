@@ -20,10 +20,14 @@
                             https://www.linkedin.com/in/oak-borges                                                             
  """"" 
 import sys
-from PySide6 import  QtWidgets, QtGui
-from PySide6.QtWidgets import (
-    QMainWindow, 
-    QWidget, QToolBar, QMessageBox,QTableWidget, QTableWidgetItem, QVBoxLayout, QAbstractItemView
+from PySide6 import  QtWidgets
+from PySide6.QtWidgets import ( 
+    QWidget,
+    QToolBar,
+    QTableWidget,
+    QTableWidgetItem,
+    QVBoxLayout,
+    QAbstractItemView
 )
 from PySide6.QtGui import QAction, QIcon
 import os
@@ -31,41 +35,48 @@ path = os.path.abspath('./')
 sys.path.append(path)
 from interfaces.stock.consult_page import ConsultWindow
 from interfaces.stock.window_stock_update import UpdateStock
-from database.database_manager.products_database import ProductsData
+from interfaces.base_windows.main_window_base import WindowBaseClass
 
-class StockPage(QMainWindow):
+class StockPage(WindowBaseClass):
     def __init__(self, parent=None):
         super().__init__(parent)
-        self.stock_icon = r'images/warehouse.png'
-        spacer = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        # Config of the window
-        self.setWindowIcon(QtGui.QIcon(self.stock_icon))
-        self.setWindowTitle('Estoque')
-        self.setMinimumSize(650,320)
-        # Add the menu options of the program
-        self.config_the_toolbar()
+        self.image_icon = r'images/warehouse.png'
         self.consult_window = ConsultWindow(self)
         self.table = QTableWidget()
+        self.all_products = self.database_get.get_all_products()
+        # Add the menu options of the program
+        self.config_the_toolbar()
+
+    def setup_ui(self):
+        # Config of the window
+        self.setWindowTitle('Estoque')
+        self.setMinimumSize(650,320)
+        self.icon_set(self.image_icon)
+        
         self.table.setEditTriggers(QAbstractItemView.NoEditTriggers)
         self.table.setColumnCount(6)
-        self.table.setHorizontalHeaderLabels(['ID', 'Produto', 'Quantidade','Valor unitario' ,'Unidade medida', 'Categoria'])
-        self.database_get = ProductsData()
-        self.all_products = self.database_get.get_all_products()
+        self.table.setHorizontalHeaderLabels(
+            [
+                'ID',
+                'Produto',
+                'Quantidade',
+                'Valor unitario',
+                'Unidade medida',
+                'Categoria'
+                ]
+            )
+        
+        spacer = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
         self.update_table(self.all_products)
         self.table.verticalHeader().setVisible(False)
-        
         self.layout = QVBoxLayout()
         self.layout.addWidget(self.table)
         widget = QWidget()
         widget.setLayout(self.layout)
         self.layout.addItem(spacer)
         self.setCentralWidget(widget)
-
-    def logoff(self):
-        self.close()
-        self.login = LoginPage()
-        self.login.show()
-    
+        self.icon_set(self.image_icon)
+          
     def config_the_toolbar(self):
         button_consult_product = QAction(QIcon(r'images/filter.png'),"Consultar Produto" ,self)
         button_consult_product.triggered.connect(self.consult_product)
@@ -112,8 +123,7 @@ class StockPage(QMainWindow):
             self.update_table(data)   
         else:
             self.show_dialog('Nenhum produto encontrado.') 
-            
-             
+              
     def cont_products(self, list):
         number_of_products = 0
         for l in list:
@@ -141,10 +151,6 @@ class StockPage(QMainWindow):
         id_clicked = item_id.text()
         nome_clicked = item_name.text()
         self.atualizar_estoque(id_clicked, nome_clicked)
-      
-    def show_dialog(self, text):
-        QMessageBox.about(self, 'DIALOG', text)
-
     
 if  __name__ == "__main__":
     app = QtWidgets.QApplication([])

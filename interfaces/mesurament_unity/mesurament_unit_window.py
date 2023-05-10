@@ -3,41 +3,36 @@ from PySide6.QtWidgets import (
     QVBoxLayout,
     QApplication,
     QWidget,
-    QMainWindow,
     QLabel,
     QListWidget,
     QListWidgetItem,
     QToolBar,
     QHBoxLayout,
-    QMessageBox,
     QDialog)
 from PySide6.QtGui import QAction,QIcon
-
 import os
 path = os.path.abspath('./')
 sys.path.append(path)
 from interfaces.mesurament_unity.add_mesurament_unit_window import AddUnitWindow
 from interfaces.mesurament_unity.edit_mesurement_unit import EditUnitWindow
-from database.database_manager.products_database import ProductsData
-from database.database_manager.add_product_database import AddProducts
 from interfaces.checkout.dialog_window_confirmation import MyDialog
+from interfaces.base_windows.main_window_base import WindowBaseClass
 
-class WindowUnit(QMainWindow):
+class WindowUnit(WindowBaseClass):
     def __init__(self, parent= None):
         super().__init__(parent)
-        self.setWindowTitle("Unidades de Medida")
-        self.database_get = ProductsData()
-        self.database_insert = AddProducts()
-        self.setMinimumSize(300,400)
         self.config_the_toolbar()
         self.setup_ui()
-        self.setWindowIcon(QIcon(r'images/ruler.png'))
+        self.image_icon = 'images/ruler.png'
         self.add_unit = AddUnitWindow(self)
 
     def setup_ui(self):
+        # Window config
+        self.icon_set(self.image_icon)
+        self.setMinimumSize(300,400)
+        self.setWindowTitle("Unidades de Medida")
         # Criação dos widgets
         self.list_unidades = QListWidget()
-
         # Configuração dos layouts
         central_widget = QWidget()
         self.setCentralWidget(central_widget)
@@ -101,10 +96,6 @@ class WindowUnit(QMainWindow):
     def add_new_category_window(self):
         self.add_unit.show()
         
-    def reset_layout(self):
-        # Clear the central widget
-        self.centralWidget().setParent(None)
-        self.setup_ui()
         
     def open_edit_mesurement_unit_window(self):
         row = self.list_unidades.currentRow()
@@ -140,11 +131,7 @@ class WindowUnit(QMainWindow):
             return True
         else:
             return False
-        
-    def show_dialog(self, text):
-        QMessageBox.about(self, 'DIALOG', text)
-
-        
+   
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     window = WindowUnit()

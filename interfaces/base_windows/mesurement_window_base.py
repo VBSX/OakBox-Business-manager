@@ -4,27 +4,22 @@ from PySide6.QtWidgets import (
     QApplication,
     QWidget,
     QGridLayout,
-    QMainWindow,
     QLabel,
     QLineEdit,
     QPushButton,
-    QMessageBox)
+    )
 import os
 path = os.path.abspath('./')
 sys.path.append(path)
-from database.database_manager.products_database import ProductsData
-from database.database_manager.add_product_database import AddProducts
-
-class MesuramentBase(QMainWindow):
+from interfaces.base_windows.main_window_base import WindowBaseClass
+class MesuramentBase(WindowBaseClass):
     def __init__(self,parent=None):
         super().__init__(parent)
-        
-        self.setMinimumSize(350,100)
-        self.database_get = ProductsData()
-        self.database_insert = AddProducts()
-        self.setup_ui()
+        self.image_icon = r'images/ruler.png'
          
     def setup_ui(self):
+        self.setMinimumSize(350,100)
+        self.icon_set(self.image_icon)
         # Criação dos widgets
         self.label_name_unit_of_measurement  = QLabel("Nome da Unidade de Medida:")
         self.line_edit_unit_of_measurement = QLineEdit()
@@ -54,15 +49,11 @@ class MesuramentBase(QMainWindow):
         self.line_edit_unit_of_measurement.textChanged.connect(self.verify_fields)
         self.line_edit_acronym.textChanged.connect(self.verify_fields)
         
-
     def verify_fields(self):
         # Verifica se ambos os campos estão preenchidos
         name_written = bool(self.line_edit_unit_of_measurement.text())
         acronym_written = bool(self.line_edit_acronym.text())
         self.button_add_unit_of_measurement .setEnabled(name_written and acronym_written)
-
-    def show_dialog(self, text):
-        QMessageBox.about(self, 'DIALOG', text)
 
     
 if __name__ == "__main__":

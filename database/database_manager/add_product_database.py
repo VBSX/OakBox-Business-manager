@@ -178,6 +178,18 @@ class AddProducts():
             return True
         except sqlite3.Error as er:
             return er
+    
+    def delete_product(self, product_name, id_product):
+        try:
+            
+            self.cursor.execute(
+                f"DELETE FROM Produtos WHERE Nome='{product_name}' AND Id='{id_product}'"
+    )    
+            self.banco.commit()
+            return True
+        except sqlite3.Error as er:
+            return er
+    
 if __name__ =='__main__':
     s = AddProducts()
     # print(s.update_item_quantity( 2, 30,'a', 50))

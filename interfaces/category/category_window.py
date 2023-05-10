@@ -3,40 +3,35 @@ from PySide6.QtWidgets import (
     QVBoxLayout,
     QApplication,
     QWidget,
-    QMainWindow,
     QLabel,
     QListWidget,
     QListWidgetItem,
     QToolBar,
     QHBoxLayout,
-    QMessageBox,
-    QDialog,)
-from PySide6.QtGui import QAction,QIcon, QPalette, QColor, Qt
+    )
+from PySide6.QtGui import QAction,QPalette, QColor, Qt, QIcon
 import os
 path = os.path.abspath('./')
 sys.path.append(path)
 from interfaces.category.add_new_category_window import CategoryAddWindow
 from interfaces.category.edit_category_window import EditCategoryWindow
-from database.database_manager.products_database import ProductsData
-from database.database_manager.add_product_database import AddProducts
-from interfaces.checkout.dialog_window_confirmation import *
+from interfaces.base_windows.main_window_base import WindowBaseClass
 
-
-class CategoryWindow(QMainWindow):
+class CategoryWindow(WindowBaseClass):
     def __init__(self, parent=None):
         super().__init__(parent)
-        self.setWindowTitle("Categorias")
-        self.database_get = ProductsData()
-        self.database_insert = AddProducts()
+        self.image_icon = r'images/category.png'
         self.msg_dialog_item_deleted = 'Categoria deletada!'
         self.button_edit_item_text = "Editar a categoria"
         self.button_add_item_name_text = "Adicionar uma nova categoria"
         self.button_remove_item_text = "Deletar a categoria"
-        self.setMinimumSize(300,400)
         self.config_the_toolbar() 
-        self.setup_ui()
-        
+
     def setup_ui(self):
+        # window config
+        self.setWindowTitle("Categorias")
+        self.setMinimumSize(300,400)
+        self.icon_set(self.image_icon)
         # Criação dos widgets
         self.list_unidades = QListWidget()
         self.list_unidades.itemSelectionChanged.connect(self.on_item_selection_changed)
@@ -63,7 +58,6 @@ class CategoryWindow(QMainWindow):
         label_nome_titulo = QLabel("Nome")
 
         layout_titulos.addWidget(label_nome_titulo)
-
         item_titulos.setSizeHint(widget_titulos.sizeHint())
         self.list_unidades.addItem(item_titulos)
         self.list_unidades.setItemWidget(item_titulos, widget_titulos)
@@ -116,27 +110,11 @@ class CategoryWindow(QMainWindow):
             else:
                 self.show_dialog(f'erro:\n {database_return}')   
 
- 
-    def reset_layout(self):
-        # Clear the central widget
-        self.centralWidget().setParent(None)
-        self.setup_ui()
-                  
-    def user_verify_continue_to_delete(self, name):
-        msg_of_warning = f'Deseja continuar a deletar o item?\n\nNome: {name}\n'
-        tela_de_confirmação = MyDialog(msg_of_warning,'Deletar Item',self)
-        tela_de_confirmação.show()
-        if tela_de_confirmação.exec() == QDialog.Accepted:
-            return True
-        else:
-            return False
-        
     def get_edit_item(self):
         row = self.list_unidades.currentRow()
         if row > 0: 
             self.open_edit_item_window(row)
-            
-
+        
     def open_edit_item_window(self, row):
         header = 1
         print(type(row))
@@ -161,9 +139,6 @@ class CategoryWindow(QMainWindow):
         # Percorrer os itens selecionados e definir a paleta de cor
         for item in selected_items:
             item.setForeground(color)
-    def show_dialog(self, text):
-        QMessageBox.about(self, 'DIALOG', text)
-
         
 if __name__ == "__main__":
     app = QApplication(sys.argv)

@@ -1,8 +1,13 @@
 import sys
-from PySide6 import QtCore, QtWidgets, QtGui
+from PySide6 import QtWidgets
 from PySide6.QtWidgets import (
-    QMainWindow, 
-    QHBoxLayout,QWidget, QToolBar, QLabel,QTableWidget,QAbstractItemView,QTableWidgetItem
+    QHBoxLayout,
+    QWidget,
+    QToolBar,
+    QLabel,
+    QTableWidget,
+    QAbstractItemView,
+    QTableWidgetItem
 )
 from PySide6.QtGui import QAction, QIcon
 import os
@@ -12,22 +17,21 @@ from interfaces.products.consult_window import *
 from interfaces.products.add_product_window import *
 from interfaces.products.table_widget import TableWidget
 from interfaces.products.product_edit import ProductEditWindow
-from database.database_manager.products_database import ProductsData
+from interfaces.base_windows.main_window_base import WindowBaseClass
 
-class ProductsPage(QMainWindow):
+class ProductsPage(WindowBaseClass):
     def __init__(self, parent=None):
         super().__init__(parent)
-        self.image_box = r'images/box.png'
+        self.image_icon = r'images/box.png'
         self.window_consult = ProductsInfo(self)
         self.window_add = WindowProductAdd(self)
-        #config of the window
-        self.setWindowIcon(QtGui.QIcon(self.image_box))
-        self.setWindowTitle('Produtos')
-        self.setMinimumSize(950,320)
         self.config_the_toolbar()
-        self.setup_ui()
 
     def setup_ui(self):
+        #config of the window
+        self.setWindowTitle('Produtos')
+        self.setMinimumSize(950,320)
+        self.icon_set(self.image_icon)
         #Add the menu options of the program
         self.label_teste = QLabel()
         self.table = QTableWidget()
@@ -37,7 +41,7 @@ class ProductsPage(QMainWindow):
                                               'Quantidade','Estoque_minimo','Estoque_maximo',
                                               'Unidade medida', 'Categoria'])
         self.table.setEditTriggers(QAbstractItemView.NoEditTriggers)
-        self.database_get = ProductsData()
+
         self.all_products = self.database_get.get_all_info_of_all_products()        
         self.update_table(self.all_products)
         self.table.verticalHeader().setVisible(False)
@@ -50,14 +54,6 @@ class ProductsPage(QMainWindow):
         self.setCentralWidget(widget)
  
 
-    def set_icons_and_resize_and_alter_font(self, item, icon):
-        item.setStyleSheet("padding :30px;font-size:18px;margin-top:30px")
-        item.setIcon(QIcon(icon))
-        item.setIconSize(QtCore.QSize(64,64))
-        
-    def show_dialog(self, text):
-        QtWidgets.QMessageBox.about(self, 'DIALOG', text)
-    
     def config_the_toolbar(self):
         button_consult_product = QAction(QIcon(r'images/filter.png'),"Consultar Produto" ,self)
         button_consult_product.triggered.connect(self.consult_product)
@@ -65,10 +61,14 @@ class ProductsPage(QMainWindow):
         button_add_product.triggered.connect(self.add_product)
         button_edit_product = QAction(QIcon(r'images/pencil.png'),"Editar Produto" ,self)
         button_edit_product.triggered.connect(self.product_edit_window)
+        self.button_remove_item = QAction(QIcon(r'images/delete.png'),'Remover Produto' ,self)
+        self.button_remove_item.triggered.connect(self.product_remove)
+        
         tool = QToolBar()
         self.addToolBar(tool)
         tool.addAction(button_consult_product)
         tool.addAction(button_add_product)
+        tool.addAction(self.button_remove_item)
         tool.addAction(button_edit_product)
         
     def consult_product(self):
@@ -123,15 +123,28 @@ class ProductsPage(QMainWindow):
         self.editar_produto_window = ProductEditWindow(id_clicked, nome_clicked,self)
         self.editar_produto_window.show()
         self.reset_layout()
+    
+    def product_remove(self):
+        current_index = self.table.currentIndex()
+        current_row = current_index.row()
+        item_id = self.table.item(current_row, 0)
+        item_name = self.table.item(current_row, 2)
+        id_clicked = item_id.text()
+        nome_clicked = item_name.text()      
+        if self.user_verify_continue_to_delete(nome_clicked): 
             
+            database_return = self.database_insert.delete_product(
+                nome_clicked,  id_clicked)
+            
+            if database_return:
+                self.show_dialog(f'Item "{nome_clicked}" removido com sucesso.\nID: "{id_clicked}"')
+                self.reset_layout()        
+            else:
+                self.show_dialog(f'erro:\n {database_return}')  
+        
     def add_product(self):
         self.window_add.show()
-    def reset_layout(self):
-        # Clear the central widget
-        self.centralWidget().setParent(None)
-        self.setup_ui()
-                
-    
+
 if __name__ == "__main__":
     app = QtWidgets.QApplication([])
     widget = ProductsPage()
