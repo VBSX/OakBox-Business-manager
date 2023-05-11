@@ -42,18 +42,16 @@ class StockPage(WindowBaseClass):
         super().__init__(parent)
         self.image_icon = r'images/warehouse.png'
         self.consult_window = ConsultWindow(self)
-
         # Add the menu options of the program
         self.config_the_toolbar()
-
 
     def setup_ui(self):
         self.table = QTableWidget()
         self.all_products = self.database_get.get_all_products()
         # Config of the window
-        self.setWindowTitle('Estoque')
-        self.setMinimumSize(750,320)
         self.icon_set(self.image_icon)
+        self.setWindowTitle('Estoque')
+        self.setMinimumSize(750, 320)
         
         self.table.setEditTriggers(QAbstractItemView.NoEditTriggers)
         self.table.setColumnCount(7)
@@ -99,6 +97,8 @@ class StockPage(WindowBaseClass):
         # Em seguida, os valores de cada item são adicionados à tabela, linha por linha e coluna por coluna, 
         # usando o método setItem do QTableWidgetItem. Cada item é convertido para string 
         # usando a função str() antes de ser adicionado à tabela.
+        # também é realizado a verificação de status de estoque, conforme a quantidade atual do produto.
+        # A função config_cell_of_table() é utilizada para configurar a cor de cada célula da tabela e adicionar na tabela. 
         self.table.setRowCount(len(data))
         for i, row in enumerate(data):
             actual_item = 0
@@ -114,35 +114,26 @@ class StockPage(WindowBaseClass):
                     elif actual_item == 8:
                         maximum_stock = item
                         
-                        status_stock = self.verify_status_of_actual_stock(stock_quatity, minimum_stock, maximum_stock)
+                        status_stock = self.verify_stock_status(stock_quatity, minimum_stock, maximum_stock)
+                        
                         if status_stock == 'Baixo':
-                            text = QTableWidgetItem(str(status_stock))
-                            text.setBackground(QColor(255, 0, 0))
-                            self.table.setItem(i, 6, text)
+                            self.config_cell_of_table(i,255,0,0,status_stock)
+                        elif status_stock == 'Crítico':
+                            self.config_cell_of_table(i,255,11,50,status_stock)
                         elif status_stock == 'Alto':
-                            text = QTableWidgetItem(str(status_stock))
-                            text.setBackground(QColor(102, 51, 0))
-                            self.table.setItem(i, 6, text)
+                            self.config_cell_of_table(i,102,51,0,status_stock)
+                            
                         elif status_stock == 'Estável':
-                            text = QTableWidgetItem(str(status_stock))
-                            text.setBackground(QColor(185, 255, 174))
-                            self.table.setItem(i, 6, text)
+                            self.config_cell_of_table(i,185,255,174,status_stock)
+                            
                         elif  status_stock == 'Vazio':
-                            text = QTableWidgetItem(str(status_stock))
-                            text.setBackground(QColor(255, 255, 255))
-                            self.table.setItem(i, 6, text)
+                            self.config_cell_of_table(i, 255, 255, 255, status_stock)
+                        
+                            
 
-                    
     def show_products(self, data):
-        """
-        Display the product information in the main window
-
-        Parameters:
-            data (list): list of tuples containing the product information
-
-        Returns:
-            None
-        """
+        # Essa função recebe os dados das janelas "UpdateStock" e "ConsultWindow"
+        # e atualiza a tabela com os dados recebidos.
         self.consult_window.close()
         if len(data) > 1:
             str_of_products = self.get_id_and_name_of_list(data)
@@ -160,7 +151,6 @@ class StockPage(WindowBaseClass):
         number_of_products = 0
         for l in list:
             number_of_products += 1
-        
         return number_of_products
     
     def get_id_and_name_of_list(self, list):
@@ -172,7 +162,7 @@ class StockPage(WindowBaseClass):
         return string
             
     def atualizar_estoque(self, id, nome):
-        self.update_window_stock = UpdateStock(id,nome,self)
+        self.update_window_stock = UpdateStock(id, nome, self)
         self.update_window_stock.show()
      
     def product_add_window(self):
@@ -184,19 +174,28 @@ class StockPage(WindowBaseClass):
         nome_clicked = item_name.text()
         self.atualizar_estoque(id_clicked, nome_clicked)
     
-    def verify_status_of_actual_stock(self,stock_quantity, minimum_stock, maximum_stock):
-        if stock_quantity > maximum_stock:
-            status_stock = 'Alto'
-        elif stock_quantity > (maximum_stock + minimum_stock)/2 and stock_quantity < maximum_stock and stock_quantity !=0: 
-            status_stock = 'Estável'
-        elif stock_quantity < (
-            maximum_stock + minimum_stock
-            )/2 and stock_quantity < maximum_stock and stock_quantity !=0 or stock_quantity < minimum_stock and stock_quantity !=0:
-            status_stock = 'Baixo'      
-        elif stock_quantity == 0:
-            status_stock = 'Vazio'  
-        print(status_stock)
-        return status_stock
+    def verify_stock_status(self, stock_quantity, min_stock, max_stock):
+        medium_stock = (max_stock + min_stock) / 2
+
+        if stock_quantity == 0:
+            return 'Vazio'
+        elif stock_quantity > max_stock:
+            return 'Alto'
+        elif stock_quantity > medium_stock:
+            return 'Estável'
+        elif stock_quantity < min_stock:
+            return 'Crítico'
+        elif stock_quantity < medium_stock > min_stock:
+            return 'Baixo'
+
+        
+
+    def config_cell_of_table(self, table_index, r_rgb,g_rgb, b_rgb, text_of_cell):
+        cell = QTableWidgetItem(str(text_of_cell))
+        cell.setBackground(QColor(r_rgb, g_rgb, b_rgb))
+        cell.setForeground(QColor(0, 0, 0))
+        self.table.setItem(table_index, 6, cell)
+        
 
 if  __name__ == "__main__":
     app = QtWidgets.QApplication([])

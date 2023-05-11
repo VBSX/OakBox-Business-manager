@@ -151,7 +151,7 @@ class MainPage(QMainWindow):
         
         # Remove the central widget
         self.centralWidget().setParent(None)
-    # Recreate the layout
+        # Recreate the layout
         self.create_main_layout()
         
     def set_icons_and_resize_and_alter_font(self, item, icon):

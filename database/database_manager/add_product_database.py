@@ -57,7 +57,8 @@ class AddProducts():
 )                           
         self.cursor.execute(
                     "INSERT INTO Entrada_prod ( Data,Horario, Id, Produto,Quantidade) "
-        f"VALUES ('{data}','{horario}','{id}','{nome}','{quantidade_de_entrada}')")
+        f"VALUES ('{data}','{horario}','{id}','{nome}','{quantidade_de_entrada}')"
+        )
         self.banco.commit()
         return True
     

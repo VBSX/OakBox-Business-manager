@@ -19,7 +19,16 @@
                             https://www.oakbox.com.br
                             https://www.linkedin.com/in/oak-borges                                                             
  """"" 
-from PySide6.QtWidgets import QPushButton, QHBoxLayout, QWidget, QLineEdit,QApplication,QMessageBox, QMainWindow, QLabel,QVBoxLayout
+from PySide6.QtWidgets import (
+    QPushButton,
+    QWidget,
+    QLineEdit,
+    QApplication,
+    QMessageBox,
+    QMainWindow,
+    QLabel,
+    QVBoxLayout
+    )
 from PySide6 import QtGui
 from PySide6.QtGui import QIntValidator
 import sys
@@ -139,8 +148,6 @@ class UpdateStock(QMainWindow):
                 self.parent().show_products(self.database_get.get_product_by_id_and_name(self.id_product, self.nome_do_produto))
         except:
             self.show_dialog('erro database, tente novamente')
-    
-    
     
     def atualizar_quantidade_final(self):
         quantidade_final = int(self.quantidade_a_adicionar.text())+ self.quantidade_no_banco
