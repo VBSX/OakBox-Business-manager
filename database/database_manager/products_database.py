@@ -83,7 +83,7 @@ class ProductsData():
 
     def get_all_products(self):
         self.cursor.execute(
-            f"SELECT Id, Nome, Quantidade, Valor_unitario, Unidade_de_medida,Categoria FROM Produtos")
+            f"SELECT Id, Nome, Quantidade, Valor_unitario, Unidade_de_medida,Categoria, Estoque_minimo, Estoque_maximo FROM Produtos")
         data_database = self.cursor.fetchall()
         
         return data_database
