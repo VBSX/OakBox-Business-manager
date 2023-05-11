@@ -42,7 +42,7 @@ class ProductsData():
     
     def get_product_by_id_and_name(self, id_of_product,name_of_product):
         self.cursor.execute(
-            f"SELECT Id, Nome, Quantidade, Valor_unitario, Unidade_de_medida,Categoria FROM Produtos WHERE Id = '{id_of_product}'AND Nome LIKE '%{name_of_product}%'")
+            f"SELECT Id, Nome, Quantidade, Valor_unitario, Unidade_de_medida,Categoria, Estoque_minimo, Estoque_maximo FROM Produtos WHERE Id = '{id_of_product}'AND Nome LIKE '%{name_of_product}%'")
         data_database = self.cursor.fetchall()
 
         return data_database
@@ -83,7 +83,7 @@ class ProductsData():
 
     def get_all_products(self):
         self.cursor.execute(
-            f"SELECT Id, Nome, Quantidade, Valor_unitario, Unidade_de_medida,Categoria, Estoque_minimo, Estoque_maximo FROM Produtos")
+            "SELECT Id, Nome, Quantidade, Valor_unitario, Unidade_de_medida,Categoria, Estoque_minimo, Estoque_maximo FROM Produtos")
         data_database = self.cursor.fetchall()
         
         return data_database
