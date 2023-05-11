@@ -29,7 +29,7 @@ from PySide6.QtWidgets import (
     QVBoxLayout,
     QAbstractItemView
 )
-from PySide6.QtGui import QAction, QIcon
+from PySide6.QtGui import QAction, QIcon, QColor
 import os
 path = os.path.abspath('./')
 sys.path.append(path)
@@ -42,19 +42,21 @@ class StockPage(WindowBaseClass):
         super().__init__(parent)
         self.image_icon = r'images/warehouse.png'
         self.consult_window = ConsultWindow(self)
-        self.table = QTableWidget()
-        self.all_products = self.database_get.get_all_products()
+
         # Add the menu options of the program
         self.config_the_toolbar()
 
+
     def setup_ui(self):
+        self.table = QTableWidget()
+        self.all_products = self.database_get.get_all_products()
         # Config of the window
         self.setWindowTitle('Estoque')
-        self.setMinimumSize(650,320)
+        self.setMinimumSize(750,320)
         self.icon_set(self.image_icon)
         
         self.table.setEditTriggers(QAbstractItemView.NoEditTriggers)
-        self.table.setColumnCount(6)
+        self.table.setColumnCount(7)
         self.table.setHorizontalHeaderLabels(
             [
                 'ID',
@@ -62,7 +64,8 @@ class StockPage(WindowBaseClass):
                 'Quantidade',
                 'Valor unitario',
                 'Unidade medida',
-                'Categoria'
+                'Categoria',
+                'Status estoque'
                 ]
             )
         
@@ -98,9 +101,51 @@ class StockPage(WindowBaseClass):
         # usando a função str() antes de ser adicionado à tabela.
         self.table.setRowCount(len(data))
         for i, row in enumerate(data):
+            actual_item = 0
             for j, item in enumerate(row):
-                self.table.setItem(i, j, QTableWidgetItem(str(item)))
-            
+                actual_item += 1
+                if actual_item == 3:
+                    stock_quatity = item
+                if actual_item<7:
+                    self.table.setItem(i, j, QTableWidgetItem(str(item)))
+                else:
+                    if actual_item == 7:
+                        minimum_stock = item
+                    elif actual_item == 8:
+                        maximum_stock = item
+
+                        if stock_quatity < minimum_stock and stock_quatity !=0:
+                            status_stock = 'Baixo'
+                            self.table.setItem(i, 6, QTableWidgetItem(str(status_stock)))
+                            text = QTableWidgetItem(str(status_stock))
+                            text.setBackground(QColor(255, 255, 0))
+                            self.table.setItem(i, 6, text)
+                            
+                        elif stock_quatity > maximum_stock:
+                            status_stock = 'Alto'
+                            text = QTableWidgetItem(str(status_stock))
+                            text.setBackground(QColor(102, 51, 0))
+                            self.table.setItem(i, 6, text)
+                            
+                        elif stock_quatity > (maximum_stock + minimum_stock)/2 and stock_quatity < maximum_stock and stock_quatity !=0: 
+                            status_stock = 'Estável'
+                            text = QTableWidgetItem(str(status_stock))
+                            text.setBackground(QColor(185, 255, 174))
+                            self.table.setItem(i, 6, text)
+                        elif stock_quatity < (maximum_stock + minimum_stock)/2 and stock_quatity < maximum_stock and stock_quatity !=0: 
+                            status_stock = 'Baixo'
+                            text = QTableWidgetItem(str(status_stock))
+                            text.setBackground(QColor(255, 0, 0))
+                            self.table.setItem(i, 6, text)
+                               
+                        elif stock_quatity == 0:
+                            status_stock = 'Vazio'  
+                            text = QTableWidgetItem(str(status_stock))
+                            text.setBackground(QColor(255, 255, 255))
+                            self.table.setItem(i, 6, text)
+                        print(status_stock)
+
+                    
     def show_products(self, data):
         """
         Display the product information in the main window
