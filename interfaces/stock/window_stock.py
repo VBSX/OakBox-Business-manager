@@ -113,37 +113,24 @@ class StockPage(WindowBaseClass):
                         minimum_stock = item
                     elif actual_item == 8:
                         maximum_stock = item
-
-                        if stock_quatity < minimum_stock and stock_quatity !=0:
-                            status_stock = 'Baixo'
-                            self.table.setItem(i, 6, QTableWidgetItem(str(status_stock)))
-                            text = QTableWidgetItem(str(status_stock))
-                            text.setBackground(QColor(255, 255, 0))
-                            self.table.setItem(i, 6, text)
-                            
-                        elif stock_quatity > maximum_stock:
-                            status_stock = 'Alto'
-                            text = QTableWidgetItem(str(status_stock))
-                            text.setBackground(QColor(102, 51, 0))
-                            self.table.setItem(i, 6, text)
-                            
-                        elif stock_quatity > (maximum_stock + minimum_stock)/2 and stock_quatity < maximum_stock and stock_quatity !=0: 
-                            status_stock = 'Estável'
-                            text = QTableWidgetItem(str(status_stock))
-                            text.setBackground(QColor(185, 255, 174))
-                            self.table.setItem(i, 6, text)
-                        elif stock_quatity < (maximum_stock + minimum_stock)/2 and stock_quatity < maximum_stock and stock_quatity !=0: 
-                            status_stock = 'Baixo'
+                        
+                        status_stock = self.verify_status_of_actual_stock(stock_quatity, minimum_stock, maximum_stock)
+                        if status_stock == 'Baixo':
                             text = QTableWidgetItem(str(status_stock))
                             text.setBackground(QColor(255, 0, 0))
                             self.table.setItem(i, 6, text)
-                               
-                        elif stock_quatity == 0:
-                            status_stock = 'Vazio'  
+                        elif status_stock == 'Alto':
+                            text = QTableWidgetItem(str(status_stock))
+                            text.setBackground(QColor(102, 51, 0))
+                            self.table.setItem(i, 6, text)
+                        elif status_stock == 'Estável':
+                            text = QTableWidgetItem(str(status_stock))
+                            text.setBackground(QColor(185, 255, 174))
+                            self.table.setItem(i, 6, text)
+                        elif  status_stock == 'Vazio':
                             text = QTableWidgetItem(str(status_stock))
                             text.setBackground(QColor(255, 255, 255))
                             self.table.setItem(i, 6, text)
-                        print(status_stock)
 
                     
     def show_products(self, data):
@@ -197,6 +184,20 @@ class StockPage(WindowBaseClass):
         nome_clicked = item_name.text()
         self.atualizar_estoque(id_clicked, nome_clicked)
     
+    def verify_status_of_actual_stock(self,stock_quantity, minimum_stock, maximum_stock):
+        if stock_quantity > maximum_stock:
+            status_stock = 'Alto'
+        elif stock_quantity > (maximum_stock + minimum_stock)/2 and stock_quantity < maximum_stock and stock_quantity !=0: 
+            status_stock = 'Estável'
+        elif stock_quantity < (
+            maximum_stock + minimum_stock
+            )/2 and stock_quantity < maximum_stock and stock_quantity !=0 or stock_quantity < minimum_stock and stock_quantity !=0:
+            status_stock = 'Baixo'      
+        elif stock_quantity == 0:
+            status_stock = 'Vazio'  
+        print(status_stock)
+        return status_stock
+
 if  __name__ == "__main__":
     app = QtWidgets.QApplication([])
     widget = StockPage()
