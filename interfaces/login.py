@@ -26,6 +26,7 @@ path = os.path.abspath('./')
 sys.path.append(path)
 from interfaces.main_page import MainPage
 from database.database_manager.products_database import ProductsData
+from passlib.hash import sha256_crypt
 
 class LoginPage(QtWidgets.QWidget):
     def __init__(self):
@@ -107,11 +108,15 @@ class LoginPage(QtWidgets.QWidget):
             return True
         else:
             return False
+    #TODO senha_criptografada = sha256_crypt.hash(senha_original)
+    
     def verify_if_password_is_corect(self, user, password_informed):
-        correct_password = self.database_get.get_password_by_user(user)
-        returned_some_password = correct_password
+        correct_password_encrypted = self.database_get.get_password_by_user(user)
+        returned_some_password = len(correct_password_encrypted) > 0
+        
         if returned_some_password:
-            if correct_password[0][0] == password_informed:
+            if sha256_crypt.verify(password_informed, correct_password_encrypted[0][0]):
+                print("Senha válida!")
                 return True
      
     def verify_credentials(self):
